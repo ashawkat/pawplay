@@ -11,70 +11,121 @@
     "name": "t:settings_schema.colors.name",
     "settings": [
       {
-        "type": "color",
-        "id": "color_primary",
-        "label": "t:settings_schema.colors.primary",
-        "default": "#FF6B6B"
+        "type": "header",
+        "content": "Color schemes"
       },
       {
-        "type": "color",
-        "id": "color_secondary",
-        "label": "t:settings_schema.colors.secondary",
-        "default": "#4ECDC4"
+        "type": "paragraph",
+        "content": "Every section has a Color scheme setting. Edit a scheme here and all sections using it update. Pick a ready-made style under Theme settings \u2192 Theme styles."
       },
       {
-        "type": "color",
-        "id": "color_yellow",
-        "label": "t:settings_schema.colors.yellow",
-        "default": "#FFE66D"
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          {
+            "type": "color",
+            "id": "background",
+            "label": "Background",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color_background",
+            "id": "background_gradient",
+            "label": "Background gradient",
+            "info": "Overrides the solid background when set"
+          },
+          {
+            "type": "color",
+            "id": "background_soft",
+            "label": "Soft background (inputs, panels)",
+            "default": "#F8F9FB"
+          },
+          {
+            "type": "color",
+            "id": "card",
+            "label": "Cards",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "heading",
+            "label": "Headings",
+            "default": "#252424"
+          },
+          {
+            "type": "color",
+            "id": "text",
+            "label": "Text",
+            "default": "#333333"
+          },
+          {
+            "type": "color",
+            "id": "text_muted",
+            "label": "Muted text",
+            "default": "#666666"
+          },
+          {
+            "type": "color",
+            "id": "primary",
+            "label": "Primary (buttons, prices, links)",
+            "default": "#FF6B6B"
+          },
+          {
+            "type": "color",
+            "id": "on_primary",
+            "label": "Text on primary",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "secondary",
+            "label": "Secondary",
+            "default": "#4ECDC4"
+          },
+          {
+            "type": "color",
+            "id": "accent",
+            "label": "Accent (highlights, yellow buttons)",
+            "default": "#FFE66D"
+          },
+          {
+            "type": "color",
+            "id": "border",
+            "label": "Borders",
+            "default": "#E6E8EC"
+          }
+        ],
+        "role": {
+          "background": {
+            "solid": "background",
+            "gradient": "background_gradient"
+          },
+          "text": "text",
+          "primary_button": "primary",
+          "on_primary_button": "on_primary",
+          "primary_button_border": "primary",
+          "secondary_button": "card",
+          "on_secondary_button": "primary",
+          "secondary_button_border": "border",
+          "icons": "text",
+          "links": "primary"
+        }
+      },
+      {
+        "type": "header",
+        "content": "Badges"
       },
       {
         "type": "color",
         "id": "color_warning",
-        "label": "t:settings_schema.colors.warning",
+        "label": "Rating stars & gold badges",
         "default": "#F4C430"
       },
       {
         "type": "color",
         "id": "color_info",
-        "label": "t:settings_schema.colors.info",
+        "label": "Info accents",
         "default": "#3498DB"
-      },
-      {
-        "type": "color",
-        "id": "color_heading",
-        "label": "t:settings_schema.colors.heading",
-        "default": "#252424"
-      },
-      {
-        "type": "color",
-        "id": "color_text",
-        "label": "t:settings_schema.colors.text",
-        "default": "#333333"
-      },
-      {
-        "type": "color",
-        "id": "color_text_muted",
-        "label": "t:settings_schema.colors.text_muted",
-        "default": "#666666"
-      },
-      {
-        "type": "color",
-        "id": "color_hero_bg",
-        "label": "t:settings_schema.colors.hero_bg",
-        "default": "#FFEDED"
-      },
-      {
-        "type": "color",
-        "id": "color_cream",
-        "label": "t:settings_schema.colors.cream",
-        "default": "#FFFAED"
-      },
-      {
-        "type": "color",
-        "id": "color_footer_bg",
-        "label": "t:settings_schema.colors.footer_bg",
-        "default": "#252424"
       }
     ]
   },

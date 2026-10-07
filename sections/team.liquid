@@ -1,10 +1,11 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: About — "Meet the pack behind PawPlay" {%- endcomment -%}
 <section class="section-y">
   <div class="page-width">
     {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, subheading: section.settings.subheading %}
     <ul class="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
       {%- for block in section.blocks -%}
-        <li {{ block.shopify_attributes }} class="rounded-3xl border border-divider bg-white p-3 text-center transition hover:-translate-y-1 hover:shadow-soft">
+        <li {{ block.shopify_attributes }} class="rounded-3xl border border-divider bg-card p-3 text-center transition hover:-translate-y-1 hover:shadow-soft">
           <div class="aspect-[4/3.5] overflow-hidden rounded-2xl bg-soft">
             {%- if block.settings.image != blank -%}
               {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', class: 'size-full object-cover' }}
@@ -19,27 +20,91 @@
     </ul>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Team",
   "max_blocks": 12,
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Humans" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Meet the pack behind PawPlay" },
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "A team of vets, designers, and lifelong animal companions." }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Humans"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Meet the pack behind PawPlay"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "A team of vets, designers, and lifelong animal companions."
+    }
   ],
   "blocks": [
-    { "type": "member", "name": "Member", "settings": [ { "type": "image_picker", "id": "image", "label": "Photo" }, { "type": "text", "id": "name", "label": "Name", "default": "Mia Cartier" }, { "type": "text", "id": "role", "label": "Role", "default": "Founder & CEO" } ] }
+    {
+      "type": "member",
+      "name": "Member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Mia Cartier"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "Founder & CEO"
+        }
+      ]
+    }
   ],
   "presets": [
     {
       "name": "Team",
       "blocks": [
-        { "type": "member" },
-        { "type": "member", "settings": { "name": "Dr. Leo Park", "role": "Head Veterinarian" } },
-        { "type": "member", "settings": { "name": "Aria Singh", "role": "Lead Groomer" } },
-        { "type": "member", "settings": { "name": "Noah Bell", "role": "Customer Care" } }
+        {
+          "type": "member"
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Dr. Leo Park",
+            "role": "Head Veterinarian"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Aria Singh",
+            "role": "Lead Groomer"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Noah Bell",
+            "role": "Customer Care"
+          }
+        }
       ]
     }
   ]

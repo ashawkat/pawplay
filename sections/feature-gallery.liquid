@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: "Crafted with care, built to last" — staggered image cards with captions {%- endcomment -%}
 <section class="section-y">
   <div class="page-width">
@@ -22,22 +23,54 @@
     </ul>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Feature gallery",
   "max_blocks": 8,
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why Pet Parents Love It" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Crafted with care, built to last" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Why Pet Parents Love It"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Crafted with care, built to last"
+    }
   ],
   "blocks": [
     {
-      "type": "feature", "name": "Feature",
+      "type": "feature",
+      "name": "Feature",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Breathable Mesh" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Engineered airflow keeps pets cool on every trip." }
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Breathable Mesh"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Engineered airflow keeps pets cool on every trip."
+        }
       ]
     }
   ],
@@ -45,10 +78,30 @@
     {
       "name": "Feature gallery",
       "blocks": [
-        { "type": "feature" },
-        { "type": "feature", "settings": { "title": "Paw-Print Design", "text": "A signature style look pet parents adore." } },
-        { "type": "feature", "settings": { "title": "Secure Zipper", "text": "Safety-lock zipper prevents accidental escapes." } },
-        { "type": "feature", "settings": { "title": "Vet-Approved", "text": "Tested and recommended by veterinary specialists." } }
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Paw-Print Design",
+            "text": "A signature style look pet parents adore."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Secure Zipper",
+            "text": "Safety-lock zipper prevents accidental escapes."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Vet-Approved",
+            "text": "Tested and recommended by veterinary specialists."
+          }
+        }
       ]
     }
   ]

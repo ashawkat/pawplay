@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="{{ settings.color_primary }}">
+    <meta name="theme-color" content="{{ settings.color_schemes.first.settings.primary }}">
     <link rel="canonical" href="{{ canonical_url }}">
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
@@ -45,18 +45,10 @@
       {{ heading_font_semibold | font_face: font_display: 'swap' }}
       {{ heading_font_bold | font_face: font_display: 'swap' }}
 
+      {% render 'color-schemes' %}
       :root {
-        --pp-primary: {{ settings.color_primary }};
-        --pp-secondary: {{ settings.color_secondary }};
-        --pp-yellow: {{ settings.color_yellow }};
         --pp-warning: {{ settings.color_warning }};
         --pp-info: {{ settings.color_info }};
-        --pp-black: {{ settings.color_heading }};
-        --pp-text: {{ settings.color_text }};
-        --pp-text-muted: {{ settings.color_text_muted }};
-        --pp-hero-bg: {{ settings.color_hero_bg }};
-        --pp-cream: {{ settings.color_cream }};
-        --pp-footer-bg: {{ settings.color_footer_bg }};
         --pp-font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
         --pp-font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
         --pp-section-y: {{ settings.section_spacing }}px;

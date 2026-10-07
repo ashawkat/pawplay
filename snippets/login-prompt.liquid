@@ -1,8 +1,8 @@
-<div class="rounded-3xl bg-white p-10 text-center shadow-soft">
+<div class="rounded-3xl bg-card p-10 text-center shadow-soft">
   <span class="mx-auto block w-fit text-primary/30">{% render 'icon', name: 'user', class: 'size-14' %}</span>
   <p class="mt-4 text-lg font-semibold text-ink">{{ 'customer.login_required' | t }}</p>
   <div class="mt-6 flex flex-wrap justify-center gap-3">
     <a href="{{ routes.account_login_url }}" class="btn btn--primary">{{ 'customer.login' | t }}</a>
-    <a href="{{ routes.account_register_url }}" class="btn border border-divider bg-white text-ink">{{ 'customer.register' | t }}</a>
+    <a href="{{ routes.account_register_url }}" class="btn border border-divider bg-card text-ink">{{ 'customer.register' | t }}</a>
   </div>
 </div>

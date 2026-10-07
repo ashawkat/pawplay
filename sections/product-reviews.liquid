@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%}
   Figma: customer reviews block. Summary reads the standard reviews.rating / reviews.rating_count
   metafields (filled by Judge.me, Shopify Product Reviews, etc). Review cards are blocks, or
@@ -54,34 +55,150 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Product reviews",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer Reviews" },
-    { "type": "range", "id": "fallback_rating", "label": "Fallback rating", "min": 0, "max": 5, "step": 0.1, "default": 4.9, "info": "Used when the product has no reviews metafield" },
-    { "type": "number", "id": "fallback_count", "label": "Fallback review count", "default": 452 },
-    { "type": "range", "id": "pct_5", "label": "5-star %", "min": 0, "max": 100, "step": 1, "default": 86 },
-    { "type": "range", "id": "pct_4", "label": "4-star %", "min": 0, "max": 100, "step": 1, "default": 10 },
-    { "type": "range", "id": "pct_3", "label": "3-star %", "min": 0, "max": 100, "step": 1, "default": 3 },
-    { "type": "range", "id": "pct_2", "label": "2-star %", "min": 0, "max": 100, "step": 1, "default": 1 },
-    { "type": "range", "id": "pct_1", "label": "1-star %", "min": 0, "max": 100, "step": 1, "default": 0 },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Write a Review" },
-    { "type": "url", "id": "button_link", "label": "Button link", "info": "Link to your review app form" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Customer Reviews"
+    },
+    {
+      "type": "range",
+      "id": "fallback_rating",
+      "label": "Fallback rating",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 4.9,
+      "info": "Used when the product has no reviews metafield"
+    },
+    {
+      "type": "number",
+      "id": "fallback_count",
+      "label": "Fallback review count",
+      "default": 452
+    },
+    {
+      "type": "range",
+      "id": "pct_5",
+      "label": "5-star %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "pct_4",
+      "label": "4-star %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "pct_3",
+      "label": "3-star %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "pct_2",
+      "label": "2-star %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "pct_1",
+      "label": "1-star %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Write a Review"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Link to your review app form"
+    }
   ],
   "blocks": [
-    { "type": "@app" },
     {
-      "type": "review", "name": "Review",
+      "type": "@app"
+    },
+    {
+      "type": "review",
+      "name": "Review",
       "settings": [
-        { "type": "image_picker", "id": "avatar", "label": "Avatar" },
-        { "type": "text", "id": "name", "label": "Name", "default": "Maya K." },
-        { "type": "checkbox", "id": "verified", "label": "Verified buyer", "default": true },
-        { "type": "text", "id": "date", "label": "Date", "default": "2 weeks ago" },
-        { "type": "range", "id": "stars", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
-        { "type": "text", "id": "title", "label": "Title", "default": "My cat actually loves it!" },
-        { "type": "textarea", "id": "body", "label": "Review", "default": "Beautifully made and so light. My cat walks in herself now whenever it's out." }
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Maya K."
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified buyer",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "2 weeks ago"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "My cat actually loves it!"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review",
+          "default": "Beautifully made and so light. My cat walks in herself now whenever it's out."
+        }
       ]
     }
   ],
@@ -89,9 +206,29 @@
     {
       "name": "Product reviews",
       "blocks": [
-        { "type": "review" },
-        { "type": "review", "settings": { "name": "Daniel R.", "date": "1 month ago", "stars": 5, "title": "Premium feel for the price", "body": "Stitching is perfect, mesh is sturdy and the pink shade is gorgeous in person." } },
-        { "type": "review", "settings": { "name": "Sofia A.", "date": "2 months ago", "stars": 4, "title": "Great for small dogs", "body": "My Pomeranian fits comfortably in the medium. The strap was a bit more padded." } }
+        {
+          "type": "review"
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Daniel R.",
+            "date": "1 month ago",
+            "stars": 5,
+            "title": "Premium feel for the price",
+            "body": "Stitching is perfect, mesh is sturdy and the pink shade is gorgeous in person."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Sofia A.",
+            "date": "2 months ago",
+            "stars": 4,
+            "title": "Great for small dogs",
+            "body": "My Pomeranian fits comfortably in the medium. The strap was a bit more padded."
+          }
+        }
       ]
     }
   ]

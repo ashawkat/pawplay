@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: PawPlay/ Product Details (62:1448) — top area {%- endcomment -%}
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
@@ -31,7 +32,7 @@
             <span class="absolute left-4 top-4 z-10 rounded-xl bg-primary px-2.5 py-1.5 text-sm font-medium text-white" data-sale-badge>-{{ off }}%</span>
           {%- endif -%}
           {%- if settings.show_wishlist_button -%}
-            <button type="button" class="absolute right-4 top-4 z-10 grid size-10 place-items-center rounded-full bg-white text-primary shadow-card" data-wishlist="{{ product.handle }}" aria-label="{{ 'products.add_to_wishlist' | t }}">{% render 'icon', name: 'heart', class: 'size-5' %}</button>
+            <button type="button" class="absolute right-4 top-4 z-10 grid size-10 place-items-center rounded-full bg-card text-primary shadow-card" data-wishlist="{{ product.handle }}" aria-label="{{ 'products.add_to_wishlist' | t }}">{% render 'icon', name: 'heart', class: 'size-5' %}</button>
           {%- endif -%}
           {%- for media in product.media -%}
             <div data-media="{{ media.id }}" class="absolute inset-0 {% unless media.id == featured.id %}hidden{% endunless %}">
@@ -146,32 +147,193 @@
 </product-info>
 
 <script type="application/ld+json">{{ product | structured_data }}</script>
+</div>
 
 {% schema %}
 {
   "name": "Product information",
   "blocks": [
-    { "type": "@app" },
-    { "type": "vendor", "name": "Brand", "limit": 1 },
-    { "type": "title", "name": "Title", "limit": 1 },
-    { "type": "rating", "name": "Rating & stock", "limit": 1 },
-    { "type": "price", "name": "Price", "limit": 1 },
-    { "type": "variant_picker", "name": "Variant picker", "limit": 1, "settings": [ { "type": "paragraph", "content": "Color options show swatches when the option has swatch values in Shopify admin." } ] },
-    { "type": "text", "name": "Short description", "settings": [ { "type": "richtext", "id": "text", "label": "Text", "info": "Leave empty to show the start of the product description" } ] },
-    { "type": "buy_buttons", "name": "Buy buttons", "limit": 1, "settings": [ { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show Buy Now button", "default": true } ] },
     {
-      "type": "perks", "name": "Perks", "limit": 1,
+      "type": "@app"
+    },
+    {
+      "type": "vendor",
+      "name": "Brand",
+      "limit": 1
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "rating",
+      "name": "Rating & stock",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1,
       "settings": [
-        { "type": "select", "id": "perk_1_icon", "label": "Perk 1 icon", "default": "truck", "options": [ { "value": "truck", "label": "Truck" }, { "value": "shield", "label": "Shield" }, { "value": "chat", "label": "Chat" }, { "value": "handshake", "label": "Heart" } ] },
-        { "type": "text", "id": "perk_1_title", "label": "Perk 1 title", "default": "Free Shipping on orders over $49" },
-        { "type": "text", "id": "perk_1_text", "label": "Perk 1 text", "default": "Delivered in 2–4 business days" },
-        { "type": "select", "id": "perk_2_icon", "label": "Perk 2 icon", "default": "handshake", "options": [ { "value": "truck", "label": "Truck" }, { "value": "shield", "label": "Shield" }, { "value": "chat", "label": "Chat" }, { "value": "handshake", "label": "Heart" } ] },
-        { "type": "text", "id": "perk_2_title", "label": "Perk 2 title", "default": "30-day easy returns" },
-        { "type": "text", "id": "perk_2_text", "label": "Perk 2 text", "default": "Hassle-free, no questions asked" },
-        { "type": "select", "id": "perk_3_icon", "label": "Perk 3 icon", "default": "shield", "options": [ { "value": "truck", "label": "Truck" }, { "value": "shield", "label": "Shield" }, { "value": "chat", "label": "Chat" }, { "value": "handshake", "label": "Heart" } ] },
-        { "type": "text", "id": "perk_3_title", "label": "Perk 3 title", "default": "Secure checkout guarantee" },
-        { "type": "text", "id": "perk_3_text", "label": "Perk 3 text", "default": "Trusted, encrypted payments" }
+        {
+          "type": "paragraph",
+          "content": "Color options show swatches when the option has swatch values in Shopify admin."
+        }
       ]
+    },
+    {
+      "type": "text",
+      "name": "Short description",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "info": "Leave empty to show the start of the product description"
+        }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "Show Buy Now button",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "perks",
+      "name": "Perks",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "perk_1_icon",
+          "label": "Perk 1 icon",
+          "default": "truck",
+          "options": [
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "handshake",
+              "label": "Heart"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "perk_1_title",
+          "label": "Perk 1 title",
+          "default": "Free Shipping on orders over $49"
+        },
+        {
+          "type": "text",
+          "id": "perk_1_text",
+          "label": "Perk 1 text",
+          "default": "Delivered in 2–4 business days"
+        },
+        {
+          "type": "select",
+          "id": "perk_2_icon",
+          "label": "Perk 2 icon",
+          "default": "handshake",
+          "options": [
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "handshake",
+              "label": "Heart"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "perk_2_title",
+          "label": "Perk 2 title",
+          "default": "30-day easy returns"
+        },
+        {
+          "type": "text",
+          "id": "perk_2_text",
+          "label": "Perk 2 text",
+          "default": "Hassle-free, no questions asked"
+        },
+        {
+          "type": "select",
+          "id": "perk_3_icon",
+          "label": "Perk 3 icon",
+          "default": "shield",
+          "options": [
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "handshake",
+              "label": "Heart"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "perk_3_title",
+          "label": "Perk 3 title",
+          "default": "Secure checkout guarantee"
+        },
+        {
+          "type": "text",
+          "id": "perk_3_text",
+          "label": "Perk 3 text",
+          "default": "Trusted, encrypted payments"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
     }
   ]
 }

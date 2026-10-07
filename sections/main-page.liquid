@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- if section.settings.show_banner -%}
   {% render 'page-banner', title: page.title, subtitle: section.settings.subtitle, breadcrumb: true, crumb: page.title %}
 {%- endif -%}
@@ -9,13 +10,29 @@
     </div>
   </section>
 {%- endif -%}
+</div>
 
 {% schema %}
 {
   "name": "Page",
   "settings": [
-    { "type": "checkbox", "id": "show_banner", "label": "Show coral banner", "default": true },
-    { "type": "richtext", "id": "subtitle", "label": "Banner subtitle" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_banner",
+      "label": "Show coral banner",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Banner subtitle"
+    }
   ]
 }
 {% endschema %}

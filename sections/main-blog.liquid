@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {% render 'page-banner', title: blog.title, subtitle: section.settings.subtitle, breadcrumb: true, crumb: blog.title, image: section.settings.banner_image %}
 
 {%- paginate blog.articles by section.settings.per_page -%}
@@ -23,15 +24,44 @@
   </div>
 </section>
 {%- endpaginate -%}
+</div>
 
 {% schema %}
 {
   "name": "Blog posts",
   "settings": [
-    { "type": "richtext", "id": "subtitle", "label": "Banner subtitle", "default": "<p>Tips, stories and expert advice for happier, healthier pets.</p>" },
-    { "type": "image_picker", "id": "banner_image", "label": "Banner background image" },
-    { "type": "checkbox", "id": "show_tags", "label": "Show tag filter", "default": true },
-    { "type": "range", "id": "per_page", "label": "Posts per page", "min": 3, "max": 24, "step": 3, "default": 9 }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Banner subtitle",
+      "default": "<p>Tips, stories and expert advice for happier, healthier pets.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner background image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tag filter",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Posts per page",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "default": 9
+    }
   ]
 }
 {% endschema %}

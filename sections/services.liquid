@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: Frame 102 (37:286) — service cards {%- endcomment -%}
 <section class="section-y">
   <div class="page-width">
@@ -5,7 +6,7 @@
 
     <ul class="mt-14 flex flex-wrap justify-center gap-6">
       {%- for block in section.blocks -%}
-        <li {{ block.shopify_attributes }} class="flex w-full flex-col overflow-hidden rounded-3xl bg-white shadow-soft sm:w-[calc(50%-12px)] lg:w-[364px]">
+        <li {{ block.shopify_attributes }} class="flex w-full flex-col overflow-hidden rounded-3xl bg-card shadow-soft sm:w-[calc(50%-12px)] lg:w-[364px]">
           <div class="h-[248px] overflow-hidden">
             {%- if block.settings.image != blank -%}
               {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', sizes: '(min-width: 1024px) 364px, 100vw', class: 'size-full object-cover transition duration-500 hover:scale-105' }}
@@ -32,30 +33,104 @@
         </li>
       {%- endfor -%}
     </ul>
+    {%- if section.settings.button_label != blank -%}
+      <div class="mt-10 flex justify-center"><a href="{{ section.settings.button_link | default: '#' }}" class="btn btn--primary">{{ section.settings.button_label }}{% render 'icon', name: 'arrow-right', class: 'size-5' %}</a></div>
+    {%- endif -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Services",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Services" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Care Services Pets Enjoy" },
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Professional care delivered with patience, love and expertise." }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Services"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Care Services Pets Enjoy"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Professional care delivered with patience, love and expertise."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
   ],
   "blocks": [
     {
       "type": "service",
       "name": "Service",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Grooming & Spa" },
-        { "type": "textarea", "id": "text", "label": "Description", "default": "Gentle, stress-free grooming sessions that keep your pet clean, comfortable, looking their best." },
-        { "type": "text", "id": "price_prefix", "label": "Price prefix", "default": "From" },
-        { "type": "text", "id": "price", "label": "Price", "default": "$40" },
-        { "type": "text", "id": "price_suffix", "label": "Price suffix", "info": "e.g. /day" },
-        { "type": "text", "id": "link_label", "label": "Link label", "default": "Book Now" },
-        { "type": "url", "id": "link", "label": "Link", "info": "Point to your booking page or service product" }
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Grooming & Spa"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Gentle, stress-free grooming sessions that keep your pet clean, comfortable, looking their best."
+        },
+        {
+          "type": "text",
+          "id": "price_prefix",
+          "label": "Price prefix",
+          "default": "From"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "$40"
+        },
+        {
+          "type": "text",
+          "id": "price_suffix",
+          "label": "Price suffix",
+          "info": "e.g. /day"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Book Now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Point to your booking page or service product"
+        }
       ]
     }
   ],
@@ -63,11 +138,49 @@
     {
       "name": "Services",
       "blocks": [
-        { "type": "service", "settings": { "title": "Grooming & Spa", "price": "$40" } },
-        { "type": "service", "settings": { "title": "Positive Training", "text": "Reward-based training programs that help pets learn good behavior naturally. Perfect for puppies & adult pets.", "price": "$30" } },
-        { "type": "service", "settings": { "title": "Wellness Checks", "text": "Preventive health checks by trained professionals to monitor your pet’s overall well-being.", "price": "$60" } },
-        { "type": "service", "settings": { "title": "Daycare & Play", "text": "A safe, supervised space where pets can play, socialize, and burn energy while you’re away.", "price_prefix": "", "price": "$30", "price_suffix": "/day" } },
-        { "type": "service", "settings": { "title": "Pet Boarding", "text": "Comfortable overnight care with attentive staff, clean spaces, and regular routines.", "price_prefix": "", "price": "$45", "price_suffix": "/night" } }
+        {
+          "type": "service",
+          "settings": {
+            "title": "Grooming & Spa",
+            "price": "$40"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Positive Training",
+            "text": "Reward-based training programs that help pets learn good behavior naturally. Perfect for puppies & adult pets.",
+            "price": "$30"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Wellness Checks",
+            "text": "Preventive health checks by trained professionals to monitor your pet’s overall well-being.",
+            "price": "$60"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Daycare & Play",
+            "text": "A safe, supervised space where pets can play, socialize, and burn energy while you’re away.",
+            "price_prefix": "",
+            "price": "$30",
+            "price_suffix": "/day"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Pet Boarding",
+            "text": "Comfortable overnight care with attentive staff, clean spaces, and regular routines.",
+            "price_prefix": "",
+            "price": "$45",
+            "price_suffix": "/night"
+          }
+        }
       ]
     }
   ]

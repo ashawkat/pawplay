@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: About — "A small idea that grew very furry" story + stats + timeline {%- endcomment -%}
 {%- assign stats = section.blocks | where: 'type', 'stat' -%}
 {%- assign milestones = section.blocks | where: 'type', 'milestone' -%}
@@ -10,7 +11,7 @@
         <div class="rte mt-5 text-lg leading-[1.4] text-muted">{{ section.settings.text }}</div>
         <ul class="mt-auto grid grid-cols-3 gap-3 pt-10">
           {%- for block in stats -%}
-            <li {{ block.shopify_attributes }} class="rounded-2xl bg-white p-4 text-center shadow-card">
+            <li {{ block.shopify_attributes }} class="rounded-2xl bg-card p-4 text-center shadow-card">
               <p class="font-heading text-2xl font-bold text-primary">{{ block.settings.value }}</p>
               <p class="mt-1 text-sm text-muted">{{ block.settings.label }}</p>
             </li>
@@ -19,7 +20,7 @@
       </div>
       <ol class="space-y-4">
         {%- for block in milestones -%}
-          <li {{ block.shopify_attributes }} class="flex items-center gap-5 rounded-2xl bg-white p-5 shadow-card">
+          <li {{ block.shopify_attributes }} class="flex items-center gap-5 rounded-2xl bg-card p-5 shadow-card">
             <span class="grid size-14 shrink-0 place-items-center rounded-2xl bg-primary font-heading text-xl font-bold text-white">{{ block.settings.year | slice: -2, 2 }}</span>
             <div>
               <p class="text-sm font-medium text-primary">{{ block.settings.year }}</p>
@@ -32,30 +33,130 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Story & timeline",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Since 2019" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "A small idea that grew very furry" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>What started as handwritten orders for friends quickly turned into a movement of pet parents demanding better. Today we’ve shipped over a million happy meals, hosted thousands of grooming days, and built a community that treats every pet like family.</p>" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Since 2019"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A small idea that grew very furry"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>What started as handwritten orders for friends quickly turned into a movement of pet parents demanding better. Today we’ve shipped over a million happy meals, hosted thousands of grooming days, and built a community that treats every pet like family.</p>"
+    }
   ],
   "blocks": [
-    { "type": "stat", "name": "Stat", "limit": 3, "settings": [ { "type": "text", "id": "value", "label": "Value", "default": "1M+" }, { "type": "text", "id": "label", "label": "Label", "default": "Orders shipped" } ] },
-    { "type": "milestone", "name": "Milestone", "settings": [ { "type": "text", "id": "year", "label": "Year", "default": "2019" }, { "type": "text", "id": "title", "label": "Title", "default": "The first scoop" }, { "type": "text", "id": "text", "label": "Text", "default": "Founded in a kitchen with one dog and a dream." } ] }
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "1M+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Orders shipped"
+        }
+      ]
+    },
+    {
+      "type": "milestone",
+      "name": "Milestone",
+      "settings": [
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Year",
+          "default": "2019"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "The first scoop"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Founded in a kitchen with one dog and a dream."
+        }
+      ]
+    }
   ],
   "presets": [
     {
       "name": "Story & timeline",
       "blocks": [
-        { "type": "stat" },
-        { "type": "stat", "settings": { "value": "25k+", "label": "Parents" } },
-        { "type": "stat", "settings": { "value": "120", "label": "Team members" } },
-        { "type": "milestone" },
-        { "type": "milestone", "settings": { "year": "2021", "title": "Service launch", "text": "Grooming & boarding added in 12 cities." } },
-        { "type": "milestone", "settings": { "year": "2023", "title": "Global Pawprint", "text": "25,000 pet parents in 40 countries." } },
-        { "type": "milestone", "settings": { "year": "2026", "title": "You with Us", "text": "Building the kindest pet brand on earth." } }
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "25k+",
+            "label": "Parents"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "120",
+            "label": "Team members"
+          }
+        },
+        {
+          "type": "milestone"
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "year": "2021",
+            "title": "Service launch",
+            "text": "Grooming & boarding added in 12 cities."
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "year": "2023",
+            "title": "Global Pawprint",
+            "text": "25,000 pet parents in 40 countries."
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "year": "2026",
+            "title": "You with Us",
+            "text": "Building the kindest pet brand on earth."
+          }
+        }
       ]
     }
   ]

@@ -1,7 +1,7 @@
 {%- comment -%} Figma: nav (197:3008) — utility bar + main nav {%- endcomment -%}
-<header-wrapper class="block {% if section.settings.sticky %}sticky top-0{% endif %} z-40 shadow-[0_16px_32px_rgb(255_107_107/0.16)]">
+<header-wrapper class="color-{{ section.settings.color_scheme }} relative z-40 block shadow-[0_16px_32px_rgb(255_107_107/0.16)]" {% if section.settings.sticky %}data-sticky{% endif %}>
   {%- if section.settings.show_topbar -%}
-    <div class="bg-primary text-white">
+    <div class="bg-primary text-on-primary">
       <div class="page-width flex h-9 items-center justify-between text-sm md:text-base">
         <div class="flex items-center gap-4">
           {%- if section.settings.phone != blank -%}
@@ -17,7 +17,7 @@
           {%- form 'localization', class: 'flex items-center gap-4' -%}
             {%- if section.settings.show_currency and localization.available_countries.size > 1 -%}
               <label class="sr-only" for="HeaderCountry">Country</label>
-              <select id="HeaderCountry" name="country_code" onchange="this.form.submit()" class="cursor-pointer border-r border-white/30 bg-transparent pr-4 text-white [&>option]:text-ink">
+              <select id="HeaderCountry" name="country_code" onchange="this.form.submit()" class="cursor-pointer border-r border-white/30 bg-transparent pr-4 text-on-primary [&>option]:text-ink">
                 {%- for country in localization.available_countries -%}
                   <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>{{ country.currency.iso_code }}</option>
                 {%- endfor -%}
@@ -25,7 +25,7 @@
             {%- endif -%}
             {%- if section.settings.show_language and localization.available_languages.size > 1 -%}
               <label class="sr-only" for="HeaderLanguage">Language</label>
-              <select id="HeaderLanguage" name="locale_code" onchange="this.form.submit()" class="cursor-pointer bg-transparent text-white [&>option]:text-ink">
+              <select id="HeaderLanguage" name="locale_code" onchange="this.form.submit()" class="cursor-pointer bg-transparent text-on-primary [&>option]:text-ink">
                 {%- for language in localization.available_languages -%}
                   <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>{{ language.endonym_name | capitalize | slice: 0, 3 }}</option>
                 {%- endfor -%}
@@ -37,7 +37,7 @@
     </div>
   {%- endif -%}
 
-  <div class="bg-white/95 backdrop-blur-[2px]">
+  <div class="bg-card backdrop-blur-[2px]">
     <div class="page-width flex h-[76px] items-center justify-between gap-6">
       <button type="button" class="lg:hidden" data-drawer-open="MenuDrawer" aria-label="{{ 'general.menu' | t }}">
         {% render 'icon', name: 'menu', class: 'size-6' %}
@@ -64,7 +64,7 @@
 
       <div class="flex items-center gap-2.5">
         {%- if section.settings.show_search -%}
-          <form action="{{ routes.search_url }}" method="get" role="search" class="hidden h-10 w-[231px] items-center gap-2.5 rounded-full border border-[#f6f6f6] bg-white px-4 xl:flex">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="hidden h-10 w-[231px] items-center gap-2.5 rounded-full border border-[#f6f6f6] bg-card px-4 xl:flex">
             {% render 'icon', name: 'search', class: 'size-4 text-ink' %}
             <label for="HeaderSearch" class="sr-only">{{ 'general.search' | t }}</label>
             <input id="HeaderSearch" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}" class="w-full bg-transparent text-[15px] outline-none placeholder:text-[#c6c6c6]">
@@ -75,7 +75,7 @@
           </a>
         {%- endif -%}
 
-        <a href="{{ routes.cart_url }}" data-cart-toggle class="relative grid size-10 place-items-center rounded-full border border-divider bg-white" aria-label="{{ 'general.cart' | t }}">
+        <a href="{{ routes.cart_url }}" data-cart-toggle class="relative grid size-10 place-items-center rounded-full border border-divider bg-card" aria-label="{{ 'general.cart' | t }}">
           {% render 'icon', name: 'bag', class: 'size-4' %}
           <span data-cart-count class="absolute -right-[7px] -top-[9px] grid h-5 min-w-[22px] place-items-center rounded-full bg-primary px-1 text-sm leading-none text-white {% if cart.item_count == 0 %}hidden{% endif %}" aria-label="{{ 'accessibility.cart_count' | t: count: cart.item_count }}">{{ cart.item_count }}</span>
         </a>
@@ -94,7 +94,7 @@
   </div>
 
   {%- comment -%} Mobile drawer {%- endcomment -%}
-  <dialog id="MenuDrawer" class="m-0 h-full max-h-none w-[85vw] max-w-sm bg-white p-6 backdrop:bg-ink/40">
+  <dialog id="MenuDrawer" class="m-0 h-full max-h-none w-[85vw] max-w-sm bg-card p-6 backdrop:bg-ink/40">
     <div class="mb-8 flex items-center justify-between">
       <span class="font-heading text-2xl font-bold text-primary">{{ shop.name }}</span>
       <button type="button" data-drawer-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close', class: 'size-6' %}</button>
@@ -112,19 +112,89 @@
   "name": "Header",
   "class": "section-header",
   "settings": [
-    { "type": "header", "content": "Top bar" },
-    { "type": "checkbox", "id": "show_topbar", "label": "Show top bar", "default": true },
-    { "type": "text", "id": "phone", "label": "Phone", "default": "+155 5467 2345" },
-    { "type": "text", "id": "address", "label": "Address", "default": "218 Maple avenue, Downtown" },
-    { "type": "checkbox", "id": "show_currency", "label": "Show country/currency selector", "default": true },
-    { "type": "checkbox", "id": "show_language", "label": "Show language selector", "default": true },
-    { "type": "header", "content": "Main bar" },
-    { "type": "image_picker", "id": "logo", "label": "Logo" },
-    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 260, "step": 4, "unit": "px", "default": 160 },
-    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
-    { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
-    { "type": "image_picker", "id": "avatar", "label": "Logged-in avatar image", "info": "Shown on the account button when a customer is signed in" },
-    { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Top bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_topbar",
+      "label": "Show top bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "default": "+155 5467 2345"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Address",
+      "default": "218 Maple avenue, Downtown"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency",
+      "label": "Show country/currency selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_language",
+      "label": "Show language selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Main bar"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 80,
+      "max": 260,
+      "step": 4,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar",
+      "label": "Logged-in avatar image",
+      "info": "Shown on the account button when a customer is signed in"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Sticky header",
+      "default": true
+    }
   ]
 }
 {% endschema %}

@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 <article class="section-y">
   <div class="page-width max-w-[820px]">
     <nav aria-label="Breadcrumb" class="text-sm text-muted"><a href="{{ blog.url }}" class="hover:text-primary">{{ blog.title }}</a> / <span aria-current="page">{{ article.title }}</span></nav>
@@ -45,13 +46,30 @@
     {%- endif -%}
   </div>
 </article>
+</div>
 
 {% schema %}
 {
   "name": "Blog post",
   "settings": [
-    { "type": "checkbox", "id": "show_author", "label": "Show author", "default": true },
-    { "type": "checkbox", "id": "show_share", "label": "Show share buttons", "default": true }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show share buttons",
+      "default": true
+    }
   ]
 }
 {% endschema %}

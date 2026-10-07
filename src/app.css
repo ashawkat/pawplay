@@ -18,6 +18,9 @@
 */
 @theme inline {
   --color-primary: var(--pp-primary);
+  --color-on-primary: var(--pp-on-primary);
+  --color-scheme: var(--pp-bg);
+  --color-card: var(--pp-card);
   --color-secondary: var(--pp-secondary);
   --color-yellow: var(--pp-yellow);
   --color-warning: var(--pp-warning);
@@ -26,11 +29,11 @@
   --color-text: var(--pp-text);
   --color-muted: var(--pp-text-muted);
   --color-disabled: #9aa0a6;
-  --color-divider: #e6e8ec;
-  --color-soft: #f8f9fb;
+  --color-divider: var(--pp-border);
+  --color-soft: var(--pp-bg-soft);
   --color-blush: var(--pp-hero-bg);
   --color-cream: var(--pp-cream);
-  --color-footer: var(--pp-footer-bg);
+  
 
   --font-heading: var(--pp-font-heading);
   --font-body: var(--pp-font-body);
@@ -43,7 +46,8 @@
 @layer base {
   html { -webkit-text-size-adjust: 100%; }
   body {
-    @apply font-body text-text bg-white antialiased;
+    @apply font-body text-text antialiased;
+    background: var(--pp-bg);
   }
   h1, h2, h3, .h { @apply font-heading text-ink; }
   :focus-visible { outline: 2px solid var(--pp-primary); outline-offset: 2px; }
@@ -51,6 +55,15 @@
 }
 
 @layer components {
+  /* Section color scheme surface */
+  .bg-scheme { background: var(--pp-bg-gradient, var(--pp-bg)); color: var(--pp-text); }
+
+  /* Footer CTA card overlaps the last section; extend that section with its own background */
+  body:has([data-footer-cta]) #MainContent > .shopify-section:last-child > .bg-scheme { padding-bottom: 150px; }
+
+  /* Sticky header must live on the section-group wrapper to stick across the page */
+  .shopify-section-group-header-group:has([data-sticky]) { position: sticky; top: 0; z-index: 40; }
+
   .page-width { @apply mx-auto w-full max-w-[calc(var(--container-site)+2rem)] px-4; }
   .section-y { padding-block: var(--pp-section-y, 4rem); }
 
@@ -59,8 +72,8 @@
       font-heading font-medium text-base leading-none transition
       hover:-translate-y-0.5 hover:shadow-soft disabled:opacity-50;
   }
-  .btn--primary { @apply bg-primary text-white; }
-  .btn--light { @apply bg-white text-primary; }
+  .btn--primary { @apply bg-primary text-on-primary; }
+  .btn--light { @apply bg-card text-primary; }
   .btn--yellow { @apply bg-yellow text-ink font-body; }
 
   .eyebrow {

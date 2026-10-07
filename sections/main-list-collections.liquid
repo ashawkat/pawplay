@@ -1,10 +1,11 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {% render 'page-banner', title: section.settings.title, subtitle: section.settings.subtitle, breadcrumb: true %}
 <section class="section-y">
   <div class="page-width">
     <ul class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
       {%- for collection in collections -%}
         <li>
-          <a href="{{ collection.url }}" class="group block overflow-hidden rounded-3xl bg-white shadow-soft">
+          <a href="{{ collection.url }}" class="group block overflow-hidden rounded-3xl bg-card shadow-soft">
             <div class="aspect-square overflow-hidden bg-soft">
               {%- if collection.featured_image -%}
                 {{ collection.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'size-full object-cover transition duration-500 group-hover:scale-105' }}
@@ -22,13 +23,29 @@
     </ul>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Collections list",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "default": "Shop by category" },
-    { "type": "richtext", "id": "subtitle", "label": "Subtitle" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Shop by category"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    }
   ]
 }
 {% endschema %}

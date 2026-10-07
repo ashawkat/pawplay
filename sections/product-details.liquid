@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: "Everything you need to know" accordion {%- endcomment -%}
 <section class="section-y">
   <div class="page-width max-w-[980px]">
@@ -24,22 +25,66 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Product details",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Product Details" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Everything you need to know" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Product Details"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Everything you need to know"
+    }
   ],
   "blocks": [
-    { "type": "description", "name": "Description", "limit": 1, "settings": [ { "type": "text", "id": "heading", "label": "Heading", "default": "Description" } ] },
     {
-      "type": "tab", "name": "Collapsible tab",
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Material & Care" },
-        { "type": "richtext", "id": "content", "label": "Content", "info": "Connect a product metafield to make this per-product" },
-        { "type": "page", "id": "page", "label": "Or show content from a page" }
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Description"
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "name": "Collapsible tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Material & Care"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "info": "Connect a product metafield to make this per-product"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Or show content from a page"
+        }
       ]
     }
   ],
@@ -47,10 +92,27 @@
     {
       "name": "Product details",
       "blocks": [
-        { "type": "description" },
-        { "type": "tab", "settings": { "heading": "Material & Care" } },
-        { "type": "tab", "settings": { "heading": "Size & Fit" } },
-        { "type": "tab", "settings": { "heading": "Shipping & Returns" } }
+        {
+          "type": "description"
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "heading": "Material & Care"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "heading": "Size & Fit"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "heading": "Shipping & Returns"
+          }
+        }
       ]
     }
   ]

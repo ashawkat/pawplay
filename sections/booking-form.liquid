@@ -1,14 +1,15 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%}
   Figma: PawPlay - Book a Service (3 steps). Built on Shopify's contact form so every booking
   is emailed to the store (no app needed). Swap the form for a booking app block later if wanted.
 {%- endcomment -%}
 {%- assign services = section.settings.services | newline_to_br | split: '<br />' -%}
 {%- assign times = section.settings.times | split: ',' -%}
-<section class="section-y bg-blush">
+<section class="section-y">
   <div class="page-width max-w-[960px]">
     {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, subheading: section.settings.subheading %}
 
-    <booking-steps class="mt-10 block rounded-3xl bg-white p-6 shadow-soft md:p-10">
+    <booking-steps class="mt-10 block rounded-3xl bg-card p-6 shadow-soft md:p-10">
       <ol class="mb-10 grid grid-cols-3 gap-3 text-center text-sm font-medium" aria-label="Progress">
         {%- assign step_labels = 'booking.step_service,booking.step_pet,booking.step_confirm' | split: ',' -%}
         {%- for key in step_labels -%}
@@ -79,7 +80,7 @@
           </fieldset>
 
           <div class="mt-10 flex justify-between gap-3">
-            <button type="button" data-prev-step class="btn invisible border border-divider bg-white text-ink">{{ 'general.previous' | t }}</button>
+            <button type="button" data-prev-step class="btn invisible border border-divider bg-card text-ink">{{ 'general.previous' | t }}</button>
             <button type="button" data-next-step class="btn btn--primary">{{ 'general.next' | t }}{% render 'icon', name: 'arrow-right', class: 'size-5' %}</button>
             <button type="submit" data-submit-step class="btn btn--primary hidden">{{ section.settings.submit_label }}</button>
           </div>
@@ -88,21 +89,77 @@
     </booking-steps>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Booking form",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Book a Service" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Pamper your pet in 3 easy steps" },
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Choose a service, tell us about your pet, and we’ll confirm your slot." },
-    { "type": "textarea", "id": "services", "label": "Services (one per line)", "default": "Grooming & Spa\nPositive Training\nWellness Check\nDaycare & Play\nPet Boarding" },
-    { "type": "text", "id": "times", "label": "Time slots (comma separated)", "default": "9:00 AM, 10:30 AM, 12:00 PM, 2:00 PM, 3:30 PM, 5:00 PM" },
-    { "type": "text", "id": "pet_types", "label": "Pet types (comma separated)", "default": "Dog, Cat, Bird, Rabbit, Other" },
-    { "type": "text", "id": "note", "label": "Note under details", "default": "We’ll email you to confirm your booking within 24 hours." },
-    { "type": "text", "id": "submit_label", "label": "Submit label", "default": "Request booking" },
-    { "type": "text", "id": "success", "label": "Success message", "default": "Thanks! Your booking request is in. We’ll confirm by email shortly." }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Book a Service"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pamper your pet in 3 easy steps"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Choose a service, tell us about your pet, and we’ll confirm your slot."
+    },
+    {
+      "type": "textarea",
+      "id": "services",
+      "label": "Services (one per line)",
+      "default": "Grooming & Spa\nPositive Training\nWellness Check\nDaycare & Play\nPet Boarding"
+    },
+    {
+      "type": "text",
+      "id": "times",
+      "label": "Time slots (comma separated)",
+      "default": "9:00 AM, 10:30 AM, 12:00 PM, 2:00 PM, 3:30 PM, 5:00 PM"
+    },
+    {
+      "type": "text",
+      "id": "pet_types",
+      "label": "Pet types (comma separated)",
+      "default": "Dog, Cat, Bird, Rabbit, Other"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note under details",
+      "default": "We’ll email you to confirm your booking within 24 hours."
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit label",
+      "default": "Request booking"
+    },
+    {
+      "type": "text",
+      "id": "success",
+      "label": "Success message",
+      "default": "Thanks! Your booking request is in. We’ll confirm by email shortly."
+    }
   ],
-  "presets": [ { "name": "Booking form" } ]
+  "presets": [
+    {
+      "name": "Booking form"
+    }
+  ]
 }
 {% endschema %}

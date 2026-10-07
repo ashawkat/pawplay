@@ -153,7 +153,7 @@ const lineOptions = (item) => (item.options_with_values || []).filter((o) => o.v
       role="dialog"
       aria-modal="true"
       :aria-label="t('title', 'Your cart')"
-      class="absolute inset-y-0 right-0 flex w-full max-w-[440px] flex-col bg-white shadow-2xl transition-transform duration-300 ease-out will-change-transform"
+      class="absolute inset-y-0 right-0 flex w-full max-w-[440px] flex-col bg-card shadow-2xl transition-transform duration-300 ease-out will-change-transform"
       :class="state.open ? 'translate-x-0' : 'translate-x-full'"
     >
       <!-- header -->
@@ -173,7 +173,7 @@ const lineOptions = (item) => (item.options_with_values || []).filter((o) => o.v
           <template v-if="remaining > 0">{{ t('freeShippingAway', 'You are') }} <strong class="text-primary">{{ money(remaining) }}</strong> {{ t('freeShippingTail', 'away from free shipping') }} 🐾</template>
           <template v-else>🎉 {{ t('freeShippingUnlocked', 'You unlocked free shipping!') }}</template>
         </p>
-        <div class="mt-2.5 h-2 overflow-hidden rounded-full bg-white">
+        <div class="mt-2.5 h-2 overflow-hidden rounded-full bg-card">
           <div class="h-full rounded-full bg-primary transition-[width] duration-500" :style="{ width: progress + '%' }" />
         </div>
       </div>
@@ -230,7 +230,7 @@ const lineOptions = (item) => (item.options_with_values || []).filter((o) => o.v
           <section v-if="recsFiltered.length" class="mt-2 border-t border-divider bg-soft px-6 py-5">
             <h3 class="mb-3 font-heading text-lg font-semibold text-ink">{{ t('upsell', 'Pets also love') }}</h3>
             <ul class="-mx-6 flex snap-x gap-3 overflow-x-auto px-6 pb-1 [scrollbar-width:none]">
-              <li v-for="p in recsFiltered" :key="p.id" class="w-[150px] shrink-0 snap-start rounded-2xl bg-white p-3">
+              <li v-for="p in recsFiltered" :key="p.id" class="w-[150px] shrink-0 snap-start rounded-2xl bg-card p-3">
                 <a :href="p.url" class="block aspect-square overflow-hidden rounded-xl bg-[#f3f3f3]">
                   <img v-if="p.featured_image" :src="sizedImage(p.featured_image, 300)" :alt="p.title" width="126" height="126" loading="lazy" class="size-full object-contain" />
                 </a>
@@ -266,7 +266,7 @@ const lineOptions = (item) => (item.options_with_values || []).filter((o) => o.v
         </div>
         <p class="mt-1 text-xs text-muted">{{ t('taxes', 'Taxes and shipping calculated at checkout') }}</p>
         <div class="mt-4 grid grid-cols-2 gap-3">
-          <a :href="config.cartUrl || '/cart'" class="btn border border-divider bg-white text-ink">{{ t('viewCart', 'View cart') }}</a>
+          <a :href="config.cartUrl || '/cart'" class="btn border border-divider bg-card text-ink">{{ t('viewCart', 'View cart') }}</a>
           <a href="/checkout" class="btn btn--primary">{{ t('checkout', 'Checkout') }}</a>
         </div>
       </footer>

@@ -1,6 +1,508 @@
 {
-  "current": "Default",
+  "current": {
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#FFFFFF",
+          "background_gradient": "",
+          "background_soft": "#F8F9FB",
+          "card": "#FFFFFF",
+          "heading": "#252424",
+          "text": "#333333",
+          "text_muted": "#666666",
+          "primary": "#FF6B6B",
+          "on_primary": "#FFFFFF",
+          "secondary": "#4ECDC4",
+          "accent": "#FFE66D",
+          "border": "#E6E8EC"
+        }
+      },
+      "scheme-2": {
+        "settings": {
+          "background": "#FFEDED",
+          "background_gradient": "",
+          "background_soft": "#FFFFFF",
+          "card": "#FFFFFF",
+          "heading": "#252424",
+          "text": "#333333",
+          "text_muted": "#666666",
+          "primary": "#FF6B6B",
+          "on_primary": "#FFFFFF",
+          "secondary": "#4ECDC4",
+          "accent": "#FFE66D",
+          "border": "#EADDDD"
+        }
+      },
+      "scheme-3": {
+        "settings": {
+          "background": "#FFFAED",
+          "background_gradient": "",
+          "background_soft": "#FFFFFF",
+          "card": "#FFFFFF",
+          "heading": "#252424",
+          "text": "#333333",
+          "text_muted": "#666666",
+          "primary": "#FF6B6B",
+          "on_primary": "#FFFFFF",
+          "secondary": "#4ECDC4",
+          "accent": "#FFE66D",
+          "border": "#EFE6CF"
+        }
+      },
+      "scheme-4": {
+        "settings": {
+          "background": "#252424",
+          "background_gradient": "",
+          "background_soft": "#2F2E2E",
+          "card": "#2F2E2E",
+          "heading": "#FFFFFF",
+          "text": "#D6D6D6",
+          "text_muted": "#A3A3A3",
+          "primary": "#FF6B6B",
+          "on_primary": "#FFFFFF",
+          "secondary": "#4ECDC4",
+          "accent": "#FFE66D",
+          "border": "#3A3A3A"
+        }
+      },
+      "scheme-5": {
+        "settings": {
+          "background": "#FF6B6B",
+          "background_gradient": "",
+          "background_soft": "#FFFFFF",
+          "card": "#FFFFFF",
+          "heading": "#FFFFFF",
+          "text": "#FFFFFF",
+          "text_muted": "#FFFFFFCC",
+          "primary": "#FFE66D",
+          "on_primary": "#252424",
+          "secondary": "#4ECDC4",
+          "accent": "#FFE66D",
+          "border": "#FFFFFF4D"
+        }
+      }
+    }
+  },
   "presets": {
-    "Default": {}
+    "Coral": {
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#FFFFFF",
+            "background_gradient": "",
+            "background_soft": "#F8F9FB",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#FF6B6B",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4ECDC4",
+            "accent": "#FFE66D",
+            "border": "#E6E8EC"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#FFEDED",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#FF6B6B",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4ECDC4",
+            "accent": "#FFE66D",
+            "border": "#EADDDD"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#FFFAED",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#FF6B6B",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4ECDC4",
+            "accent": "#FFE66D",
+            "border": "#EFE6CF"
+          }
+        },
+        "scheme-4": {
+          "settings": {
+            "background": "#252424",
+            "background_gradient": "",
+            "background_soft": "#2F2E2E",
+            "card": "#2F2E2E",
+            "heading": "#FFFFFF",
+            "text": "#D6D6D6",
+            "text_muted": "#A3A3A3",
+            "primary": "#FF6B6B",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4ECDC4",
+            "accent": "#FFE66D",
+            "border": "#3A3A3A"
+          }
+        },
+        "scheme-5": {
+          "settings": {
+            "background": "#FF6B6B",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#FFFFFF",
+            "text": "#FFFFFF",
+            "text_muted": "#FFFFFFCC",
+            "primary": "#FFE66D",
+            "on_primary": "#252424",
+            "secondary": "#4ECDC4",
+            "accent": "#FFE66D",
+            "border": "#FFFFFF4D"
+          }
+        }
+      }
+    },
+    "Ocean": {
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#FFFFFF",
+            "background_gradient": "",
+            "background_soft": "#F8F9FB",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#3A86FF",
+            "on_primary": "#FFFFFF",
+            "secondary": "#06D6A0",
+            "accent": "#FFD166",
+            "border": "#E6E8EC"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#EAF2FF",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#3A86FF",
+            "on_primary": "#FFFFFF",
+            "secondary": "#06D6A0",
+            "accent": "#FFD166",
+            "border": "#EADDDD"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#F2FBF8",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#3A86FF",
+            "on_primary": "#FFFFFF",
+            "secondary": "#06D6A0",
+            "accent": "#FFD166",
+            "border": "#EFE6CF"
+          }
+        },
+        "scheme-4": {
+          "settings": {
+            "background": "#14213D",
+            "background_gradient": "",
+            "background_soft": "#1D2D50",
+            "card": "#1D2D50",
+            "heading": "#FFFFFF",
+            "text": "#D6D6D6",
+            "text_muted": "#A3A3A3",
+            "primary": "#3A86FF",
+            "on_primary": "#FFFFFF",
+            "secondary": "#06D6A0",
+            "accent": "#FFD166",
+            "border": "#3A3A3A"
+          }
+        },
+        "scheme-5": {
+          "settings": {
+            "background": "#3A86FF",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#FFFFFF",
+            "text": "#FFFFFF",
+            "text_muted": "#FFFFFFCC",
+            "primary": "#FFD166",
+            "on_primary": "#252424",
+            "secondary": "#06D6A0",
+            "accent": "#FFD166",
+            "border": "#FFFFFF4D"
+          }
+        }
+      }
+    },
+    "Meadow": {
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#FFFFFF",
+            "background_gradient": "",
+            "background_soft": "#F8F9FB",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#2A9D8F",
+            "on_primary": "#FFFFFF",
+            "secondary": "#E76F51",
+            "accent": "#E9C46A",
+            "border": "#E6E8EC"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#E6F4F2",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#2A9D8F",
+            "on_primary": "#FFFFFF",
+            "secondary": "#E76F51",
+            "accent": "#E9C46A",
+            "border": "#EADDDD"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#FBF6E9",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#2A9D8F",
+            "on_primary": "#FFFFFF",
+            "secondary": "#E76F51",
+            "accent": "#E9C46A",
+            "border": "#EFE6CF"
+          }
+        },
+        "scheme-4": {
+          "settings": {
+            "background": "#1E2D2B",
+            "background_gradient": "",
+            "background_soft": "#283B38",
+            "card": "#283B38",
+            "heading": "#FFFFFF",
+            "text": "#D6D6D6",
+            "text_muted": "#A3A3A3",
+            "primary": "#2A9D8F",
+            "on_primary": "#FFFFFF",
+            "secondary": "#E76F51",
+            "accent": "#E9C46A",
+            "border": "#3A3A3A"
+          }
+        },
+        "scheme-5": {
+          "settings": {
+            "background": "#2A9D8F",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#FFFFFF",
+            "text": "#FFFFFF",
+            "text_muted": "#FFFFFFCC",
+            "primary": "#E9C46A",
+            "on_primary": "#252424",
+            "secondary": "#E76F51",
+            "accent": "#E9C46A",
+            "border": "#FFFFFF4D"
+          }
+        }
+      }
+    },
+    "Berry": {
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#FFFFFF",
+            "background_gradient": "",
+            "background_soft": "#F8F9FB",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#B5179E",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4CC9F0",
+            "accent": "#FFD60A",
+            "border": "#E6E8EC"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#F9E6F5",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#B5179E",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4CC9F0",
+            "accent": "#FFD60A",
+            "border": "#EADDDD"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#FFF9E6",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#252424",
+            "text": "#333333",
+            "text_muted": "#666666",
+            "primary": "#B5179E",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4CC9F0",
+            "accent": "#FFD60A",
+            "border": "#EFE6CF"
+          }
+        },
+        "scheme-4": {
+          "settings": {
+            "background": "#240046",
+            "background_gradient": "",
+            "background_soft": "#3C096C",
+            "card": "#3C096C",
+            "heading": "#FFFFFF",
+            "text": "#D6D6D6",
+            "text_muted": "#A3A3A3",
+            "primary": "#B5179E",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4CC9F0",
+            "accent": "#FFD60A",
+            "border": "#3A3A3A"
+          }
+        },
+        "scheme-5": {
+          "settings": {
+            "background": "#B5179E",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#FFFFFF",
+            "text": "#FFFFFF",
+            "text_muted": "#FFFFFFCC",
+            "primary": "#FFD60A",
+            "on_primary": "#252424",
+            "secondary": "#4CC9F0",
+            "accent": "#FFD60A",
+            "border": "#FFFFFF4D"
+          }
+        }
+      }
+    },
+    "Midnight": {
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#141414",
+            "background_gradient": "",
+            "background_soft": "#1F1F1F",
+            "card": "#1F1F1F",
+            "heading": "#FFFFFF",
+            "text": "#E0E0E0",
+            "text_muted": "#A3A3A3",
+            "primary": "#FF6B6B",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4ECDC4",
+            "accent": "#FFE66D",
+            "border": "#2E2E2E"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#1C1717",
+            "background_gradient": "",
+            "background_soft": "#262020",
+            "card": "#262020",
+            "heading": "#FFFFFF",
+            "text": "#E0E0E0",
+            "text_muted": "#A3A3A3",
+            "primary": "#FF6B6B",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4ECDC4",
+            "accent": "#FFE66D",
+            "border": "#3A3030"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#1A1914",
+            "background_gradient": "",
+            "background_soft": "#25241D",
+            "card": "#25241D",
+            "heading": "#FFFFFF",
+            "text": "#E0E0E0",
+            "text_muted": "#A3A3A3",
+            "primary": "#FF6B6B",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4ECDC4",
+            "accent": "#FFE66D",
+            "border": "#36352B"
+          }
+        },
+        "scheme-4": {
+          "settings": {
+            "background": "#0A0A0A",
+            "background_gradient": "",
+            "background_soft": "#161616",
+            "card": "#161616",
+            "heading": "#FFFFFF",
+            "text": "#D6D6D6",
+            "text_muted": "#A3A3A3",
+            "primary": "#FF6B6B",
+            "on_primary": "#FFFFFF",
+            "secondary": "#4ECDC4",
+            "accent": "#FFE66D",
+            "border": "#2A2A2A"
+          }
+        },
+        "scheme-5": {
+          "settings": {
+            "background": "#FF6B6B",
+            "background_gradient": "",
+            "background_soft": "#FFFFFF",
+            "card": "#FFFFFF",
+            "heading": "#FFFFFF",
+            "text": "#FFFFFF",
+            "text_muted": "#FFFFFFCC",
+            "primary": "#FFE66D",
+            "on_primary": "#252424",
+            "secondary": "#4ECDC4",
+            "accent": "#FFE66D",
+            "border": "#FFFFFF4D"
+          }
+        }
+      }
+    }
   }
 }

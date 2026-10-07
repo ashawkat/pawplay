@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: Frame 105 (37:301) — "Loved by Pets" product grid {%- endcomment -%}
 <section class="section-y">
   <div class="page-width">
@@ -18,24 +19,76 @@
 
     {%- if section.settings.button_label != blank -%}
       <div class="mt-6 flex justify-center">
-        <a href="{{ collection.url | default: routes.all_products_collection_url }}" class="btn border border-divider bg-white text-ink">{{ section.settings.button_label }}</a>
+        <a href="{{ section.settings.button_link | default: collection.url | default: routes.all_products_collection_url }}" class="btn border border-divider bg-card text-ink">{{ section.settings.button_label }}</a>
       </div>
     {%- endif -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Featured products",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer Favorites" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Loved by Pets. Trusted by Owners." },
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Carefully selected pet essentials that deliver taste, nutrition, and happiness—every single day." },
-    { "type": "collection", "id": "collection", "label": "Collection" },
-    { "type": "range", "id": "limit", "label": "Products to show", "min": 4, "max": 16, "step": 4, "default": 8 },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore All Products" },
-    { "type": "paragraph", "content": "Ratings use the reviews.rating metafield (Shopify Product Reviews standard). Badge text uses custom.badge." }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Customer Favorites"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Loved by Pets. Trusted by Owners."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Carefully selected pet essentials that deliver taste, nutrition, and happiness—every single day."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Products to show",
+      "min": 4,
+      "max": 16,
+      "step": 4,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore All Products"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Defaults to the selected collection"
+    },
+    {
+      "type": "paragraph",
+      "content": "Ratings use the reviews.rating metafield (Shopify Product Reviews standard). Badge text uses custom.badge."
+    }
   ],
-  "presets": [ { "name": "Featured products" } ]
+  "presets": [
+    {
+      "name": "Featured products"
+    }
+  ]
 }
 {% endschema %}

@@ -1,13 +1,13 @@
 {%- comment -%} Figma: footer (33:226) — CTA card overlaps the dark footer {%- endcomment -%}
-<footer class="relative bg-footer text-white/70 {% if section.settings.show_cta %}mt-[150px]{% endif %}">
+<footer class="color-{{ section.settings.color_scheme }} bg-scheme relative text-muted" {% if section.settings.show_cta %}data-footer-cta{% endif %}>
   {%- if section.settings.show_cta -%}
-    <div class="page-width -translate-y-[142px] -mb-[142px]">
+    <div class="page-width relative z-10 -mt-[150px]">
       <div class="relative overflow-hidden rounded-3xl bg-primary px-6 py-14 text-center">
         <span class="pointer-events-none absolute -left-6 -top-6 size-48 rounded-full bg-white/10 blur-sm" aria-hidden="true"></span>
-        <span class="pointer-events-none absolute -bottom-16 right-10 size-56 rounded-full border-[28px] border-white/10" aria-hidden="true"></span>
+        <span class="pointer-events-none absolute -bottom-16 right-10 size-56 rounded-full border-[28px] border-divider" aria-hidden="true"></span>
         <h2 class="relative mx-auto max-w-[420px] font-heading text-3xl font-semibold text-white md:text-4xl">{{ section.settings.cta_heading }}</h2>
         {%- if section.settings.cta_text != blank -%}
-          <p class="relative mt-3 text-lg font-semibold text-white/70 md:text-xl">{{ section.settings.cta_text }}</p>
+          <p class="relative mt-3 text-lg font-semibold text-muted md:text-xl">{{ section.settings.cta_text }}</p>
         {%- endif -%}
         {%- if section.settings.cta_label != blank -%}
           <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="btn btn--yellow relative mt-9 h-12">
@@ -26,7 +26,7 @@
             {{ section.settings.logo | image_url: width: 400 | image_tag: width: 160, alt: shop.name }}
           {%- else -%}
             {% render 'icon', name: 'paw', class: 'h-7 w-[34px]' %}
-            <span class="font-heading text-[28px] font-bold leading-none"><span class="text-white">Paw</span>Play</span>
+            <span class="font-heading text-[28px] font-bold leading-none"><span class="text-ink">Paw</span>Play</span>
           {%- endif -%}
         </a>
         <div class="text-lg leading-snug">{{ section.settings.about }}</div>
@@ -38,7 +38,7 @@
           {%- if settings[key] != blank -%}
             <li>
               <a href="{{ settings[key] }}" target="_blank" rel="noopener" aria-label="{{ s | capitalize }}"
-                 class="grid size-10 place-items-center rounded-full border border-white/5 bg-white/[0.02] text-white transition hover:bg-primary {% if forloop.first %}bg-primary{% endif %}">
+                 class="grid size-10 place-items-center rounded-full border border-divider bg-soft text-ink hover:text-on-primary transition hover:bg-primary {% if forloop.first %}bg-primary{% endif %}">
                 {% render 'icon', name: s, class: 'size-4' %}
               </a>
             </li>
@@ -50,12 +50,12 @@
     <div class="grid gap-10 sm:grid-cols-3 lg:gap-9">
       {%- for block in section.blocks -%}
         <div {{ block.shopify_attributes }} class="{% if block.type == 'newsletter' %}sm:col-span-1{% endif %}">
-          <h3 class="mb-6 font-body text-[22px] font-semibold text-white">{{ block.settings.heading }}</h3>
+          <h3 class="mb-6 font-body text-[22px] font-semibold text-ink">{{ block.settings.heading }}</h3>
           {%- case block.type -%}
             {%- when 'links' -%}
               <ul class="space-y-4 text-lg">
                 {%- for link in block.settings.menu.links -%}
-                  <li><a href="{{ link.url }}" class="transition hover:text-white">{{ link.title }}</a></li>
+                  <li><a href="{{ link.url }}" class="transition hover:text-primary">{{ link.title }}</a></li>
                 {%- endfor -%}
               </ul>
             {%- when 'newsletter' -%}
@@ -64,7 +64,7 @@
                 <input type="hidden" name="contact[tags]" value="newsletter">
                 <label for="FooterEmail" class="sr-only">{{ 'newsletter.email' | t }}</label>
                 <input id="FooterEmail" type="email" name="contact[email]" required autocomplete="email" placeholder="{{ 'newsletter.email' | t }}"
-                  class="h-11 w-full rounded-full border border-white/15 bg-white/[0.08] px-4 text-center text-sm text-white placeholder:text-white/70 outline-none focus:border-primary">
+                  class="h-11 w-full rounded-full border border-white/15 bg-white/[0.08] px-4 text-center text-sm text-white placeholder:text-muted outline-none focus:border-primary">
                 <button type="submit" class="btn btn--primary w-full">{{ 'newsletter.subscribe' | t }}</button>
                 {%- if form.posted_successfully? -%}<p class="text-sm text-secondary">{{ 'newsletter.success' | t }}</p>{%- endif -%}
                 {%- if form.errors -%}<p class="text-sm text-primary">{{ form.errors | default_errors }}</p>{%- endif -%}
@@ -76,10 +76,10 @@
   </div>
 
   <div class="page-width">
-    <div class="border-t border-white/10 py-4 text-center text-[15px] text-white/25">
+    <div class="border-t border-divider py-4 text-center text-[15px] text-muted/60">
       {%- assign year = 'now' | date: '%Y' -%}
       {{ 'footer.copyright' | t: year: year, shop: shop.name }}
-      {%- for link in section.settings.legal_menu.links %} | <a href="{{ link.url }}" class="hover:text-white">{{ link.title }}</a>{% endfor -%}
+      {%- for link in section.settings.legal_menu.links %} | <a href="{{ link.url }}" class="hover:text-primary">{{ link.title }}</a>{% endfor -%}
     </div>
   </div>
 </footer>
@@ -89,25 +89,88 @@
   "name": "Footer",
   "max_blocks": 4,
   "settings": [
-    { "type": "header", "content": "Call to action card" },
-    { "type": "checkbox", "id": "show_cta", "label": "Show CTA card", "default": true },
-    { "type": "text", "id": "cta_heading", "label": "Heading", "default": "Give Your Pet The Care They Deserve" },
-    { "type": "text", "id": "cta_text", "label": "Text", "default": "Join thousands of happy pet parents who trust PawPlay everyday." },
-    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Start Shopping" },
-    { "type": "url", "id": "cta_link", "label": "Button link" },
-    { "type": "header", "content": "Brand" },
-    { "type": "image_picker", "id": "logo", "label": "Footer logo" },
-    { "type": "richtext", "id": "about", "label": "About text", "default": "<p>Your one-stop wonderland for all things furry, feathery, and scaly. Premium products and expert services for your beloved pets.</p>" },
-    { "type": "paragraph", "content": "Social links are set in Theme settings > Social media." },
-    { "type": "link_list", "id": "legal_menu", "label": "Legal menu", "default": "footer" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "header",
+      "content": "Call to action card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show CTA card",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "Heading",
+      "default": "Give Your Pet The Care They Deserve"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Text",
+      "default": "Join thousands of happy pet parents who trust PawPlay everyday."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Start Shopping"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "richtext",
+      "id": "about",
+      "label": "About text",
+      "default": "<p>Your one-stop wonderland for all things furry, feathery, and scaly. Premium products and expert services for your beloved pets.</p>"
+    },
+    {
+      "type": "paragraph",
+      "content": "Social links are set in Theme settings > Social media."
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal menu",
+      "default": "footer"
+    }
   ],
   "blocks": [
     {
       "type": "links",
       "name": "Menu",
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Quick Links" },
-        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer"
+        }
       ]
     },
     {
@@ -115,16 +178,38 @@
       "name": "Newsletter",
       "limit": 1,
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Newsletter" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Subscribe for tail-wagging deals!" }
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Newsletter"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Subscribe for tail-wagging deals!"
+        }
       ]
     }
   ],
   "default": {
     "blocks": [
-      { "type": "links", "settings": { "heading": "Quick Links" } },
-      { "type": "links", "settings": { "heading": "Services" } },
-      { "type": "newsletter" }
+      {
+        "type": "links",
+        "settings": {
+          "heading": "Quick Links"
+        }
+      },
+      {
+        "type": "links",
+        "settings": {
+          "heading": "Services"
+        }
+      },
+      {
+        "type": "newsletter"
+      }
     ]
   }
 }

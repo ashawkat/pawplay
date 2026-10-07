@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: "Designed for adventures together" full-bleed banner. Reusable anywhere. {%- endcomment -%}
 <section class="relative isolate overflow-hidden" style="background: {{ section.settings.background }};">
   {%- if section.settings.layout == 'cover' and section.settings.image != blank -%}
@@ -23,20 +24,82 @@
     {%- endif -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Image with text",
   "settings": [
-    { "type": "select", "id": "layout", "label": "Layout", "default": "cover", "options": [ { "value": "cover", "label": "Full-bleed image" }, { "value": "image_right", "label": "Image right" }, { "value": "image_left", "label": "Image left" } ] },
-    { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Designed for adventures together" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Lightweight comfort, breathable ventilation, and a paw-print finish that turns heads.</p>" },
-    { "type": "text", "id": "button_label", "label": "Button label" },
-    { "type": "url", "id": "button_link", "label": "Button link" },
-    { "type": "color", "id": "background", "label": "Background", "default": "#FF8A80" },
-    { "type": "color", "id": "text_color", "label": "Text color", "default": "#FFFFFF" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "cover",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Full-bleed image"
+        },
+        {
+          "value": "image_right",
+          "label": "Image right"
+        },
+        {
+          "value": "image_left",
+          "label": "Image left"
+        }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Designed for adventures together"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Lightweight comfort, breathable ventilation, and a paw-print finish that turns heads.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FF8A80"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    }
   ],
-  "presets": [ { "name": "Image with text" } ]
+  "presets": [
+    {
+      "name": "Image with text"
+    }
+  ]
 }
 {% endschema %}

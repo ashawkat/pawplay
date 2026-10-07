@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: PawPlay/ Shop (60:224). Filters = Shopify Search & Discovery storefront filters. {%- endcomment -%}
 {%- assign banner_title = section.settings.title | default: collection.title -%}
 {%- assign banner_sub = collection.description | default: section.settings.subtitle -%}
@@ -10,7 +11,7 @@
       <aside data-filters-panel class="hidden lg:block">
         <form id="FilterForm" class="space-y-4" data-filter-form>
           {%- if section.settings.show_categories and section.settings.category_menu.links.size > 0 -%}
-            <details class="group rounded-xl border border-divider bg-white" open>
+            <details class="group rounded-xl border border-divider bg-card" open>
               <summary class="flex cursor-pointer list-none items-center justify-between p-4 font-semibold group-open:border-b group-open:border-divider [&::-webkit-details-marker]:hidden">
                 {{ section.settings.category_heading }}{% render 'icon', name: 'chevron-down', class: 'size-5 transition group-open:rotate-180' %}
               </summary>
@@ -23,7 +24,7 @@
           {%- endif -%}
 
           {%- for filter in collection.filters -%}
-            <details class="group rounded-xl border border-divider bg-white" {% if forloop.index <= 4 or filter.active_values.size > 0 %}open{% endif %}>
+            <details class="group rounded-xl border border-divider bg-card" {% if forloop.index <= 4 or filter.active_values.size > 0 %}open{% endif %}>
               <summary class="flex cursor-pointer list-none items-center justify-between p-4 font-semibold group-open:border-b group-open:border-divider [&::-webkit-details-marker]:hidden">
                 {{ filter.label }}{% render 'icon', name: 'chevron-down', class: 'size-5 transition group-open:rotate-180' %}
               </summary>
@@ -80,13 +81,13 @@
       <div>
         <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-3">
-            <button type="button" class="btn h-10 border border-divider bg-white px-4 text-sm text-ink lg:hidden" data-toggle-filters>{{ 'collections.filters' | t }}</button>
+            <button type="button" class="btn h-10 border border-divider bg-card px-4 text-sm text-ink lg:hidden" data-toggle-filters>{{ 'collections.filters' | t }}</button>
             <p class="text-lg font-medium text-text">{{ 'collections.products_found' | t: count: collection.products_count }}</p>
           </div>
           <label class="flex items-center gap-3 font-medium">
             <span>{{ 'collections.sort_by' | t }}</span>
             {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
-            <select name="sort_by" form="FilterForm" class="h-10 rounded-lg border border-divider bg-white px-3 text-sm">
+            <select name="sort_by" form="FilterForm" class="h-10 rounded-lg border border-divider bg-card px-3 text-sm">
               {%- for option in collection.sort_options -%}
                 <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
               {%- endfor -%}
@@ -121,20 +122,70 @@
   </div>
 </div>
 {%- endpaginate -%}
+</div>
 
 {% schema %}
 {
   "name": "Product grid",
   "settings": [
-    { "type": "text", "id": "title", "label": "Banner title", "info": "Defaults to collection title" },
-    { "type": "richtext", "id": "subtitle", "label": "Banner subtitle", "info": "Used when the collection has no description", "default": "<p>Premium pet products chosen with care and responsibility. Trusted by pet parents for everyday needs.</p>" },
-    { "type": "image_picker", "id": "banner_image", "label": "Banner background image" },
-    { "type": "range", "id": "per_page", "label": "Products per page", "min": 6, "max": 36, "step": 3, "default": 12 },
-    { "type": "header", "content": "Sidebar" },
-    { "type": "checkbox", "id": "show_categories", "label": "Show category menu", "default": true },
-    { "type": "text", "id": "category_heading", "label": "Category heading", "default": "Product Category" },
-    { "type": "link_list", "id": "category_menu", "label": "Category menu" },
-    { "type": "paragraph", "content": "Brand, price, rating and pet filters come from the Shopify Search & Discovery app." }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Banner title",
+      "info": "Defaults to collection title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Banner subtitle",
+      "info": "Used when the collection has no description",
+      "default": "<p>Premium pet products chosen with care and responsibility. Trusted by pet parents for everyday needs.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner background image"
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Products per page",
+      "min": 6,
+      "max": 36,
+      "step": 3,
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Sidebar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_categories",
+      "label": "Show category menu",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "category_heading",
+      "label": "Category heading",
+      "default": "Product Category"
+    },
+    {
+      "type": "link_list",
+      "id": "category_menu",
+      "label": "Category menu"
+    },
+    {
+      "type": "paragraph",
+      "content": "Brand, price, rating and pet filters come from the Shopify Search & Discovery app."
+    }
   ]
 }
 {% endschema %}

@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Contact page: info cards + Shopify contact form (emails the store) + optional map {%- endcomment -%}
 <section class="section-y">
   <div class="page-width grid gap-10 lg:grid-cols-[400px_1fr]">
@@ -7,7 +8,7 @@
       <div class="rte text-lg text-muted">{{ section.settings.text }}</div>
       <ul class="space-y-3 pt-4">
         {%- for block in section.blocks -%}
-          <li {{ block.shopify_attributes }} class="flex items-center gap-4 rounded-2xl border border-divider bg-white p-4">
+          <li {{ block.shopify_attributes }} class="flex items-center gap-4 rounded-2xl border border-divider bg-card p-4">
             <span class="grid size-12 shrink-0 place-items-center rounded-2xl text-white" style="background: {{ block.settings.color }};">{% render 'icon', name: block.settings.icon, class: 'size-6' %}</span>
             <div>
               <p class="text-sm text-muted">{{ block.settings.label }}</p>
@@ -22,7 +23,7 @@
       </ul>
     </div>
 
-    <div class="rounded-3xl bg-white p-6 shadow-soft md:p-10">
+    <div class="rounded-3xl bg-card p-6 shadow-soft md:p-10">
       {%- form 'contact', id: 'ContactForm', class: 'grid gap-5 sm:grid-cols-2' -%}
         {%- if form.posted_successfully? -%}
           <p class="rounded-2xl bg-secondary/15 p-4 text-sm font-medium text-ink sm:col-span-2" role="status">{{ 'contact.success' | t }}</p>
@@ -48,26 +49,97 @@
     </div>
   {%- endif -%}
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Contact form",
   "max_blocks": 5,
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Get in touch" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "We’d love to hear from you" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Questions about an order, a product or booking a service? Our friendly team usually replies within a few hours.</p>" },
-    { "type": "text", "id": "map_query", "label": "Map address", "info": "Shows an embedded Google map when filled", "default": "218 Maple Avenue" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Get in touch"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "We’d love to hear from you"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Questions about an order, a product or booking a service? Our friendly team usually replies within a few hours.</p>"
+    },
+    {
+      "type": "text",
+      "id": "map_query",
+      "label": "Map address",
+      "info": "Shows an embedded Google map when filled",
+      "default": "218 Maple Avenue"
+    }
   ],
   "blocks": [
     {
-      "type": "info", "name": "Contact detail",
+      "type": "info",
+      "name": "Contact detail",
       "settings": [
-        { "type": "select", "id": "icon", "label": "Icon", "default": "phone", "options": [ { "value": "phone", "label": "Phone" }, { "value": "pin", "label": "Location" }, { "value": "chat", "label": "Chat" }, { "value": "shield", "label": "Clock/Shield" } ] },
-        { "type": "color", "id": "color", "label": "Icon background", "default": "#FF6B6B" },
-        { "type": "text", "id": "label", "label": "Label", "default": "Call us" },
-        { "type": "text", "id": "value", "label": "Value", "default": "+155 5467 2345" },
-        { "type": "url", "id": "link", "label": "Link" }
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "phone",
+          "options": [
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "pin",
+              "label": "Location"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "shield",
+              "label": "Clock/Shield"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Icon background",
+          "default": "#FF6B6B"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Call us"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "+155 5467 2345"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
       ]
     }
   ],
@@ -75,9 +147,27 @@
     {
       "name": "Contact form",
       "blocks": [
-        { "type": "info" },
-        { "type": "info", "settings": { "icon": "chat", "color": "#4ECDC4", "label": "Email us", "value": "hello@example.com" } },
-        { "type": "info", "settings": { "icon": "pin", "color": "#F4C430", "label": "Visit us", "value": "218 Maple avenue, Downtown" } }
+        {
+          "type": "info"
+        },
+        {
+          "type": "info",
+          "settings": {
+            "icon": "chat",
+            "color": "#4ECDC4",
+            "label": "Email us",
+            "value": "hello@example.com"
+          }
+        },
+        {
+          "type": "info",
+          "settings": {
+            "icon": "pin",
+            "color": "#F4C430",
+            "label": "Visit us",
+            "value": "218 Maple avenue, Downtown"
+          }
+        }
       ]
     }
   ]

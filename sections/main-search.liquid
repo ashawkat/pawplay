@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- assign search_title = 'templates.search.title' | t -%}
 {% render 'page-banner', title: search_title, breadcrumb: false %}
 <section class="section-y">
@@ -27,7 +28,18 @@
     {%- endif -%}
   </div>
 </section>
+</div>
 
 {% schema %}
-{ "name": "Search results", "settings": [] }
+{
+  "name": "Search results",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ]
+}
 {% endschema %}

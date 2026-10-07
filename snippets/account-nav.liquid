@@ -5,7 +5,7 @@
 {%- liquid
   assign items = 'overview,pets,orders,bookings,wishlist,settings' | split: ','
 -%}
-<aside class="h-fit rounded-3xl bg-white p-5 shadow-soft lg:sticky lg:top-32">
+<aside class="h-fit rounded-3xl bg-card p-5 shadow-soft lg:sticky lg:top-32">
   {%- if customer -%}
     <div class="mb-5 flex items-center gap-3 border-b border-divider pb-5">
       <span class="grid size-12 place-items-center rounded-full bg-primary font-heading text-lg font-bold text-white">{{ customer.first_name | default: customer.email | slice: 0 | upcase }}</span>

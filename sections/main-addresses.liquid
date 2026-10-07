@@ -1,9 +1,10 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: Profile - Settings (171:1391): addresses + account details {%- endcomment -%}
-<section class="bg-blush py-12 md:py-16">
+<section class=" py-12 md:py-16">
   <div class="page-width grid gap-6 lg:grid-cols-[260px_1fr]">
     {% render 'account-nav', active: 'settings' %}
     <div class="space-y-6">
-      <div class="rounded-3xl bg-white p-6 shadow-soft">
+      <div class="rounded-3xl bg-card p-6 shadow-soft">
         <h1 class="font-heading text-3xl font-bold text-ink">{{ 'customer.nav_settings' | t }}</h1>
         <dl class="mt-6 grid gap-4 sm:grid-cols-2">
           <div class="rounded-2xl bg-soft p-4"><dt class="text-sm text-muted">{{ 'contact.name' | t }}</dt><dd class="font-semibold">{{ customer.name | default: '—' }}</dd></div>
@@ -13,7 +14,7 @@
         </dl>
       </div>
 
-      <div class="rounded-3xl bg-white p-6 shadow-soft">
+      <div class="rounded-3xl bg-card p-6 shadow-soft">
         <div class="flex items-center justify-between">
           <h2 class="font-heading text-2xl font-semibold text-ink">{{ 'customer.addresses' | t }}</h2>
           <a href="#AddAddress" class="btn btn--primary h-10 px-5 text-sm">+ {{ 'customer.add_address' | t }}</a>
@@ -40,7 +41,7 @@
         {%- endpaginate -%}
       </div>
 
-      <div id="AddAddress" class="scroll-mt-32 rounded-3xl bg-white p-6 shadow-soft">
+      <div id="AddAddress" class="scroll-mt-32 rounded-3xl bg-card p-6 shadow-soft">
         <h2 class="font-heading text-2xl font-semibold text-ink">{{ 'customer.add_address' | t }}</h2>
         {%- form 'customer_address', customer.new_address, class: 'mt-6 grid gap-3' -%}
           {% render 'address-fields', form: form, prefix: 'new' %}
@@ -49,7 +50,18 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
-{ "name": "Account settings", "settings": [] }
+{
+  "name": "Account settings",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    }
+  ]
+}
 {% endschema %}

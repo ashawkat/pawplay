@@ -1,7 +1,8 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: Auth (Sign In / create account) — split card {%- endcomment -%}
-<section class="bg-blush py-12 md:py-20">
+<section class=" py-12 md:py-20">
   <div class="page-width">
-    <div class="grid overflow-hidden rounded-3xl bg-white shadow-soft lg:grid-cols-2">
+    <div class="grid overflow-hidden rounded-3xl bg-card shadow-soft lg:grid-cols-2">
       <div class="relative hidden min-h-[580px] bg-primary lg:block">
         {%- if section.settings.image != blank -%}
           {{ section.settings.image | image_url: width: 1100 | image_tag: loading: 'eager', class: 'absolute inset-0 size-full object-cover' }}
@@ -33,21 +34,28 @@
             {%- if form.posted_successfully? -%}<p class="text-sm text-secondary">{{ 'customer.recover_sent' | t }}</p>{%- endif -%}
             {{ form.errors | default_errors }}
             {% render 'field', name: 'email', label: 'customer.email', type: 'email', id: 'RecoverEmail', required: true %}
-            <button class="btn w-full border border-divider bg-white text-ink">{{ 'customer.submit' | t }}</button>
+            <button class="btn w-full border border-divider bg-card text-ink">{{ 'customer.submit' | t }}</button>
           {%- endform -%}
         </div>
         {%- if shop.checkout.guest_login -%}
-          <div class="mt-8 border-t border-divider pt-6">{%- form 'guest_login' -%}<button class="btn w-full border border-divider bg-white text-ink">{{ 'customer.guest' | t }}</button>{%- endform -%}</div>
+          <div class="mt-8 border-t border-divider pt-6">{%- form 'guest_login' -%}<button class="btn w-full border border-divider bg-card text-ink">{{ 'customer.guest' | t }}</button>{%- endform -%}</div>
         {%- endif -%}
       </div>
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Sign in",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
     {
       "type": "image_picker",
       "id": "image",

@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- liquid
   assign title = section.settings.title
   if title == blank
@@ -5,16 +6,45 @@
   endif
 -%}
 {% render 'page-banner', title: title, subtitle: section.settings.subtitle, breadcrumb: section.settings.breadcrumb, image: section.settings.image %}
+</div>
 
 {% schema %}
 {
   "name": "Page banner",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "info": "Leave empty to use the page title" },
-    { "type": "richtext", "id": "subtitle", "label": "Subtitle" },
-    { "type": "checkbox", "id": "breadcrumb", "label": "Show breadcrumb", "default": false },
-    { "type": "image_picker", "id": "image", "label": "Background image (optional)" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "info": "Leave empty to use the page title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "checkbox",
+      "id": "breadcrumb",
+      "label": "Show breadcrumb",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image (optional)"
+    }
   ],
-  "presets": [ { "name": "Page banner" } ]
+  "presets": [
+    {
+      "name": "Page banner"
+    }
+  ]
 }
 {% endschema %}

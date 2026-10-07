@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: Frame 110 (46:245) — category tiles + promo banners {%- endcomment -%}
 <section class="section-y overflow-hidden">
   <div class="page-width">
@@ -18,7 +19,8 @@
       {%- for block in tiles -%}
         {%- assign c = block.settings.color -%}
         <li {{ block.shopify_attributes }} class="w-[273px]">
-          <a href="{{ block.settings.collection.url | default: '#' }}" class="group relative flex h-[180px] flex-col items-center justify-end gap-6 rounded-xl px-6 pb-6" style="background: {{ c | color_modify: 'alpha', 0.14 }}; --tile: {{ c }};">
+          {%- assign tile_url = block.settings.link | default: block.settings.collection.url | default: '#' -%}
+          <a href="{{ tile_url }}" class="group relative flex h-[180px] flex-col items-center justify-end gap-6 rounded-xl px-6 pb-6" style="background: {{ c | color_modify: 'alpha', 0.14 }}; --tile: {{ c }};">
             <div class="absolute bottom-[96px] left-1/2 h-[190px] w-[199px] -translate-x-1/2">
               <span class="absolute bottom-0 left-[3.5px] h-[142px] w-[192px] rounded-b-3xl rounded-t-[100px]" style="background: var(--tile);"></span>
               <div class="absolute inset-0 overflow-hidden rounded-b-3xl rounded-t-[100px]">
@@ -75,24 +77,71 @@
     {%- endif -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Shop by pet",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop By Pet" },
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Carefully curated essentials for every kind of companion." }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop By Pet"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Carefully curated essentials for every kind of companion."
+    }
   ],
   "blocks": [
     {
       "type": "category",
       "name": "Category tile",
       "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "text", "id": "title", "label": "Title", "info": "Defaults to collection title" },
-        { "type": "image_picker", "id": "image", "label": "Image", "info": "Cut-out PNG, 400 × 380px" },
-        { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop Essentials" },
-        { "type": "color", "id": "color", "label": "Tile color", "default": "#FF6B6B" }
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Custom link",
+          "info": "Optional. Overrides the collection link (any product, page, collection or URL)."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Defaults to collection title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Cut-out PNG, 400 × 380px"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Shop Essentials"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Tile color",
+          "default": "#FF6B6B"
+        }
       ]
     },
     {
@@ -100,16 +149,74 @@
       "name": "Promo banner",
       "limit": 2,
       "settings": [
-        { "type": "select", "id": "style", "label": "Style", "default": "solid", "options": [ { "value": "green", "label": "Green gradient" }, { "value": "solid", "label": "Solid color" } ] },
-        { "type": "color", "id": "background", "label": "Background (solid style)", "default": "#FF6B6B" },
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow", "info": "Bold text is highlighted large" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Parrot Food" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Nutritious blends for vibrant feathers and active days." },
-        { "type": "text", "id": "price_label", "label": "Price label", "default": "Starts from" },
-        { "type": "text", "id": "price", "label": "Price", "default": "$5.00" },
-        { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore Now" },
-        { "type": "url", "id": "link", "label": "Link" }
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "default": "solid",
+          "options": [
+            {
+              "value": "green",
+              "label": "Green gradient"
+            },
+            {
+              "value": "solid",
+              "label": "Solid color"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background (solid style)",
+          "default": "#FF6B6B"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "info": "Bold text is highlighted large"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Parrot Food"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Nutritious blends for vibrant feathers and active days."
+        },
+        {
+          "type": "text",
+          "id": "price_label",
+          "label": "Price label",
+          "default": "Starts from"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "$5.00"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Explore Now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
       ]
     }
   ],
@@ -117,12 +224,54 @@
     {
       "name": "Shop by pet",
       "blocks": [
-        { "type": "category", "settings": { "title": "Dog food", "link_label": "Shop Dog Essentials", "color": "#FF6B6B" } },
-        { "type": "category", "settings": { "title": "Cat Food", "link_label": "Shop Cat Essentials", "color": "#4ECDC4" } },
-        { "type": "category", "settings": { "title": "Bird Food", "link_label": "Shop Bird Essentials", "color": "#F4C430" } },
-        { "type": "category", "settings": { "title": "Accessories", "link_label": "Browse Accessories", "color": "#B682FF" } },
-        { "type": "promo", "settings": { "style": "green", "eyebrow": "Up to <strong>50%</strong> Discount", "title": "Food & Accessories", "price_label": "", "price": "" } },
-        { "type": "promo", "settings": { "style": "solid" } }
+        {
+          "type": "category",
+          "settings": {
+            "title": "Dog food",
+            "link_label": "Shop Dog Essentials",
+            "color": "#FF6B6B"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Cat Food",
+            "link_label": "Shop Cat Essentials",
+            "color": "#4ECDC4"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Bird Food",
+            "link_label": "Shop Bird Essentials",
+            "color": "#F4C430"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Accessories",
+            "link_label": "Browse Accessories",
+            "color": "#B682FF"
+          }
+        },
+        {
+          "type": "promo",
+          "settings": {
+            "style": "green",
+            "eyebrow": "Up to <strong>50%</strong> Discount",
+            "title": "Food & Accessories",
+            "price_label": "",
+            "price": ""
+          }
+        },
+        {
+          "type": "promo",
+          "settings": {
+            "style": "solid"
+          }
+        }
       ]
     }
   ]

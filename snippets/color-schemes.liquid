@@ -1,0 +1,30 @@
+{%- comment -%}
+  Outputs one CSS class per color scheme (.color-scheme-1 …). The first scheme is also the
+  site default on :root. Every Tailwind color token reads these variables, so changing a
+  scheme in Theme settings → Colors updates every section that uses it instantly.
+{%- endcomment -%}
+{%- for scheme in settings.color_schemes -%}
+  {%- liquid
+    assign s = scheme.settings
+    assign bg = s.background
+  -%}
+  {% if forloop.first %}:root,{% endif %}
+  .color-{{ scheme.id }} {
+    --pp-bg: {{ s.background }};
+    --pp-bg-soft: {{ s.background_soft }};
+    --pp-black: {{ s.heading }};
+    --pp-text: {{ s.text }};
+    --pp-text-muted: {{ s.text_muted }};
+    --pp-primary: {{ s.primary }};
+    --pp-on-primary: {{ s.on_primary }};
+    --pp-secondary: {{ s.secondary }};
+    --pp-yellow: {{ s.accent }};
+    --pp-border: {{ s.border }};
+    --pp-card: {{ s.card }};
+    --pp-hero-bg: color-mix(in srgb, {{ s.primary }} 12%, {{ bg }});
+    --pp-cream: color-mix(in srgb, {{ s.accent }} 14%, {{ bg }});
+    {%- if s.background_gradient != blank %}
+    --pp-bg-gradient: {{ s.background_gradient }};
+    {%- endif %}
+  }
+{%- endfor -%}

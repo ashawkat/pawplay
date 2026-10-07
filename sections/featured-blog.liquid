@@ -1,3 +1,4 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Latest posts row — usable on home, about, article pages {%- endcomment -%}
 <section class="section-y">
   <div class="page-width">
@@ -11,16 +12,45 @@
     </ul>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Blog posts",
   "settings": [
-    { "type": "blog", "id": "blog", "label": "Blog" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "From the blog" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Tips for happy pets" },
-    { "type": "text", "id": "subheading", "label": "Subheading" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "From the blog"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tips for happy pets"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    }
   ],
-  "presets": [ { "name": "Blog posts" } ]
+  "presets": [
+    {
+      "name": "Blog posts"
+    }
+  ]
 }
 {% endschema %}

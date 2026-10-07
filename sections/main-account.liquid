@@ -1,6 +1,7 @@
+<div class="color-{{ section.settings.color_scheme }} bg-scheme">
 {%- comment -%} Figma: Profile - Overview (192:1900) + Orders (181:2774) {%- endcomment -%}
 {%- assign pets = customer.metafields.custom.pets.value -%}
-<section class="bg-blush py-12 md:py-16">
+<section class=" py-12 md:py-16">
   <div class="page-width grid gap-6 lg:grid-cols-[260px_1fr]">
     {% render 'account-nav', active: 'overview' %}
     <div class="space-y-6">
@@ -16,13 +17,13 @@
           assign pets_count = pets.size | default: 0
           assign spent = customer.total_spent | money
         -%}
-        <li class="rounded-2xl bg-white p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.orders' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ customer.orders_count }}</p></li>
-        <li class="rounded-2xl bg-white p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.total_spent' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ spent }}</p></li>
-        <li class="rounded-2xl bg-white p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.nav_pets' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ pets_count }}</p></li>
-        <li class="rounded-2xl bg-white p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.addresses' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ customer.addresses_count }}</p></li>
+        <li class="rounded-2xl bg-card p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.orders' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ customer.orders_count }}</p></li>
+        <li class="rounded-2xl bg-card p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.total_spent' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ spent }}</p></li>
+        <li class="rounded-2xl bg-card p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.nav_pets' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ pets_count }}</p></li>
+        <li class="rounded-2xl bg-card p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.addresses' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ customer.addresses_count }}</p></li>
       </ul>
 
-      <div id="orders" class="scroll-mt-32 rounded-3xl bg-white p-6 shadow-soft">
+      <div id="orders" class="scroll-mt-32 rounded-3xl bg-card p-6 shadow-soft">
         <h2 class="font-heading text-2xl font-semibold text-ink">{{ 'customer.orders' | t }}</h2>
         {%- paginate customer.orders by 10 -%}
           {%- if customer.orders.size > 0 -%}
@@ -55,7 +56,7 @@
       </div>
 
       {%- if customer.default_address -%}
-        <div class="rounded-3xl bg-white p-6 shadow-soft">
+        <div class="rounded-3xl bg-card p-6 shadow-soft">
           <div class="flex items-center justify-between"><h2 class="font-heading text-2xl font-semibold text-ink">{{ 'customer.default_address' | t }}</h2><a href="{{ routes.account_addresses_url }}" class="text-sm font-medium text-primary">{{ 'customer.manage' | t }}</a></div>
           <div class="mt-4 text-muted">{{ customer.default_address | format_address }}</div>
         </div>
@@ -63,12 +64,24 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "Account overview",
   "settings": [
-    { "type": "text", "id": "welcome_text", "label": "Welcome text", "default": "Here’s everything happening with your pack." }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "text",
+      "id": "welcome_text",
+      "label": "Welcome text",
+      "default": "Here’s everything happening with your pack."
+    }
   ]
 }
 {% endschema %}
