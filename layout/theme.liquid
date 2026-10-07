@@ -95,8 +95,9 @@
 
     {% sections 'footer-group' %}
 
-    {% render 'side-cart' %}
+    {%- unless request.design_mode -%}{% render 'side-cart' %}{%- endunless -%}
 
+    {%- unless request.design_mode -%}
     {%- comment -%} Instant navigation: Chrome prerenders internal links on hover/press {%- endcomment -%}
     <script type="speculationrules">
       {
@@ -110,5 +111,6 @@
         }]
       }
     </script>
+    {%- endunless -%}
   </body>
 </html>
