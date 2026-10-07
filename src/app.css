@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* Scan Liquid + JS for class names */
+@source "../layout";
+@source "../sections";
+@source "../snippets";
+@source "../templates";
+@source "../blocks";
+@source "../assets/theme.js";
+@source "../assets/components.js";
+@source "./side-cart";
+/* Classes built dynamically in Liquid */
+@source inline("lg:grid-cols-{1,2,3,4}");
+
+/*
+  Design tokens map to CSS variables that layout/theme.liquid writes from
+  theme settings, so merchants can rebrand from the theme editor.
+*/
+@theme inline {
+  --color-primary: var(--pp-primary);
+  --color-secondary: var(--pp-secondary);
+  --color-yellow: var(--pp-yellow);
+  --color-warning: var(--pp-warning);
+  --color-info: var(--pp-info);
+  --color-ink: var(--pp-black);
+  --color-text: var(--pp-text);
+  --color-muted: var(--pp-text-muted);
+  --color-disabled: #9aa0a6;
+  --color-divider: #e6e8ec;
+  --color-soft: #f8f9fb;
+  --color-blush: var(--pp-hero-bg);
+  --color-cream: var(--pp-cream);
+  --color-footer: var(--pp-footer-bg);
+
+  --font-heading: var(--pp-font-heading);
+  --font-body: var(--pp-font-body);
+
+  --shadow-soft: 0 16px 64px rgb(255 107 107 / 0.16);
+  --shadow-card: 0 8px 12px rgb(149 157 165 / 0.2);
+  --container-site: 1140px;
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    @apply font-body text-text bg-white antialiased;
+  }
+  h1, h2, h3, .h { @apply font-heading text-ink; }
+  :focus-visible { outline: 2px solid var(--pp-primary); outline-offset: 2px; }
+  img { max-width: 100%; height: auto; }
+}
+
+@layer components {
+  .page-width { @apply mx-auto w-full max-w-[calc(var(--container-site)+2rem)] px-4; }
+  .section-y { padding-block: var(--pp-section-y, 4rem); }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-4
+      font-heading font-medium text-base leading-none transition
+      hover:-translate-y-0.5 hover:shadow-soft disabled:opacity-50;
+  }
+  .btn--primary { @apply bg-primary text-white; }
+  .btn--light { @apply bg-white text-primary; }
+  .btn--yellow { @apply bg-yellow text-ink font-body; }
+
+  .eyebrow {
+    @apply inline-flex h-[30px] items-center rounded-full px-6 text-sm font-medium;
+    background: rgb(from var(--pp-primary) r g b / 0.12);
+    color: var(--pp-primary);
+  }
+  .section-title { @apply font-heading font-semibold text-3xl md:text-4xl leading-tight text-ink; }
+  .section-sub { @apply text-lg md:text-xl font-semibold text-muted; }
+
+  .rte p + p { @apply mt-3; }
+  .rte strong { @apply font-semibold text-text; }
+
+  .scroll-row { @apply flex gap-4 overflow-x-auto snap-x snap-mandatory; scrollbar-width: none; }
+  .scroll-row::-webkit-scrollbar { display: none; }
+  .scroll-row > * { @apply snap-start shrink-0; }
+
+  .placeholder-svg { @apply w-full h-full bg-soft fill-disabled; }
+  [data-wishlist][aria-pressed="true"] svg { fill: currentColor; }
+  /* Side cart line transitions (Vue TransitionGroup) */
+  .line-enter-active, .line-leave-active { transition: all 0.25s ease; }
+  .line-enter-from, .line-leave-to { opacity: 0; transform: translateX(24px); }}

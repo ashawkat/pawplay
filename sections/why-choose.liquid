@@ -1,0 +1,62 @@
+{%- comment -%} Figma: Frame 40 (21:365) {%- endcomment -%}
+<section class="section-y overflow-hidden">
+  <div class="page-width grid items-center gap-12 lg:grid-cols-[1fr_600px]">
+    <div class="relative max-w-[460px]">
+      <span class="absolute -top-20 left-[230px] hidden text-primary/15 md:block">{% render 'icon', name: 'paw', class: 'h-16 w-20' %}</span>
+      <h2 class="section-title [&_em]:not-italic [&_em]:underline [&_em]:decoration-primary [&_em]:decoration-wavy [&_em]:underline-offset-8">{{ section.settings.heading }}</h2>
+      <div class="rte mt-6 text-xl font-medium leading-[1.3] text-muted md:text-2xl">{{ section.settings.text }}</div>
+    </div>
+
+    <ul class="grid gap-6 sm:grid-cols-2">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }} class="flex min-h-[228px] flex-col items-center justify-center gap-6 rounded-3xl border border-[#ffeaea] bg-white p-6 text-center {% if forloop.first %}shadow-soft border-transparent{% endif %} {% cycle '', 'sm:translate-y-9' %}">
+          <span class="grid size-16 place-items-center rounded-3xl text-white" style="background: {{ block.settings.color }};">
+            {% render 'icon', name: block.settings.icon, class: 'size-8' %}
+          </span>
+          <div class="space-y-3">
+            <h3 class="font-body text-xl font-bold leading-none text-text">{{ block.settings.title }}</h3>
+            <p class="text-sm font-medium leading-[1.3] text-muted">{{ block.settings.text }}</p>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why choose us",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "info": "Italic text gets a wavy underline", "default": "Why Parents <em>Choose</em> PawPlay Cares" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>PawPlay is built around quality, care, and trust. We carefully select <strong>products that support</strong> your pet’s health and happiness. From <strong>nutrition to accessories</strong>, every item is chosen with <strong>love and responsibility.</strong></p>" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "shield", "options": [
+          { "value": "shield", "label": "Shield" }, { "value": "truck", "label": "Truck" },
+          { "value": "handshake", "label": "Heart" }, { "value": "chat", "label": "Chat" },
+          { "value": "paw", "label": "Paw" }, { "value": "star", "label": "Star" }
+        ] },
+        { "type": "color", "id": "color", "label": "Icon background", "default": "#4ECDC4" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Quality You Can Trust" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Every product is carefully vetted for safety, comfort and durability" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why choose us",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "shield", "color": "#4ECDC4", "title": "Quality You Can Trust", "text": "Every product is carefully vetted for safety, comfort and durability" } },
+        { "type": "feature", "settings": { "icon": "handshake", "color": "#FF6B6B", "title": "Pet-First Philosophy", "text": "We design & select everything with your pet’s wellbeing in mind" } },
+        { "type": "feature", "settings": { "icon": "truck", "color": "#F4C430", "title": "Fast & Reliable Delivery", "text": "Because waiting is hard - especially when tails are wagging" } },
+        { "type": "feature", "settings": { "icon": "chat", "color": "#3498DB", "title": "Friendly Support", "text": "Real humans, real help, whenever you need it." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

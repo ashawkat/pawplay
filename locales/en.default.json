@@ -1,0 +1,213 @@
+{
+  "general": {
+    "home": "Home",
+    "tagged_with": "Tagged \"{{ tags }}\"",
+    "page": "Page {{ page }}",
+    "search": "Search",
+    "search_placeholder": "Search products ...",
+    "cart": "Cart",
+    "account": "Account",
+    "menu": "Menu",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "explore_now": "Explore now",
+    "view_all": "Explore all products"
+  },
+  "accessibility": {
+    "skip_to_text": "Skip to content",
+    "cart_count": "{{ count }} items in cart",
+    "star_rating": "Rated {{ rating }} out of 5"
+  },
+  "products": {
+    "add_to_cart": "Add to cart",
+    "add_to_wishlist": "Add wishlist",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "in_stock": "In stock",
+    "sale": "Sale",
+    "save": "Save {{ amount }}",
+    "regular_price": "Regular price",
+    "sale_price": "Sale price",
+    "from": "From",
+    "brand": "Brand",
+    "reviews": "reviews",
+    "based_on": "Based on {{ count }} reviews",
+    "verified": "Verified"
+  },
+  "collections": {
+    "products_found": {
+      "one": "{{ count }} product found",
+      "other": "{{ count }} products found"
+    },
+    "sort_by": "Sort by",
+    "filters": "Filters",
+    "apply": "Apply",
+    "clear_all": "Clear all filters",
+    "from": "From",
+    "to": "To"
+  },
+  "blogs": {
+    "all": "All",
+    "read_more": "Read more",
+    "share": "Share",
+    "comments": {
+      "one": "{{ count }} comment",
+      "other": "{{ count }} comments"
+    },
+    "comment_posted": "Thanks! Your comment will appear after moderation.",
+    "post_comment": "Post comment"
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "send": "Send message",
+    "success": "Thanks for reaching out! We’ll get back to you soon."
+  },
+  "booking": {
+    "step_service": "Service",
+    "step_pet": "Your pet",
+    "step_confirm": "Confirm",
+    "choose_service": "Choose a service",
+    "date": "Preferred date",
+    "time": "Preferred time",
+    "about_pet": "Tell us about your pet",
+    "pet_name": "Pet name",
+    "pet_type": "Pet type",
+    "breed": "Breed",
+    "age": "Age",
+    "notes": "Anything we should know?",
+    "your_details": "Your details"
+  },
+  "newsletter": {
+    "email": "Enter your email",
+    "subscribe": "Subscribe",
+    "success": "Thanks for subscribing!"
+  },
+  "footer": {
+    "copyright": "© {{ year }} {{ shop }}. All rights reserved."
+  },
+  "templates": {
+    "404": {
+      "title": "Page not found",
+      "subtitle": "The page you were looking for does not exist.",
+      "cta": "Continue shopping",
+      "home": "Back to home"
+    },
+    "search": {
+      "title": "Search results",
+      "no_results": "No results found for “{{ terms }}”.",
+      "results_count": {
+        "one": "{{ count }} result for “{{ terms }}”",
+        "other": "{{ count }} results for “{{ terms }}”"
+      }
+    },
+    "collection": {
+      "empty": "No products match these filters yet."
+    },
+    "cart": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "checkout": "Proceed to checkout",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "tax": "Tax (est.)",
+      "calculated": "Calculated at checkout",
+      "total": "Total",
+      "summary": "Order Summary",
+      "product": "Product",
+      "price": "Price",
+      "remove": "Remove",
+      "quantity": "Quantity",
+      "discount": "Discount or gift code",
+      "apply_at_checkout": "Applied at checkout",
+      "continue": "Continue shopping",
+      "update": "Update cart",
+      "note": "Order note"
+    }
+  },
+  "customer": {
+    "login": "Sign in",
+    "login_sub": "Welcome back! Sign in to manage your pets, orders and bookings.",
+    "logout": "Log out",
+    "register": "Create account",
+    "register_sub": "Join the pack for faster checkout, order tracking and pet perks.",
+    "activate": "Activate your account",
+    "activate_sub": "Create a password to finish setting up your account.",
+    "reset": "Reset password",
+    "reset_sub": "Choose a new password for your account.",
+    "recover_sent": "We’ve emailed you a link to reset your password.",
+    "no_account": "New to PawPlay?",
+    "have_account": "Already have an account?",
+    "guest": "Continue as guest",
+    "marketing": "Send me tail-wagging deals by email",
+    "email": "Email",
+    "password": "Password",
+    "password_confirm": "Confirm password",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "forgot": "Forgot your password?",
+    "submit": "Submit",
+    "save": "Save address",
+    "account": "My account",
+    "welcome_back": "Welcome back,",
+    "orders": "Orders",
+    "items": "items",
+    "view": "View",
+    "total_spent": "Total spent",
+    "addresses": "Addresses",
+    "add_address": "Add address",
+    "default_address": "Default address",
+    "default": "Default",
+    "set_default": "Set as default address",
+    "manage": "Manage",
+    "edit": "Edit",
+    "address1": "Address",
+    "address2": "Apartment, suite, etc.",
+    "city": "City",
+    "zip": "Postal code",
+    "country": "Country",
+    "province": "State / Province",
+    "billing": "Billing address",
+    "shipping": "Shipping address",
+    "track": "Track package",
+    "cancelled": "Order cancelled on",
+    "no_orders": "You haven't placed any orders yet.",
+    "marketing_status": "Email updates",
+    "subscribed": "Subscribed",
+    "not_subscribed": "Not subscribed",
+    "login_required": "Please sign in to see this page.",
+    "pet_age": "Age",
+    "pet_weight": "Weight",
+    "nav_overview": "Overview",
+    "nav_pets": "My pets",
+    "nav_orders": "Orders",
+    "nav_bookings": "Bookings",
+    "nav_wishlist": "Wishlist",
+    "nav_settings": "Settings"
+  },
+  "password": {
+    "enter": "Enter store using password",
+    "password": "Password"
+  },
+  "gift_card": {
+    "title": "Your gift card",
+    "code": "Gift card code"
+  },
+  "side_cart": {
+    "removed": "removed",
+    "added": "added to cart",
+    "add": "Add",
+    "increase": "Increase quantity",
+    "decrease": "Decrease quantity",
+    "taxes": "Taxes and shipping calculated at checkout",
+    "view_cart": "View cart",
+    "checkout": "Checkout",
+    "add_note": "Add order note",
+    "free_away": "You're",
+    "free_tail": "away from free shipping",
+    "free_unlocked": "You unlocked free shipping!"
+  }
+}

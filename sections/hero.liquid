@@ -1,0 +1,118 @@
+{%- comment -%} Figma: Gradient Background #3 (48:286) {%- endcomment -%}
+<section class="relative overflow-hidden bg-blush" style="--glow: {{ section.settings.glow_color }};">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div class="absolute left-1/2 top-[-40%] h-[90%] w-[min(1040px,90vw)] -translate-x-1/2 rounded-[50%] opacity-70 blur-[60px]" style="background: radial-gradient(closest-side, var(--glow), transparent);"></div>
+    <div class="absolute left-[23%] top-[-30%] h-[120%] w-[20%] rotate-2 bg-gradient-to-b from-primary/30 to-transparent blur-[45px]"></div>
+    <div class="absolute right-[23%] top-[-30%] h-[120%] w-[20%] -rotate-2 bg-gradient-to-b from-primary/30 to-transparent blur-[45px]"></div>
+    {%- for i in (1..4) -%}
+      {%- case i -%}
+        {%- when 1 -%}{%- assign pos = 'left-[6%] top-[30%] size-24 -rotate-12' -%}
+        {%- when 2 -%}{%- assign pos = 'left-[18%] top-[6%] size-16 rotate-12' -%}
+        {%- when 3 -%}{%- assign pos = 'right-[9%] top-[20%] size-28 rotate-6' -%}
+        {%- when 4 -%}{%- assign pos = 'right-[6%] top-[62%] size-20 -rotate-6' -%}
+      {%- endcase -%}
+      <span class="absolute hidden text-primary/15 md:block {{ pos }}">{% render 'icon', name: 'paw', class: 'size-full' %}</span>
+    {%- endfor -%}
+  </div>
+
+  <div class="page-width relative flex flex-col items-center pt-16 text-center md:pt-[95px]">
+    <h1 class="max-w-[780px] text-balance font-heading text-4xl font-bold leading-[1.1] text-ink md:text-[56px]">{{ section.settings.heading }}</h1>
+    {%- if section.settings.text != blank -%}
+      <div class="mt-5 max-w-[780px] text-lg font-medium leading-[1.3] text-text md:text-2xl">{{ section.settings.text }}</div>
+    {%- endif -%}
+    <div class="relative z-10 mt-10 flex flex-wrap justify-center gap-4">
+      {%- if section.settings.button_1_label != blank -%}
+        <a href="{{ section.settings.button_1_link | default: routes.all_products_collection_url }}" class="btn btn--primary">{{ section.settings.button_1_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.button_2_label != blank -%}
+        <a href="{{ section.settings.button_2_link | default: '#' }}" class="btn btn--light">{{ section.settings.button_2_label }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="relative -mt-6 w-full max-w-[1030px]">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 2060 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600,2060', sizes: '(min-width: 1100px) 1030px, 100vw', class: 'mx-auto w-full h-auto' }}
+      {%- else -%}
+        <div class="aspect-[1030/576]">{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg rounded-3xl opacity-60' }}</div>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'trust_badge' -%}
+            <div {{ block.shopify_attributes }} class="absolute bottom-[18%] left-0 hidden w-[158px] flex-col gap-1.5 rounded-xl bg-white px-4 py-3 text-left shadow-[0_10px_25px_rgb(0_0_0/0.1)] sm:flex lg:-left-[2%]">
+              <p class="text-sm font-medium leading-[1.3] text-muted">{{ block.settings.label }}<br><strong class="text-base font-bold text-text">{{ block.settings.value }}</strong></p>
+              <div class="flex -space-x-4">
+                {%- for n in (1..3) -%}
+                  {%- assign key = 'avatar_' | append: n -%}
+                  {%- if block.settings[key] != blank -%}
+                    {{ block.settings[key] | image_url: width: 80 | image_tag: width: 40, height: 40, class: 'size-10 rounded-full border-2 border-white object-cover' }}
+                  {%- else -%}
+                    <span class="size-10 rounded-full border-2 border-white bg-blush"></span>
+                  {%- endif -%}
+                {%- endfor -%}
+                <span class="grid size-10 place-items-center rounded-full border-2 border-white bg-primary text-xs font-medium text-white">{{ block.settings.count }}</span>
+              </div>
+            </div>
+          {%- when 'product_badge' -%}
+            <div {{ block.shopify_attributes }} class="absolute bottom-[26%] right-0 hidden h-[86px] w-[210px] items-center gap-2.5 rounded-xl bg-white p-3 text-left shadow-card sm:flex lg:-right-[2%]">
+              <div class="-ml-10 size-16 shrink-0 overflow-hidden rounded-full border-4 border-white bg-blush shadow-card">
+                {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 140 | image_tag: class: 'size-full object-cover' }}{%- endif -%}
+              </div>
+              <div class="min-w-0">
+                <p class="font-heading text-base font-semibold uppercase text-primary">{{ block.settings.title }}</p>
+                <p class="mt-1 text-[10px] text-muted">{{ block.settings.label }}</p>
+                <p class="mt-1 truncate text-[11px] font-bold text-muted">{{ block.settings.detail }}</p>
+              </div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "div",
+  "max_blocks": 2,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Everything Your Pet Loves All in One Place" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>From nutritious food to playful toys and trusted care - PawPlay is your everyday partner in giving pets a happier, healthier life</p>" },
+    { "type": "text", "id": "button_1_label", "label": "Primary button label", "default": "Shop For Your Pet" },
+    { "type": "url", "id": "button_1_link", "label": "Primary button link" },
+    { "type": "text", "id": "button_2_label", "label": "Secondary button label", "default": "Explore Services" },
+    { "type": "url", "id": "button_2_link", "label": "Secondary button link" },
+    { "type": "image_picker", "id": "image", "label": "Hero image", "info": "Transparent PNG of pets works best, 2060 × 1150px" },
+    { "type": "color", "id": "glow_color", "label": "Glow color", "default": "#FF8A8A" }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust badge",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Trusted by" },
+        { "type": "text", "id": "value", "label": "Value", "default": "12k+ Pet Owners" },
+        { "type": "text", "id": "count", "label": "Count bubble", "default": "+12k" },
+        { "type": "image_picker", "id": "avatar_1", "label": "Avatar 1" },
+        { "type": "image_picker", "id": "avatar_2", "label": "Avatar 2" },
+        { "type": "image_picker", "id": "avatar_3", "label": "Avatar 3" }
+      ]
+    },
+    {
+      "type": "product_badge",
+      "name": "Product badge",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Salmon Mix" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Ingredients" },
+        { "type": "text", "id": "detail", "label": "Detail", "default": "Salmon, Pumpkin, Omega Oils" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Hero", "blocks": [ { "type": "trust_badge" }, { "type": "product_badge" } ] }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,51 @@
+{%- comment -%} Figma: About — "More than a store" mission cards. Reusable icon card row. {%- endcomment -%}
+<section class="section-y">
+  <div class="page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, subheading: section.settings.subheading %}
+    <ul class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-{{ section.blocks.size | at_most: 4 }}">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }} class="flex flex-col items-center gap-5 rounded-3xl border border-[#ffeaea] bg-white p-7 text-center transition hover:shadow-soft {% if forloop.first %}shadow-soft border-transparent{% endif %}">
+          <span class="grid size-14 place-items-center rounded-2xl text-white" style="background: {{ block.settings.color }};">{% render 'icon', name: block.settings.icon, class: 'size-7' %}</span>
+          <div>
+            <h3 class="font-body text-xl font-bold text-text">{{ block.settings.title }}</h3>
+            <p class="mt-2 text-sm leading-[1.4] text-muted">{{ block.settings.text }}</p>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Icon cards",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Mission" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "More than a store - a promise to every paw" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "We exist to raise the bar on pet care: transparent sourcing, vet-approved formulas, and services delivered by humans who truly love animals." }
+  ],
+  "blocks": [
+    {
+      "type": "card", "name": "Card",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "shield", "options": [ { "value": "shield", "label": "Shield" }, { "value": "handshake", "label": "Heart" }, { "value": "truck", "label": "Truck" }, { "value": "chat", "label": "Chat" }, { "value": "paw", "label": "Paw" }, { "value": "star", "label": "Star" }, { "value": "user", "label": "Person" } ] },
+        { "type": "color", "id": "color", "label": "Icon background", "default": "#4ECDC4" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Quality First" },
+        { "type": "text", "id": "text", "label": "Text", "default": "We source only the finest products from trusted brands." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon cards",
+      "blocks": [
+        { "type": "card" },
+        { "type": "card", "settings": { "icon": "handshake", "color": "#FF6B6B", "title": "Community", "text": "Building lasting relationships with pet families." } },
+        { "type": "card", "settings": { "icon": "paw", "color": "#23B96F", "title": "Eco-Friendly", "text": "Committed to sustainable and eco-conscious practices." } },
+        { "type": "card", "settings": { "icon": "user", "color": "#3498DB", "title": "Expertise", "text": "Professional team with years of pet care experience." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

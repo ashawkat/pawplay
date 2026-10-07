@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "account-bookings",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

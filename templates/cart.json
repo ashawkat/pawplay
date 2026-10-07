@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {}
+    },
+    "related": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "You may also like",
+        "heading": "Complete the routine",
+        "subheading": "",
+        "limit": 4,
+        "button_label": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related"
+  ]
+}

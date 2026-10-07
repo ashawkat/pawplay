@@ -1,0 +1,108 @@
+{%- comment -%}
+  Figma: PawPlay - Book a Service (3 steps). Built on Shopify's contact form so every booking
+  is emailed to the store (no app needed). Swap the form for a booking app block later if wanted.
+{%- endcomment -%}
+{%- assign services = section.settings.services | newline_to_br | split: '<br />' -%}
+{%- assign times = section.settings.times | split: ',' -%}
+<section class="section-y bg-blush">
+  <div class="page-width max-w-[960px]">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, subheading: section.settings.subheading %}
+
+    <booking-steps class="mt-10 block rounded-3xl bg-white p-6 shadow-soft md:p-10">
+      <ol class="mb-10 grid grid-cols-3 gap-3 text-center text-sm font-medium" aria-label="Progress">
+        {%- assign step_labels = 'booking.step_service,booking.step_pet,booking.step_confirm' | split: ',' -%}
+        {%- for key in step_labels -%}
+          <li data-step-indicator="{{ forloop.index }}" class="flex flex-col items-center gap-2 text-muted data-[active]:text-primary">
+            <span class="grid size-10 place-items-center rounded-full border-2 border-current font-bold">{{ forloop.index }}</span>{{ key | t }}
+          </li>
+        {%- endfor -%}
+      </ol>
+
+      {%- form 'contact', id: 'BookingForm' -%}
+        <input type="hidden" name="contact[tags]" value="booking">
+        <input type="hidden" name="contact[form]" value="Service booking">
+        {%- if form.posted_successfully? -%}
+          <div class="rounded-3xl bg-secondary/15 p-8 text-center" role="status">
+            <span class="mx-auto block w-fit text-secondary">{% render 'icon', name: 'paw', class: 'h-12 w-14' %}</span>
+            <p class="mt-4 text-xl font-semibold text-ink">{{ section.settings.success }}</p>
+          </div>
+        {%- else -%}
+          {%- if form.errors -%}<div class="mb-6 rounded-2xl bg-primary/10 p-4 text-sm text-primary" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
+
+          <fieldset data-step="1" class="space-y-6">
+            <legend class="mb-4 text-xl font-semibold text-ink">{{ 'booking.choose_service' | t }}</legend>
+            <div class="grid gap-3 sm:grid-cols-2">
+              {%- for s in services -%}
+                {%- assign s = s | strip -%}
+                {%- if s != blank -%}
+                  <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-divider p-4 transition has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                    <input type="radio" name="contact[service]" value="{{ s | escape }}" required class="accent-[var(--pp-primary)]" {% if forloop.first %}checked{% endif %}>
+                    <span class="font-medium">{{ s }}</span>
+                  </label>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <label class="block"><span class="mb-2 block text-sm font-semibold">{{ 'booking.date' | t }}</span>
+                <input type="date" name="contact[date]" required class="h-12 w-full rounded-full border border-divider bg-soft px-5"></label>
+              <label class="block"><span class="mb-2 block text-sm font-semibold">{{ 'booking.time' | t }}</span>
+                <select name="contact[time]" class="h-12 w-full rounded-full border border-divider bg-soft px-5">
+                  {%- for t in times -%}<option>{{ t | strip }}</option>{%- endfor -%}
+                </select></label>
+            </div>
+          </fieldset>
+
+          <fieldset data-step="2" class="hidden space-y-5">
+            <legend class="mb-4 text-xl font-semibold text-ink">{{ 'booking.about_pet' | t }}</legend>
+            <div class="grid gap-5 sm:grid-cols-2">
+              {% render 'field', name: 'contact[pet_name]', label: 'booking.pet_name', required: true %}
+              <label class="block"><span class="mb-2 block text-sm font-semibold">{{ 'booking.pet_type' | t }}</span>
+                <select name="contact[pet_type]" class="h-12 w-full rounded-full border border-divider bg-soft px-5">
+                  {%- assign types = section.settings.pet_types | split: ',' -%}
+                  {%- for t in types -%}<option>{{ t | strip }}</option>{%- endfor -%}
+                </select></label>
+              {% render 'field', name: 'contact[breed]', label: 'booking.breed' %}
+              {% render 'field', name: 'contact[age]', label: 'booking.age' %}
+            </div>
+            <label class="block"><span class="mb-2 block text-sm font-semibold">{{ 'booking.notes' | t }}</span>
+              <textarea name="contact[body]" rows="4" class="w-full rounded-2xl border border-divider bg-soft p-4"></textarea></label>
+          </fieldset>
+
+          <fieldset data-step="3" class="hidden space-y-5">
+            <legend class="mb-4 text-xl font-semibold text-ink">{{ 'booking.your_details' | t }}</legend>
+            <div class="grid gap-5 sm:grid-cols-2">
+              {% render 'field', name: 'contact[name]', label: 'contact.name', required: true, autocomplete: 'name', value: customer.name %}
+              {% render 'field', name: 'contact[email]', label: 'contact.email', type: 'email', required: true, autocomplete: 'email', value: customer.email %}
+              {% render 'field', name: 'contact[phone]', label: 'contact.phone', type: 'tel', autocomplete: 'tel', full: true %}
+            </div>
+            <p class="text-sm text-muted">{{ section.settings.note }}</p>
+          </fieldset>
+
+          <div class="mt-10 flex justify-between gap-3">
+            <button type="button" data-prev-step class="btn invisible border border-divider bg-white text-ink">{{ 'general.previous' | t }}</button>
+            <button type="button" data-next-step class="btn btn--primary">{{ 'general.next' | t }}{% render 'icon', name: 'arrow-right', class: 'size-5' %}</button>
+            <button type="submit" data-submit-step class="btn btn--primary hidden">{{ section.settings.submit_label }}</button>
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </booking-steps>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Booking form",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Book a Service" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Pamper your pet in 3 easy steps" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Choose a service, tell us about your pet, and we’ll confirm your slot." },
+    { "type": "textarea", "id": "services", "label": "Services (one per line)", "default": "Grooming & Spa\nPositive Training\nWellness Check\nDaycare & Play\nPet Boarding" },
+    { "type": "text", "id": "times", "label": "Time slots (comma separated)", "default": "9:00 AM, 10:30 AM, 12:00 PM, 2:00 PM, 3:30 PM, 5:00 PM" },
+    { "type": "text", "id": "pet_types", "label": "Pet types (comma separated)", "default": "Dog, Cat, Bird, Rabbit, Other" },
+    { "type": "text", "id": "note", "label": "Note under details", "default": "We’ll email you to confirm your booking within 24 hours." },
+    { "type": "text", "id": "submit_label", "label": "Submit label", "default": "Request booking" },
+    { "type": "text", "id": "success", "label": "Success message", "default": "Thanks! Your booking request is in. We’ll confirm by email shortly." }
+  ],
+  "presets": [ { "name": "Booking form" } ]
+}
+{% endschema %}

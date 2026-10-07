@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {}
+    },
+    "more": {
+      "type": "featured-blog",
+      "settings": {
+        "eyebrow": "Keep reading",
+        "heading": "More from the blog"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "more"
+  ]
+}

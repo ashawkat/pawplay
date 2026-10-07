@@ -1,0 +1,26 @@
+{
+  "name": "pawplay-theme",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "tailwindcss -i ./src/app.css -o ./assets/app.css --minify",
+    "build:js": "vite build",
+    "watch": "tailwindcss -i ./src/app.css -o ./assets/app.css --watch",
+    "watch:js": "vite build --watch",
+    "dev": "shopify theme dev --path .",
+    "check": "shopify theme check --path ."
+  },
+  "dependencies": {
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@shopify/theme-check-node": "^3.30.1",
+    "@tailwindcss/cli": "^4.1.0",
+    "@vitejs/plugin-vue": "^5.2.0",
+    "tailwindcss": "^4.1.0",
+    "terser": "^5.51.2",
+    "vite": "^6.0.0"
+  }
+}

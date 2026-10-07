@@ -1,0 +1,20 @@
+{%- liquid
+  assign title = section.settings.title
+  if title == blank
+    assign title = page.title | default: blog.title | default: collection.title | default: page_title
+  endif
+-%}
+{% render 'page-banner', title: title, subtitle: section.settings.subtitle, breadcrumb: section.settings.breadcrumb, image: section.settings.image %}
+
+{% schema %}
+{
+  "name": "Page banner",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "info": "Leave empty to use the page title" },
+    { "type": "richtext", "id": "subtitle", "label": "Subtitle" },
+    { "type": "checkbox", "id": "breadcrumb", "label": "Show breadcrumb", "default": false },
+    { "type": "image_picker", "id": "image", "label": "Background image (optional)" }
+  ],
+  "presets": [ { "name": "Page banner" } ]
+}
+{% endschema %}

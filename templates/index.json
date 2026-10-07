@@ -1,0 +1,69 @@
+{
+  "sections": {
+    "hero": { "type": "hero", "blocks": { "trust": { "type": "trust_badge", "settings": {} }, "product": { "type": "product_badge", "settings": {} } }, "block_order": ["trust", "product"], "settings": {} },
+    "shop_by_pet": {
+      "type": "shop-by-pet",
+      "blocks": {
+        "dog": { "type": "category", "settings": { "title": "Dog food", "link_label": "Shop Dog Essentials", "color": "#FF6B6B" } },
+        "cat": { "type": "category", "settings": { "title": "Cat Food", "link_label": "Shop Cat Essentials", "color": "#4ECDC4" } },
+        "bird": { "type": "category", "settings": { "title": "Bird Food", "link_label": "Shop Bird Essentials", "color": "#F4C430" } },
+        "acc": { "type": "category", "settings": { "title": "Accessories", "link_label": "Browse Accessories", "color": "#B682FF" } },
+        "promo_1": { "type": "promo", "settings": { "style": "green", "eyebrow": "Up to <strong>50%</strong> Discount", "title": "Food & Accessories", "price_label": "", "price": "" } },
+        "promo_2": { "type": "promo", "settings": { "style": "solid" } }
+      },
+      "block_order": ["dog", "cat", "bird", "acc", "promo_1", "promo_2"],
+      "settings": {}
+    },
+    "featured": { "type": "featured-products", "settings": {} },
+    "why": {
+      "type": "why-choose",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "icon": "shield", "color": "#4ECDC4", "title": "Quality You Can Trust", "text": "Every product is carefully vetted for safety, comfort and durability" } },
+        "f2": { "type": "feature", "settings": { "icon": "handshake", "color": "#FF6B6B", "title": "Pet-First Philosophy", "text": "We design & select everything with your pet’s wellbeing in mind" } },
+        "f3": { "type": "feature", "settings": { "icon": "truck", "color": "#F4C430", "title": "Fast & Reliable Delivery", "text": "Because waiting is hard - especially when tails are wagging" } },
+        "f4": { "type": "feature", "settings": { "icon": "chat", "color": "#3498DB", "title": "Friendly Support", "text": "Real humans, real help, whenever you need it." } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"],
+      "settings": {}
+    },
+    "promo": { "type": "shipping-banner", "settings": {} },
+    "services": {
+      "type": "services",
+      "blocks": {
+        "s1": { "type": "service", "settings": { "title": "Grooming & Spa", "price": "$40" } },
+        "s2": { "type": "service", "settings": { "title": "Positive Training", "text": "Reward-based training programs that help pets learn good behavior naturally. Perfect for puppies & adult pets.", "price": "$30" } },
+        "s3": { "type": "service", "settings": { "title": "Wellness Checks", "text": "Preventive health checks by trained professionals to monitor your pet’s overall well-being.", "price": "$60" } },
+        "s4": { "type": "service", "settings": { "title": "Daycare & Play", "text": "A safe, supervised space where pets can play, socialize, and burn energy while you’re away.", "price_prefix": "", "price": "$30", "price_suffix": "/day" } },
+        "s5": { "type": "service", "settings": { "title": "Pet Boarding", "text": "Comfortable overnight care with attentive staff, clean spaces, and regular routines.", "price_prefix": "", "price": "$45", "price_suffix": "/night" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5"],
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": { "t1": { "type": "testimonial", "settings": {} }, "t2": { "type": "testimonial", "settings": { "name": "James Carter", "role": "Cat Owner" } } },
+      "block_order": ["t1", "t2"],
+      "settings": {}
+    },
+    "gallery": {
+      "type": "pets-gallery",
+      "blocks": { "g1": { "type": "image", "settings": {} }, "g2": { "type": "image", "settings": {} }, "g3": { "type": "image", "settings": {} }, "g4": { "type": "image", "settings": {} }, "g5": { "type": "image", "settings": {} }, "g6": { "type": "image", "settings": {} }, "g7": { "type": "image", "settings": {} } },
+      "block_order": ["g1", "g2", "g3", "g4", "g5", "g6", "g7"],
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": { "type": "question", "settings": {} },
+        "q2": { "type": "question", "settings": { "question": "Do you offer food for different types of pets?", "answer": "<p>Yes — we stock food for dogs, cats, birds and small pets.</p>" } },
+        "q3": { "type": "question", "settings": { "question": "How long does delivery take?", "answer": "<p>Most orders arrive within 2–5 business days.</p>" } },
+        "q4": { "type": "question", "settings": { "question": "Do you offer free shipping?", "answer": "<p>Yes, on orders over $25.</p>" } },
+        "q5": { "type": "question", "settings": { "question": "Can I return or exchange a product?", "answer": "<p>Unopened items can be returned within 30 days.</p>" } },
+        "q6": { "type": "question", "settings": { "question": "How can I contact customer support?", "answer": "<p>Reach us through the contact page or by phone.</p>" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6"],
+      "settings": {}
+    }
+  },
+  "order": ["hero", "shop_by_pet", "featured", "why", "promo", "services", "testimonials", "gallery", "faq"]
+}

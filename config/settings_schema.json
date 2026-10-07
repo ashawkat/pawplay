@@ -1,0 +1,216 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "PawPlay",
+    "theme_version": "0.1.0",
+    "theme_author": "Betatech",
+    "theme_documentation_url": "https://betatech.co",
+    "theme_support_url": "https://betatech.co"
+  },
+  {
+    "name": "t:settings_schema.colors.name",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "t:settings_schema.colors.primary",
+        "default": "#FF6B6B"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "t:settings_schema.colors.secondary",
+        "default": "#4ECDC4"
+      },
+      {
+        "type": "color",
+        "id": "color_yellow",
+        "label": "t:settings_schema.colors.yellow",
+        "default": "#FFE66D"
+      },
+      {
+        "type": "color",
+        "id": "color_warning",
+        "label": "t:settings_schema.colors.warning",
+        "default": "#F4C430"
+      },
+      {
+        "type": "color",
+        "id": "color_info",
+        "label": "t:settings_schema.colors.info",
+        "default": "#3498DB"
+      },
+      {
+        "type": "color",
+        "id": "color_heading",
+        "label": "t:settings_schema.colors.heading",
+        "default": "#252424"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "t:settings_schema.colors.text",
+        "default": "#333333"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "t:settings_schema.colors.text_muted",
+        "default": "#666666"
+      },
+      {
+        "type": "color",
+        "id": "color_hero_bg",
+        "label": "t:settings_schema.colors.hero_bg",
+        "default": "#FFEDED"
+      },
+      {
+        "type": "color",
+        "id": "color_cream",
+        "label": "t:settings_schema.colors.cream",
+        "default": "#FFFAED"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_bg",
+        "label": "t:settings_schema.colors.footer_bg",
+        "default": "#252424"
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.typography.name",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "t:settings_schema.typography.heading",
+        "default": "poppins_n6"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "t:settings_schema.typography.body",
+        "default": "dm_sans_n4"
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.layout.name",
+    "settings": [
+      {
+        "type": "range",
+        "id": "section_spacing",
+        "label": "t:settings_schema.layout.section_spacing",
+        "min": 24,
+        "max": 120,
+        "step": 4,
+        "unit": "px",
+        "default": 64
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.favicon.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "t:settings_schema.favicon.label"
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.social.name",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "placeholder": "https://facebook.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "placeholder": "https://pinterest.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin_link",
+        "label": "LinkedIn",
+        "placeholder": "https://linkedin.com/company/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube",
+        "placeholder": "https://youtube.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "placeholder": "https://instagram.com/shopify"
+      }
+    ]
+  },
+  {
+    "name": "Cart & products",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart type",
+        "default": "drawer",
+        "options": [
+          {
+            "value": "drawer",
+            "label": "Side cart (drawer)"
+          },
+          {
+            "value": "page",
+            "label": "Cart page"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_open_on_add",
+        "label": "Open side cart after adding a product",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold",
+        "info": "In your store's default currency. 0 hides the progress bar.",
+        "default": 49
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell",
+        "label": "Show product recommendations in side cart",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_heading",
+        "label": "Recommendations heading",
+        "default": "Pets also love"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_note",
+        "label": "Allow order note in side cart",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_wishlist_button",
+        "label": "Show wishlist button on product cards",
+        "default": true
+      }
+    ]
+  }
+]

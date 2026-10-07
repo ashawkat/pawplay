@@ -1,0 +1,114 @@
+{%- comment -%} Figma: Your shopping cart (165:1735). Checkout itself is Shopify-hosted. {%- endcomment -%}
+<section class="bg-blush py-16 md:py-24">
+  <div class="page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, subheading: section.settings.subheading %}
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" id="CartForm" class="mt-12 grid items-start gap-6 lg:grid-cols-[1fr_360px]">
+        <div class="rounded-3xl bg-white p-4 shadow-soft md:p-6">
+          <table class="w-full text-left">
+            <thead class="hidden text-xs font-semibold uppercase text-ink md:table-header-group">
+              <tr><th class="pb-4 font-semibold">{{ 'templates.cart.product' | t }}</th><th class="pb-4 font-semibold">{{ 'templates.cart.price' | t }}</th><th class="pb-4 font-semibold">{{ 'templates.cart.quantity' | t }}</th><th class="pb-4 font-semibold">{{ 'templates.cart.total' | t }}</th></tr>
+            </thead>
+            <tbody class="divide-y divide-divider">
+              {%- for item in cart.items -%}
+                <tr class="grid grid-cols-[64px_1fr] gap-x-4 gap-y-2 py-5 md:table-row">
+                  <td class="row-span-3 md:py-5 md:pr-4">
+                    <div class="flex items-start gap-4">
+                      <a href="{{ item.url }}" class="block size-16 shrink-0 overflow-hidden rounded-xl bg-[#f3f3f3] md:size-[56px]">
+                        {%- if item.image -%}{{ item.image | image_url: width: 160 | image_tag: class: 'size-full object-contain', alt: item.title }}{%- endif -%}
+                      </a>
+                      <div class="hidden md:block">
+                        <a href="{{ item.url }}" class="block max-w-[150px] font-semibold leading-snug text-ink">{{ item.product.title }}</a>
+                        {%- unless item.product.has_only_default_variant -%}<p class="mt-2 text-sm text-muted">{{ item.variant.options | join: ' • ' }}</p>{%- endunless -%}
+                        {%- for p in item.properties -%}{%- unless p.last == blank or p.first.first == '_' -%}<p class="text-xs text-muted">{{ p.first }}: {{ p.last }}</p>{%- endunless -%}{%- endfor -%}
+                        <a href="{{ item.url_to_remove }}" class="mt-2 inline-flex items-center gap-1 text-sm text-primary">{% render 'icon', name: 'close', class: 'size-3.5' %}{{ 'templates.cart.remove' | t }}</a>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="md:hidden">
+                    <a href="{{ item.url }}" class="font-semibold text-ink">{{ item.product.title }}</a>
+                    {%- unless item.product.has_only_default_variant -%}<p class="text-sm text-muted">{{ item.variant.options | join: ' • ' }}</p>{%- endunless -%}
+                  </td>
+                  <td class="text-text md:py-5">
+                    {%- if item.original_price != item.final_price -%}<s class="mr-1 text-sm text-[#b6b6b6]">{{ item.original_price | money }}</s>{%- endif -%}
+                    {{ item.final_price | money }}
+                  </td>
+                  <td class="md:py-5">
+                    <quantity-input class="inline-flex h-10 items-center gap-2 rounded-full border border-divider px-3">
+                      <button type="button" data-qty="1" aria-label="+">+</button>
+                      <label class="sr-only" for="Qty-{{ item.key }}">{{ 'templates.cart.quantity' | t }}</label>
+                      <input id="Qty-{{ item.key }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-cart-qty class="w-8 bg-transparent text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none">
+                      <button type="button" data-qty="-1" aria-label="−">−</button>
+                    </quantity-input>
+                    <a href="{{ item.url_to_remove }}" class="ml-3 text-sm text-primary md:hidden">{{ 'templates.cart.remove' | t }}</a>
+                  </td>
+                  <td class="col-start-2 font-bold text-primary md:py-5">{{ item.final_line_price | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+
+          <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+            {%- if section.settings.show_discount -%}
+              <label class="flex h-11 flex-1 items-center gap-2 rounded-full border border-divider px-4">
+                <span class="text-primary">%</span>
+                <span class="sr-only">{{ 'templates.cart.discount' | t }}</span>
+                <input type="text" name="discount" form="CartForm" placeholder="{{ 'templates.cart.discount' | t }}" class="flex-1 bg-transparent text-sm outline-none">
+                <span class="text-sm text-primary">{{ 'templates.cart.apply_at_checkout' | t }}</span>
+              </label>
+            {%- endif -%}
+            <a href="{{ routes.all_products_collection_url }}" class="grid h-11 place-items-center rounded-full border border-primary/40 px-6 text-sm font-medium text-primary">{{ 'templates.cart.continue' | t }}</a>
+            <noscript><button type="submit" name="update" class="h-11 rounded-full border border-divider px-6 text-sm">{{ 'templates.cart.update' | t }}</button></noscript>
+          </div>
+
+          {%- if section.settings.show_note -%}
+            <label class="mt-6 block"><span class="mb-2 block text-sm font-semibold">{{ 'templates.cart.note' | t }}</span>
+              <textarea name="note" rows="2" class="w-full rounded-2xl border border-divider p-3 text-sm">{{ cart.note }}</textarea></label>
+          {%- endif -%}
+        </div>
+
+        <aside class="rounded-3xl bg-white p-6 shadow-soft lg:sticky lg:top-32">
+          <h2 class="font-heading text-2xl font-semibold text-ink">{{ 'templates.cart.summary' | t }}</h2>
+          <dl class="mt-5 space-y-3 border-t border-divider pt-5 text-sm">
+            <div class="flex justify-between"><dt>{{ 'templates.cart.subtotal' | t }}</dt><dd class="font-medium">{{ cart.items_subtotal_price | money }}</dd></div>
+            {%- for d in cart.cart_level_discount_applications -%}
+              <div class="flex justify-between text-secondary"><dt>{{ d.title }}</dt><dd>-{{ d.total_allocated_amount | money }}</dd></div>
+            {%- endfor -%}
+            <div class="flex justify-between"><dt>{{ 'templates.cart.shipping' | t }}</dt><dd class="font-medium">{{ section.settings.shipping_text }}</dd></div>
+            <div class="flex justify-between"><dt>{{ 'templates.cart.tax' | t }}</dt><dd class="font-medium">{{ 'templates.cart.calculated' | t }}</dd></div>
+          </dl>
+          <div class="mt-5 flex items-center justify-between border-t border-divider pt-5">
+            <span class="text-xl font-semibold text-text">{{ 'templates.cart.total' | t }}</span>
+            <span class="text-2xl font-bold text-primary">{{ cart.total_price | money }}</span>
+          </div>
+          <button type="submit" name="checkout" form="CartForm" class="btn btn--primary mt-6 w-full">{{ 'templates.cart.checkout' | t }}{% render 'icon', name: 'arrow-right', class: 'size-5' %}</button>
+          {%- if additional_checkout_buttons and section.settings.show_express -%}
+            <div class="mt-3 [&_.shopify-cleanslate]:!rounded-full">{{ content_for_additional_checkout_buttons }}</div>
+          {%- endif -%}
+        </aside>
+      </form>
+    {%- else -%}
+      <div class="mt-12 rounded-3xl bg-white p-12 text-center shadow-soft">
+        <span class="mx-auto block w-fit text-primary/30">{% render 'icon', name: 'paw', class: 'h-16 w-20' %}</span>
+        <p class="mt-4 text-xl font-semibold text-text">{{ 'templates.cart.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary mt-6">{{ 'templates.404.cta' | t }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your cart" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Just a few tail-wags away" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Review your items before heading to checkout." },
+    { "type": "text", "id": "shipping_text", "label": "Shipping label", "default": "Calculated at checkout" },
+    { "type": "checkbox", "id": "show_discount", "label": "Show discount code field", "default": true },
+    { "type": "checkbox", "id": "show_note", "label": "Show order note", "default": false },
+    { "type": "checkbox", "id": "show_express", "label": "Show express checkout buttons", "default": true }
+  ]
+}
+{% endschema %}

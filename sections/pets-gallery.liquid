@@ -1,0 +1,50 @@
+{%- comment -%} Figma: Frame 58 (31:375) — "Pets of PawPlay" strip {%- endcomment -%}
+<section class="section-y overflow-hidden">
+  <div class="page-width">
+    {% render 'section-heading', heading: section.settings.heading, subheading: section.settings.subheading %}
+  </div>
+  <div class="relative mt-14">
+    <ul class="flex justify-center gap-4">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }} class="group relative h-[200px] w-[188px] shrink-0 overflow-hidden rounded-2xl">
+          <a href="{{ block.settings.link | default: settings.social_instagram_link | default: '#' }}" target="_blank" rel="noopener" class="block size-full">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'size-full object-cover' }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+            <span class="absolute inset-0 grid place-items-center bg-black/60 text-white opacity-0 transition group-hover:opacity-100">
+              {% render 'icon', name: 'instagram', class: 'size-9' %}<span class="sr-only">Instagram</span>
+            </span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+    <div class="pointer-events-none absolute inset-y-0 left-0 w-[33%] bg-gradient-to-r from-white via-white/80 to-transparent" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 w-[33%] bg-gradient-to-l from-white via-white/80 to-transparent" aria-hidden="true"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Social gallery",
+  "max_blocks": 9,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Pets of PawPlay" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Tag us @pawplay for a chance to be featured" }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "url", "id": "link", "label": "Link", "info": "Defaults to your Instagram link" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Social gallery", "blocks": [ { "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" } ] }
+  ]
+}
+{% endschema %}

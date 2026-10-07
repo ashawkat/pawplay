@@ -1,0 +1,33 @@
+{%- assign search_title = 'templates.search.title' | t -%}
+{% render 'page-banner', title: search_title, breadcrumb: false %}
+<section class="section-y">
+  <div class="page-width">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="mx-auto flex max-w-2xl gap-2">
+      <label for="SearchPage" class="sr-only">{{ 'general.search' | t }}</label>
+      <input id="SearchPage" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}" class="h-12 flex-1 rounded-full border border-divider bg-soft px-5 outline-none focus:border-primary">
+      <input type="hidden" name="options[prefix]" value="last">
+      <button class="btn btn--primary">{% render 'icon', name: 'search', class: 'size-4' %}{{ 'general.search' | t }}</button>
+    </form>
+    {%- if search.performed -%}
+      <p class="mt-8 text-center text-muted">{{ 'templates.search.results_count' | t: count: search.results_count, terms: search.terms }}</p>
+      {%- paginate search.results by 12 -%}
+        <ul class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+          {%- for item in search.results -%}
+            {%- case item.object_type -%}
+              {%- when 'product' -%}<li>{% render 'product-card', product: item %}</li>
+              {%- when 'article' -%}<li>{% render 'article-card', article: item %}</li>
+              {%- else -%}<li class="rounded-3xl bg-soft p-6"><a href="{{ item.url }}" class="font-semibold hover:text-primary">{{ item.title }}</a><p class="mt-2 text-sm text-muted">{{ item.content | strip_html | truncate: 100 }}</p></li>
+            {%- endcase -%}
+          {%- else -%}
+            <li class="col-span-full rounded-3xl bg-soft p-10 text-center text-muted">{{ 'templates.search.no_results' | t: terms: search.terms }}</li>
+          {%- endfor -%}
+        </ul>
+        {% render 'pagination', paginate: paginate %}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Search results", "settings": [] }
+{% endschema %}

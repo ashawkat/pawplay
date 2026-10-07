@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "product-card-render",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ],
+  "layout": false
+}

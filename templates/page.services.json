@@ -1,0 +1,199 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "title": "Our Services",
+        "subtitle": "<p>Professional care delivered with patience, love and expertise.</p>",
+        "breadcrumb": true
+      }
+    },
+    "services": {
+      "type": "services",
+      "settings": {
+        "eyebrow": "What we offer",
+        "heading": "Care Services Pets Enjoy"
+      },
+      "blocks": {
+        "s1": {
+          "type": "service",
+          "settings": {
+            "title": "Grooming & Spa",
+            "price": "$40",
+            "link": "/pages/book-a-service"
+          }
+        },
+        "s2": {
+          "type": "service",
+          "settings": {
+            "title": "Positive Training",
+            "text": "Reward-based training programs that help pets learn good behavior naturally.",
+            "price": "$30",
+            "link": "/pages/book-a-service"
+          }
+        },
+        "s3": {
+          "type": "service",
+          "settings": {
+            "title": "Wellness Checks",
+            "text": "Preventive health checks by trained professionals to monitor your pet’s overall well-being.",
+            "price": "$60",
+            "link": "/pages/book-a-service"
+          }
+        },
+        "s4": {
+          "type": "service",
+          "settings": {
+            "title": "Daycare & Play",
+            "text": "A safe, supervised space where pets can play and socialize while you’re away.",
+            "price_prefix": "",
+            "price": "$30",
+            "price_suffix": "/day",
+            "link": "/pages/book-a-service"
+          }
+        },
+        "s5": {
+          "type": "service",
+          "settings": {
+            "title": "Pet Boarding",
+            "text": "Comfortable overnight care with attentive staff and regular routines.",
+            "price_prefix": "",
+            "price": "$45",
+            "price_suffix": "/night",
+            "link": "/pages/book-a-service"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
+    },
+    "pricing": {
+      "type": "service-pricing",
+      "settings": {},
+      "blocks": {
+        "g1": {
+          "type": "group",
+          "settings": {
+            "title": "Dogs"
+          }
+        },
+        "p1": {
+          "type": "price",
+          "settings": {}
+        },
+        "p2": {
+          "type": "price",
+          "settings": {
+            "name": "Full Groom",
+            "detail": "Haircut, nails, ears · 90 min",
+            "price": "$65"
+          }
+        },
+        "p3": {
+          "type": "price",
+          "settings": {
+            "name": "Training Session",
+            "detail": "1:1 positive reinforcement · 60 min",
+            "price": "$30"
+          }
+        },
+        "g2": {
+          "type": "group",
+          "settings": {
+            "title": "Cats"
+          }
+        },
+        "p4": {
+          "type": "price",
+          "settings": {
+            "name": "Bath & Brush",
+            "detail": "Gentle handling · 40 min",
+            "price": "$45"
+          }
+        },
+        "p5": {
+          "type": "price",
+          "settings": {
+            "name": "Nail Trim",
+            "detail": "15 min",
+            "price": "$15"
+          }
+        },
+        "g3": {
+          "type": "group",
+          "settings": {
+            "title": "Other pets"
+          }
+        },
+        "p6": {
+          "type": "price",
+          "settings": {
+            "name": "Small pet boarding",
+            "detail": "Rabbits, hamsters, birds · per night",
+            "price": "$20"
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "p1",
+        "p2",
+        "p3",
+        "g2",
+        "p4",
+        "p5",
+        "g3",
+        "p6"
+      ]
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {},
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "t1"
+      ]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {},
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need to book in advance?",
+            "answer": "<p>We recommend booking 2–3 days ahead, but same-day slots are often available.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "What vaccinations are required?",
+            "answer": "<p>Up-to-date rabies and core vaccines are required for daycare and boarding.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2"
+      ]
+    }
+  },
+  "order": [
+    "banner",
+    "services",
+    "pricing",
+    "testimonials",
+    "faq"
+  ]
+}

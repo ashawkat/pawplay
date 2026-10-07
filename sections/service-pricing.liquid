@@ -1,0 +1,78 @@
+{%- comment -%} Figma: service pricing - dogs / cats / other pets (70:1538…). Tabs = "group" blocks, rows = "price" blocks that follow a group. {%- endcomment -%}
+<section class="section-y bg-soft">
+  <div class="page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, subheading: section.settings.subheading %}
+
+    {%- assign groups = section.blocks | where: 'type', 'group' -%}
+    <tab-group class="mt-10 block">
+      <div class="mx-auto flex w-fit flex-wrap justify-center gap-2 rounded-full bg-white p-1.5 shadow-card" role="tablist">
+        {%- for g in groups -%}
+          <button type="button" role="tab" id="Tab-{{ section.id }}-{{ forloop.index }}" aria-controls="Panel-{{ section.id }}-{{ forloop.index }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            class="rounded-full px-6 py-2.5 font-medium transition aria-selected:bg-primary aria-selected:text-white">{{ g.settings.title }}</button>
+        {%- endfor -%}
+      </div>
+
+      {%- for g in groups -%}
+        <div id="Panel-{{ section.id }}-{{ forloop.index }}" role="tabpanel" aria-labelledby="Tab-{{ section.id }}-{{ forloop.index }}" {{ g.shopify_attributes }} class="mx-auto mt-8 max-w-[760px] {% unless forloop.first %}hidden{% endunless %}">
+          <ul class="divide-y divide-divider overflow-hidden rounded-3xl bg-white shadow-soft">
+            {%- assign in_group = false -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'group' -%}
+                {%- if block.id == g.id -%}{%- assign in_group = true -%}{%- else -%}{%- assign in_group = false -%}{%- endif -%}
+              {%- elsif in_group -%}
+                <li {{ block.shopify_attributes }} class="flex items-center justify-between gap-6 p-5">
+                  <div>
+                    <p class="font-semibold text-ink">{{ block.settings.name }}</p>
+                    {%- if block.settings.detail != blank -%}<p class="text-sm text-muted">{{ block.settings.detail }}</p>{%- endif -%}
+                  </div>
+                  <div class="flex shrink-0 items-center gap-4">
+                    <span class="text-xl font-bold text-primary">{{ block.settings.price }}</span>
+                    {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" class="hidden rounded-full border border-primary px-4 py-1.5 text-sm font-medium text-primary hover:bg-primary hover:text-white sm:block">{{ section.settings.book_label }}</a>{%- endif -%}
+                  </div>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    </tab-group>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Service pricing",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Pricing" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Simple, honest pricing" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "No hidden fees. Pick your pet to see services and prices." },
+    { "type": "text", "id": "book_label", "label": "Book button label", "default": "Book" },
+    { "type": "paragraph", "content": "Add a Tab block, then the Price rows that belong under it." }
+  ],
+  "blocks": [
+    { "type": "group", "name": "Tab", "settings": [ { "type": "text", "id": "title", "label": "Tab title", "default": "Dogs" } ] },
+    { "type": "price", "name": "Price row", "settings": [
+      { "type": "text", "id": "name", "label": "Service", "default": "Bath & Brush" },
+      { "type": "text", "id": "detail", "label": "Detail", "default": "Small breeds · 45 min" },
+      { "type": "text", "id": "price", "label": "Price", "default": "$40" },
+      { "type": "url", "id": "link", "label": "Booking link" }
+    ] }
+  ],
+  "presets": [
+    {
+      "name": "Service pricing",
+      "blocks": [
+        { "type": "group", "settings": { "title": "Dogs" } },
+        { "type": "price" },
+        { "type": "price", "settings": { "name": "Full Groom", "detail": "Haircut, nails, ears · 90 min", "price": "$65" } },
+        { "type": "price", "settings": { "name": "Training Session", "detail": "1:1 positive reinforcement · 60 min", "price": "$30" } },
+        { "type": "group", "settings": { "title": "Cats" } },
+        { "type": "price", "settings": { "name": "Bath & Brush", "detail": "Gentle handling · 40 min", "price": "$45" } },
+        { "type": "price", "settings": { "name": "Nail Trim", "detail": "15 min", "price": "$15" } },
+        { "type": "group", "settings": { "title": "Other pets" } },
+        { "type": "price", "settings": { "name": "Small pet boarding", "detail": "Rabbits, hamsters, birds · per night", "price": "$20" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

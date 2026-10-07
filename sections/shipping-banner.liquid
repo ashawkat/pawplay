@@ -1,0 +1,38 @@
+{%- comment -%} Figma: Frame 95 (42:223) — gradient promo strip {%- endcomment -%}
+<section class="section-y">
+  <div class="page-width">
+    <div class="relative isolate flex min-h-[282px] flex-col items-center justify-center overflow-hidden rounded-3xl px-6 py-12 text-center"
+         style="background: linear-gradient(90deg, {{ section.settings.color_edge }}, {{ section.settings.color_center }} 50%, {{ section.settings.color_edge }} 97%);">
+      {%- if section.settings.image_left != blank -%}
+        <div class="absolute inset-y-0 left-0 -z-10 hidden w-[32%] md:block">{{ section.settings.image_left | image_url: width: 800 | image_tag: loading: 'lazy', class: 'size-full object-cover object-left' }}</div>
+      {%- endif -%}
+      {%- if section.settings.image_right != blank -%}
+        <div class="absolute inset-y-0 right-0 -z-10 hidden w-[28%] md:block">{{ section.settings.image_right | image_url: width: 800 | image_tag: loading: 'lazy', class: 'size-full object-cover object-right' }}</div>
+      {%- endif -%}
+      <p class="text-lg font-medium text-white">{{ section.settings.eyebrow }}</p>
+      <h2 class="mt-4 max-w-[470px] font-heading text-3xl font-bold leading-none text-white md:text-4xl">{{ section.settings.heading }}</h2>
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="mt-8 inline-flex h-11 items-center gap-2.5 bg-ink px-10 font-medium text-white [clip-path:polygon(4%_8%,100%_0,97%_50%,100%_100%,2%_94%,0_50%)] transition hover:scale-105">
+          {{ section.settings.button_label }}{% render 'icon', name: 'arrow-right-circle', class: 'size-[21px]' %}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo banner",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FREE Shipping over $25 order" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Premium food & toys your dog will love." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore Now" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "image_picker", "id": "image_left", "label": "Left image" },
+    { "type": "image_picker", "id": "image_right", "label": "Right image" },
+    { "type": "color", "id": "color_edge", "label": "Gradient edge color", "default": "#FFE66D" },
+    { "type": "color", "id": "color_center", "label": "Gradient center color", "default": "#23B96F" }
+  ],
+  "presets": [ { "name": "Promo banner" } ]
+}
+{% endschema %}

@@ -1,0 +1,23 @@
+{
+  "settings_schema": {
+    "colors": {
+      "name": "Colors",
+      "primary": "Primary",
+      "secondary": "Secondary",
+      "yellow": "Accent yellow",
+      "warning": "Accent gold",
+      "info": "Accent blue",
+      "heading": "Headings",
+      "text": "Body text",
+      "text_muted": "Muted text",
+      "hero_bg": "Hero background",
+      "cream": "Cream background",
+      "footer_bg": "Footer background"
+    },
+    "typography": { "name": "Typography", "heading": "Heading font", "body": "Body font" },
+    "layout": { "name": "Layout", "section_spacing": "Vertical section spacing" },
+    "favicon": { "name": "Favicon", "label": "Favicon image" },
+    "social": { "name": "Social media" },
+    "cart": { "name": "Products", "show_wishlist": "Show wishlist button on product cards" }
+  }
+}

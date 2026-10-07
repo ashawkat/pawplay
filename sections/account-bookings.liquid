@@ -1,0 +1,59 @@
+{%- comment -%}
+  Figma: Profile - Bookings (181:2510).
+  Data: customer metafield custom.bookings (JSON), e.g.
+  [{"service":"Grooming & Spa","pet":"Bella","date":"2026-10-20","time":"10:30 AM","status":"Confirmed","price":"$40"}]
+{%- endcomment -%}
+{%- assign bookings = customer.metafields.custom.bookings.value -%}
+<section class="bg-blush py-12 md:py-16">
+  <div class="page-width grid gap-6 lg:grid-cols-[260px_1fr]">
+    {%- if customer -%}{% render 'account-nav', active: 'bookings' %}{%- endif -%}
+    <div class="{% unless customer %}lg:col-span-2{% endunless %}">
+      {%- if customer or request.design_mode -%}
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <h1 class="font-heading text-3xl font-bold text-ink">{{ section.settings.heading }}</h1>
+          {%- if section.settings.book_link != blank -%}<a href="{{ section.settings.book_link }}" class="btn btn--primary h-11 px-5 text-sm">+ {{ section.settings.book_label }}</a>{%- endif -%}
+        </div>
+        <div class="mt-6 rounded-3xl bg-white p-6 shadow-soft">
+          {%- if bookings.size > 0 -%}
+            <ul class="divide-y divide-divider">
+              {%- for b in bookings -%}
+                <li class="flex flex-wrap items-center gap-4 py-4">
+                  <span class="grid size-14 shrink-0 place-items-center rounded-2xl bg-primary/10 text-center leading-tight text-primary">
+                    <span><span class="block text-lg font-bold">{{ b.date | date: '%d' }}</span><span class="text-xs uppercase">{{ b.date | date: '%b' }}</span></span>
+                  </span>
+                  <div class="min-w-[160px] flex-1">
+                    <p class="font-semibold text-ink">{{ b.service }}</p>
+                    <p class="text-sm text-muted">{{ b.pet }}{% if b.time %} · {{ b.time }}{% endif %}</p>
+                  </div>
+                  {%- assign st = b.status | downcase -%}
+                  <span class="rounded-full px-3 py-1 text-xs font-semibold {% if st == 'confirmed' %}bg-secondary/15 text-[#1a8f86]{% elsif st == 'cancelled' %}bg-primary/10 text-primary{% else %}bg-yellow/40 text-ink{% endif %}">{{ b.status }}</span>
+                  {%- if b.price -%}<span class="w-16 text-right font-bold text-ink">{{ b.price }}</span>{%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- else -%}
+            <div class="p-6 text-center">
+              <span class="mx-auto block w-fit text-primary/30">{% render 'icon', name: 'shield', class: 'size-14' %}</span>
+              <p class="mt-4 text-muted">{{ section.settings.empty_text }}</p>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        {% render 'login-prompt' %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "My bookings",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "My bookings" },
+    { "type": "text", "id": "book_label", "label": "Book button label", "default": "Book a service" },
+    { "type": "url", "id": "book_link", "label": "Book button link", "default": "/pages/book-a-service" },
+    { "type": "text", "id": "empty_text", "label": "Empty text", "default": "No bookings yet. Treat your pet to a spa day!" },
+    { "type": "paragraph", "content": "Reads the customer metafield custom.bookings (JSON list)." }
+  ]
+}
+{% endschema %}

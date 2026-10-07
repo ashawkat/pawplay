@@ -1,0 +1,74 @@
+{%- comment -%} Figma: Profile - Overview (192:1900) + Orders (181:2774) {%- endcomment -%}
+{%- assign pets = customer.metafields.custom.pets.value -%}
+<section class="bg-blush py-12 md:py-16">
+  <div class="page-width grid gap-6 lg:grid-cols-[260px_1fr]">
+    {% render 'account-nav', active: 'overview' %}
+    <div class="space-y-6">
+      <div class="relative overflow-hidden rounded-3xl bg-primary p-8 text-white">
+        <span class="absolute -right-6 -top-6 text-white/15" aria-hidden="true">{% render 'icon', name: 'paw', class: 'h-40 w-48 rotate-12' %}</span>
+        <p class="text-white/80">{{ 'customer.welcome_back' | t }}</p>
+        <h1 class="mt-1 font-heading text-3xl font-bold text-white md:text-4xl">{{ customer.first_name | default: customer.name }}</h1>
+        <p class="mt-2 max-w-md text-white/85">{{ section.settings.welcome_text }}</p>
+      </div>
+
+      <ul class="grid grid-cols-2 gap-4 md:grid-cols-4">
+        {%- liquid
+          assign pets_count = pets.size | default: 0
+          assign spent = customer.total_spent | money
+        -%}
+        <li class="rounded-2xl bg-white p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.orders' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ customer.orders_count }}</p></li>
+        <li class="rounded-2xl bg-white p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.total_spent' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ spent }}</p></li>
+        <li class="rounded-2xl bg-white p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.nav_pets' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ pets_count }}</p></li>
+        <li class="rounded-2xl bg-white p-5 shadow-card"><p class="text-sm text-muted">{{ 'customer.addresses' | t }}</p><p class="mt-1 text-2xl font-bold text-ink">{{ customer.addresses_count }}</p></li>
+      </ul>
+
+      <div id="orders" class="scroll-mt-32 rounded-3xl bg-white p-6 shadow-soft">
+        <h2 class="font-heading text-2xl font-semibold text-ink">{{ 'customer.orders' | t }}</h2>
+        {%- paginate customer.orders by 10 -%}
+          {%- if customer.orders.size > 0 -%}
+            <ul class="mt-5 divide-y divide-divider">
+              {%- for order in customer.orders -%}
+                <li class="flex flex-wrap items-center gap-4 py-4">
+                  <div class="flex -space-x-3">
+                    {%- for li in order.line_items limit: 3 -%}
+                      <span class="size-12 overflow-hidden rounded-xl border-2 border-white bg-[#f3f3f3]">{%- if li.image -%}{{ li.image | image_url: width: 100 | image_tag: class: 'size-full object-contain' }}{%- endif -%}</span>
+                    {%- endfor -%}
+                  </div>
+                  <div class="min-w-[120px] flex-1">
+                    <a href="{{ order.customer_url }}" class="font-semibold text-ink hover:text-primary">{{ order.name }}</a>
+                    <p class="text-sm text-muted">{{ order.created_at | date: format: 'date' }} · {{ order.line_items.size }} {{ 'customer.items' | t }}</p>
+                  </div>
+                  <span class="rounded-full px-3 py-1 text-xs font-semibold {% if order.fulfillment_status == 'fulfilled' %}bg-secondary/15 text-[#1a8f86]{% else %}bg-yellow/40 text-ink{% endif %}">{{ order.fulfillment_status_label }}</span>
+                  <span class="w-24 text-right font-bold text-primary">{{ order.total_price | money }}</span>
+                  <a href="{{ order.customer_url }}" class="text-sm font-medium text-primary">{{ 'customer.view' | t }} →</a>
+                </li>
+              {%- endfor -%}
+            </ul>
+            {% render 'pagination', paginate: paginate %}
+          {%- else -%}
+            <div class="mt-5 rounded-2xl bg-soft p-8 text-center">
+              <p class="text-muted">{{ 'customer.no_orders' | t }}</p>
+              <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary mt-4">{{ 'templates.404.cta' | t }}</a>
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+
+      {%- if customer.default_address -%}
+        <div class="rounded-3xl bg-white p-6 shadow-soft">
+          <div class="flex items-center justify-between"><h2 class="font-heading text-2xl font-semibold text-ink">{{ 'customer.default_address' | t }}</h2><a href="{{ routes.account_addresses_url }}" class="text-sm font-medium text-primary">{{ 'customer.manage' | t }}</a></div>
+          <div class="mt-4 text-muted">{{ customer.default_address | format_address }}</div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Account overview",
+  "settings": [
+    { "type": "text", "id": "welcome_text", "label": "Welcome text", "default": "Here’s everything happening with your pack." }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,130 @@
+{%- comment -%} Figma: nav (197:3008) — utility bar + main nav {%- endcomment -%}
+<header-wrapper class="block {% if section.settings.sticky %}sticky top-0{% endif %} z-40 shadow-[0_16px_32px_rgb(255_107_107/0.16)]">
+  {%- if section.settings.show_topbar -%}
+    <div class="bg-primary text-white">
+      <div class="page-width flex h-9 items-center justify-between text-sm md:text-base">
+        <div class="flex items-center gap-4">
+          {%- if section.settings.phone != blank -%}
+            <a href="tel:{{ section.settings.phone | remove: ' ' }}" class="flex items-center gap-1.5">
+              {% render 'icon', name: 'phone', class: 'size-3' %}{{ section.settings.phone }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.address != blank -%}
+            <span class="hidden items-center gap-1.5 md:flex">{% render 'icon', name: 'pin', class: 'size-3' %}{{ section.settings.address }}</span>
+          {%- endif -%}
+        </div>
+        <div class="flex items-center gap-4">
+          {%- form 'localization', class: 'flex items-center gap-4' -%}
+            {%- if section.settings.show_currency and localization.available_countries.size > 1 -%}
+              <label class="sr-only" for="HeaderCountry">Country</label>
+              <select id="HeaderCountry" name="country_code" onchange="this.form.submit()" class="cursor-pointer border-r border-white/30 bg-transparent pr-4 text-white [&>option]:text-ink">
+                {%- for country in localization.available_countries -%}
+                  <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>{{ country.currency.iso_code }}</option>
+                {%- endfor -%}
+              </select>
+            {%- endif -%}
+            {%- if section.settings.show_language and localization.available_languages.size > 1 -%}
+              <label class="sr-only" for="HeaderLanguage">Language</label>
+              <select id="HeaderLanguage" name="locale_code" onchange="this.form.submit()" class="cursor-pointer bg-transparent text-white [&>option]:text-ink">
+                {%- for language in localization.available_languages -%}
+                  <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>{{ language.endonym_name | capitalize | slice: 0, 3 }}</option>
+                {%- endfor -%}
+              </select>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="bg-white/95 backdrop-blur-[2px]">
+    <div class="page-width flex h-[76px] items-center justify-between gap-6">
+      <button type="button" class="lg:hidden" data-drawer-open="MenuDrawer" aria-label="{{ 'general.menu' | t }}">
+        {% render 'icon', name: 'menu', class: 'size-6' %}
+      </button>
+
+      <a href="{{ routes.root_url }}" class="flex items-center gap-2.5 text-primary">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 400 | image_tag: width: section.settings.logo_width, alt: shop.name, class: 'h-auto', style: 'max-width: none;' }}
+        {%- else -%}
+          {% render 'icon', name: 'paw', class: 'h-7 w-[34px]' %}
+          <span class="font-heading text-[28px] font-bold leading-none"><span class="text-ink">Paw</span>Play</span>
+        {%- endif -%}
+      </a>
+
+      <nav class="hidden lg:block" aria-label="Main">
+        <ul class="flex items-center gap-10">
+          {%- for link in section.settings.menu.links -%}
+            <li>
+              <a href="{{ link.url }}" class="font-medium text-muted transition hover:text-primary {% if link.active %}text-primary{% endif %}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+
+      <div class="flex items-center gap-2.5">
+        {%- if section.settings.show_search -%}
+          <form action="{{ routes.search_url }}" method="get" role="search" class="hidden h-10 w-[231px] items-center gap-2.5 rounded-full border border-[#f6f6f6] bg-white px-4 xl:flex">
+            {% render 'icon', name: 'search', class: 'size-4 text-ink' %}
+            <label for="HeaderSearch" class="sr-only">{{ 'general.search' | t }}</label>
+            <input id="HeaderSearch" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}" class="w-full bg-transparent text-[15px] outline-none placeholder:text-[#c6c6c6]">
+            <input type="hidden" name="options[prefix]" value="last">
+          </form>
+          <a href="{{ routes.search_url }}" class="grid size-10 place-items-center rounded-full border border-divider xl:hidden" aria-label="{{ 'general.search' | t }}">
+            {% render 'icon', name: 'search', class: 'size-4' %}
+          </a>
+        {%- endif -%}
+
+        <a href="{{ routes.cart_url }}" data-cart-toggle class="relative grid size-10 place-items-center rounded-full border border-divider bg-white" aria-label="{{ 'general.cart' | t }}">
+          {% render 'icon', name: 'bag', class: 'size-4' %}
+          <span data-cart-count class="absolute -right-[7px] -top-[9px] grid h-5 min-w-[22px] place-items-center rounded-full bg-primary px-1 text-sm leading-none text-white {% if cart.item_count == 0 %}hidden{% endif %}" aria-label="{{ 'accessibility.cart_count' | t: count: cart.item_count }}">{{ cart.item_count }}</span>
+        </a>
+
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="grid size-10 place-items-center overflow-hidden rounded-full bg-soft" aria-label="{{ 'general.account' | t }}">
+            {%- if customer and section.settings.avatar != blank -%}
+              {{ section.settings.avatar | image_url: width: 80 | image_tag: width: 40, height: 40, class: 'size-10 object-cover' }}
+            {%- else -%}
+              {% render 'icon', name: 'user', class: 'size-5 text-muted' %}
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Mobile drawer {%- endcomment -%}
+  <dialog id="MenuDrawer" class="m-0 h-full max-h-none w-[85vw] max-w-sm bg-white p-6 backdrop:bg-ink/40">
+    <div class="mb-8 flex items-center justify-between">
+      <span class="font-heading text-2xl font-bold text-primary">{{ shop.name }}</span>
+      <button type="button" data-drawer-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close', class: 'size-6' %}</button>
+    </div>
+    <ul class="space-y-5 text-lg font-medium">
+      {%- for link in section.settings.menu.links -%}
+        <li><a href="{{ link.url }}" class="{% if link.active %}text-primary{% endif %}">{{ link.title }}</a></li>
+      {%- endfor -%}
+    </ul>
+  </dialog>
+</header-wrapper>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    { "type": "header", "content": "Top bar" },
+    { "type": "checkbox", "id": "show_topbar", "label": "Show top bar", "default": true },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "+155 5467 2345" },
+    { "type": "text", "id": "address", "label": "Address", "default": "218 Maple avenue, Downtown" },
+    { "type": "checkbox", "id": "show_currency", "label": "Show country/currency selector", "default": true },
+    { "type": "checkbox", "id": "show_language", "label": "Show language selector", "default": true },
+    { "type": "header", "content": "Main bar" },
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 260, "step": 4, "unit": "px", "default": 160 },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
+    { "type": "image_picker", "id": "avatar", "label": "Logged-in avatar image", "info": "Shown on the account button when a customer is signed in" },
+    { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true }
+  ]
+}
+{% endschema %}

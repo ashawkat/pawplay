@@ -1,0 +1,140 @@
+{%- comment -%} Figma: PawPlay/ Shop (60:224). Filters = Shopify Search & Discovery storefront filters. {%- endcomment -%}
+{%- assign banner_title = section.settings.title | default: collection.title -%}
+{%- assign banner_sub = collection.description | default: section.settings.subtitle -%}
+{% render 'page-banner', title: banner_title, subtitle: banner_sub, breadcrumb: true, crumb: collection.title, image: section.settings.banner_image %}
+
+{%- paginate collection.products by section.settings.per_page -%}
+<div class="section-y">
+  <div class="page-width">
+    <collection-filters class="grid gap-8 lg:grid-cols-[264px_1fr]" data-section="{{ section.id }}">
+      <aside data-filters-panel class="hidden lg:block">
+        <form id="FilterForm" class="space-y-4" data-filter-form>
+          {%- if section.settings.show_categories and section.settings.category_menu.links.size > 0 -%}
+            <details class="group rounded-xl border border-divider bg-white" open>
+              <summary class="flex cursor-pointer list-none items-center justify-between p-4 font-semibold group-open:border-b group-open:border-divider [&::-webkit-details-marker]:hidden">
+                {{ section.settings.category_heading }}{% render 'icon', name: 'chevron-down', class: 'size-5 transition group-open:rotate-180' %}
+              </summary>
+              <ul class="space-y-3 p-4 text-sm">
+                {%- for link in section.settings.category_menu.links -%}
+                  <li><a href="{{ link.url }}" class="transition hover:text-primary {% if link.active %}font-semibold text-primary{% endif %}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            </details>
+          {%- endif -%}
+
+          {%- for filter in collection.filters -%}
+            <details class="group rounded-xl border border-divider bg-white" {% if forloop.index <= 4 or filter.active_values.size > 0 %}open{% endif %}>
+              <summary class="flex cursor-pointer list-none items-center justify-between p-4 font-semibold group-open:border-b group-open:border-divider [&::-webkit-details-marker]:hidden">
+                {{ filter.label }}{% render 'icon', name: 'chevron-down', class: 'size-5 transition group-open:rotate-180' %}
+              </summary>
+              <div class="p-4 text-sm">
+                {%- if filter.type == 'price_range' -%}
+                  {%- assign max = filter.range_max | money_without_currency | remove: ',' -%}
+                  <div class="flex gap-3">
+                    <label class="flex-1"><span class="sr-only">{{ 'collections.from' | t }}</span>
+                      <input type="number" name="{{ filter.min_value.param_name }}" min="0" max="{{ max }}" placeholder="0" value="{% if filter.min_value.value %}{{ filter.min_value.value | money_without_currency | remove: ',' }}{% endif %}" class="h-10 w-full rounded-lg border border-divider bg-soft px-3 text-center"></label>
+                    <label class="flex-1"><span class="sr-only">{{ 'collections.to' | t }}</span>
+                      <input type="number" name="{{ filter.max_value.param_name }}" min="0" max="{{ max }}" placeholder="{{ max }}" value="{% if filter.max_value.value %}{{ filter.max_value.value | money_without_currency | remove: ',' }}{% endif %}" class="h-10 w-full rounded-lg border border-divider bg-soft px-3 text-center"></label>
+                  </div>
+                {%- else -%}
+                  <ul class="space-y-3">
+                    {%- for value in filter.values -%}
+                      {%- liquid
+                        assign disabled = false
+                        if value.count == 0 and value.active == false
+                          assign disabled = true
+                        endif
+                        assign stars = 0
+                        if filter.param_name contains 'rating'
+                          assign stars = value.value | plus: 0
+                        endif
+                      -%}
+                      <li>
+                        <label class="flex cursor-pointer items-center gap-2.5 {% if disabled %}opacity-40{% endif %}">
+                          <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if disabled %}disabled{% endif %} class="size-4 rounded accent-[var(--pp-primary)]">
+                          {%- if value.swatch.color -%}<span class="size-4 rounded-full border border-divider" style="background: {{ value.swatch.color }}"></span>{%- endif -%}
+                          {%- if stars > 0 -%}
+                            <span class="flex gap-0.5" aria-label="{{ value.label }}">{%- for i in (1..5) -%}{%- if i <= stars -%}{% render 'icon', name: 'star', class: 'size-4 text-warning' %}{%- else -%}{% render 'icon', name: 'star', class: 'size-4 text-[#d9d9d9]' %}{%- endif -%}{%- endfor -%}</span>
+                          {%- else -%}
+                            <span>{{ value.label }}</span>
+                          {%- endif -%}
+                          <span class="ml-auto text-xs text-disabled">{{ value.count }}</span>
+                        </label>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </div>
+            </details>
+          {%- endfor -%}
+
+          {%- if collection.filters.size > 0 -%}
+            <noscript><button type="submit" class="btn btn--primary w-full">{{ 'collections.apply' | t }}</button></noscript>
+            <a href="{{ collection.url }}" class="block text-center text-sm text-primary underline">{{ 'collections.clear_all' | t }}</a>
+          {%- elsif request.design_mode -%}
+            <p class="rounded-xl border border-dashed border-divider p-4 text-xs text-muted">Install the Shopify Search &amp; Discovery app to add brand, price, rating and pet filters here.</p>
+          {%- endif -%}
+        </form>
+      </aside>
+
+      <div>
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <button type="button" class="btn h-10 border border-divider bg-white px-4 text-sm text-ink lg:hidden" data-toggle-filters>{{ 'collections.filters' | t }}</button>
+            <p class="text-lg font-medium text-text">{{ 'collections.products_found' | t: count: collection.products_count }}</p>
+          </div>
+          <label class="flex items-center gap-3 font-medium">
+            <span>{{ 'collections.sort_by' | t }}</span>
+            {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+            <select name="sort_by" form="FilterForm" class="h-10 rounded-lg border border-divider bg-white px-3 text-sm">
+              {%- for option in collection.sort_options -%}
+                <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+              {%- endfor -%}
+            </select>
+          </label>
+        </div>
+
+        <ul class="mb-6 flex flex-wrap gap-2 empty:hidden">
+          {%- for filter in collection.filters -%}
+            {%- for v in filter.active_values -%}
+              <li><a href="{{ v.url_to_remove }}" class="flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-sm text-primary">{{ v.label }} {% render 'icon', name: 'close', class: 'size-3.5' %}</a></li>
+            {%- endfor -%}
+            {%- if filter.type == 'price_range' -%}
+              {%- if filter.min_value.value or filter.max_value.value -%}
+                <li><a href="{{ filter.url_to_remove }}" class="flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-sm text-primary">{{ filter.min_value.value | default: 0 | money }} – {{ filter.max_value.value | default: filter.range_max | money }} {% render 'icon', name: 'close', class: 'size-3.5' %}</a></li>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        <ul class="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+          {%- for product in collection.products -%}
+            <li>{% render 'product-card', product: product %}</li>
+          {%- else -%}
+            <li class="col-span-full rounded-3xl bg-soft p-10 text-center text-muted">{{ 'templates.collection.empty' | t }}</li>
+          {%- endfor -%}
+        </ul>
+
+        {% render 'pagination', paginate: paginate %}
+      </div>
+    </collection-filters>
+  </div>
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Product grid",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Banner title", "info": "Defaults to collection title" },
+    { "type": "richtext", "id": "subtitle", "label": "Banner subtitle", "info": "Used when the collection has no description", "default": "<p>Premium pet products chosen with care and responsibility. Trusted by pet parents for everyday needs.</p>" },
+    { "type": "image_picker", "id": "banner_image", "label": "Banner background image" },
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 6, "max": 36, "step": 3, "default": 12 },
+    { "type": "header", "content": "Sidebar" },
+    { "type": "checkbox", "id": "show_categories", "label": "Show category menu", "default": true },
+    { "type": "text", "id": "category_heading", "label": "Category heading", "default": "Product Category" },
+    { "type": "link_list", "id": "category_menu", "label": "Category menu" },
+    { "type": "paragraph", "content": "Brand, price, rating and pet filters come from the Shopify Search & Discovery app." }
+  ]
+}
+{% endschema %}

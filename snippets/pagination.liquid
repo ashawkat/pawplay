@@ -1,0 +1,23 @@
+{%- if paginate.pages > 1 -%}
+  <nav class="mt-12 flex items-center justify-center gap-2" aria-label="Pagination">
+    {%- if paginate.previous -%}
+      <a href="{{ paginate.previous.url }}" class="grid h-10 place-items-center rounded-lg border border-divider px-6 font-medium hover:border-primary">{{ 'general.previous' | t }}</a>
+    {%- else -%}
+      <span class="grid h-10 place-items-center rounded-lg border border-divider px-6 font-medium text-disabled">{{ 'general.previous' | t }}</span>
+    {%- endif -%}
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        <a href="{{ part.url }}" class="grid size-10 place-items-center rounded-lg border border-divider hover:border-primary">{{ part.title }}</a>
+      {%- elsif part.title == paginate.current_page -%}
+        <span aria-current="page" class="grid size-10 place-items-center rounded-lg bg-primary font-semibold text-white">{{ part.title }}</span>
+      {%- else -%}
+        <span class="grid size-10 place-items-center">{{ part.title }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if paginate.next -%}
+      <a href="{{ paginate.next.url }}" class="grid h-10 place-items-center rounded-lg border border-divider px-6 font-medium hover:border-primary">{{ 'general.next' | t }}</a>
+    {%- else -%}
+      <span class="grid h-10 place-items-center rounded-lg border border-divider px-6 font-medium text-disabled">{{ 'general.next' | t }}</span>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

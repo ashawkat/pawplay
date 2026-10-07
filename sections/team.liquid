@@ -1,0 +1,47 @@
+{%- comment -%} Figma: About — "Meet the pack behind PawPlay" {%- endcomment -%}
+<section class="section-y">
+  <div class="page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, subheading: section.settings.subheading %}
+    <ul class="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }} class="rounded-3xl border border-divider bg-white p-3 text-center transition hover:-translate-y-1 hover:shadow-soft">
+          <div class="aspect-[4/3.5] overflow-hidden rounded-2xl bg-soft">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', class: 'size-full object-cover' }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+          <h3 class="mt-4 font-body text-lg font-semibold text-ink">{{ block.settings.name }}</h3>
+          <p class="pb-2 text-sm text-muted">{{ block.settings.role }}</p>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Team",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Humans" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Meet the pack behind PawPlay" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "A team of vets, designers, and lifelong animal companions." }
+  ],
+  "blocks": [
+    { "type": "member", "name": "Member", "settings": [ { "type": "image_picker", "id": "image", "label": "Photo" }, { "type": "text", "id": "name", "label": "Name", "default": "Mia Cartier" }, { "type": "text", "id": "role", "label": "Role", "default": "Founder & CEO" } ] }
+  ],
+  "presets": [
+    {
+      "name": "Team",
+      "blocks": [
+        { "type": "member" },
+        { "type": "member", "settings": { "name": "Dr. Leo Park", "role": "Head Veterinarian" } },
+        { "type": "member", "settings": { "name": "Aria Singh", "role": "Lead Groomer" } },
+        { "type": "member", "settings": { "name": "Noah Bell", "role": "Customer Care" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

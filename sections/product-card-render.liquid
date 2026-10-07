@@ -1,0 +1,6 @@
+{%- comment -%} Used by templates/product.card.json so JS can fetch a rendered product card (wishlist). {%- endcomment -%}
+{% render 'product-card', product: product %}
+
+{% schema %}
+{ "name": "Product card (internal)", "settings": [] }
+{% endschema %}

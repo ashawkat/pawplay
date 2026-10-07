@@ -1,0 +1,81 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "title": "Contact Us",
+        "subtitle": "<p>Real humans, real help — whenever you need it.</p>",
+        "breadcrumb": true
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {},
+      "blocks": {
+        "i1": {
+          "type": "info",
+          "settings": {}
+        },
+        "i2": {
+          "type": "info",
+          "settings": {
+            "icon": "chat",
+            "color": "#4ECDC4",
+            "label": "Email us",
+            "value": "hello@example.com"
+          }
+        },
+        "i3": {
+          "type": "info",
+          "settings": {
+            "icon": "pin",
+            "color": "#F4C430",
+            "label": "Visit us",
+            "value": "218 Maple avenue, Downtown"
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3"
+      ]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "open_first": true
+      },
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {}
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>Most orders arrive within 2–5 business days.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "How can I contact customer support?",
+            "answer": "<p>Use the form above or call us — we reply within a few hours.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ]
+    }
+  },
+  "order": [
+    "banner",
+    "form",
+    "faq"
+  ]
+}

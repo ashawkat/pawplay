@@ -1,0 +1,37 @@
+{% render 'page-banner', title: blog.title, subtitle: section.settings.subtitle, breadcrumb: true, crumb: blog.title, image: section.settings.banner_image %}
+
+{%- paginate blog.articles by section.settings.per_page -%}
+<section class="section-y">
+  <div class="page-width">
+    {%- if blog.all_tags.size > 0 and section.settings.show_tags -%}
+      <ul class="mb-10 flex flex-wrap justify-center gap-2">
+        <li><a href="{{ blog.url }}" class="block rounded-full border px-5 py-2 text-sm font-medium {% if current_tags == blank %}border-primary bg-primary text-white{% else %}border-divider hover:border-primary{% endif %}">{{ 'blogs.all' | t }}</a></li>
+        {%- for tag in blog.all_tags -%}
+          <li><a href="{{ blog.url }}/tagged/{{ tag | handleize }}" class="block rounded-full border px-5 py-2 text-sm font-medium {% if current_tags contains tag %}border-primary bg-primary text-white{% else %}border-divider hover:border-primary{% endif %}">{{ tag }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {%- for article in blog.articles -%}
+        <li>{% render 'article-card', article: article %}</li>
+      {%- else -%}
+        {%- for i in (1..3) -%}<li>{% render 'article-card' %}</li>{%- endfor -%}
+      {%- endfor -%}
+    </ul>
+    {% render 'pagination', paginate: paginate %}
+  </div>
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "settings": [
+    { "type": "richtext", "id": "subtitle", "label": "Banner subtitle", "default": "<p>Tips, stories and expert advice for happier, healthier pets.</p>" },
+    { "type": "image_picker", "id": "banner_image", "label": "Banner background image" },
+    { "type": "checkbox", "id": "show_tags", "label": "Show tag filter", "default": true },
+    { "type": "range", "id": "per_page", "label": "Posts per page", "min": 3, "max": 24, "step": 3, "default": 9 }
+  ]
+}
+{% endschema %}

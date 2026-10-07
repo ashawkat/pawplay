@@ -1,0 +1,158 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "title": "Our Story",
+        "subtitle": "<p>Born from love in 2019 · Now serving 30k+ families</p>"
+      }
+    },
+    "mission": {
+      "type": "icon-cards",
+      "settings": {},
+      "blocks": {
+        "c1": {
+          "type": "card",
+          "settings": {}
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "icon": "handshake",
+            "color": "#FF6B6B",
+            "title": "Community",
+            "text": "Building lasting relationships with pet families."
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "icon": "paw",
+            "color": "#23B96F",
+            "title": "Eco-Friendly",
+            "text": "Committed to sustainable and eco-conscious practices."
+          }
+        },
+        "c4": {
+          "type": "card",
+          "settings": {
+            "icon": "user",
+            "color": "#3498DB",
+            "title": "Expertise",
+            "text": "Professional team with years of pet care experience."
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ]
+    },
+    "story": {
+      "type": "story-timeline",
+      "settings": {},
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {}
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "value": "25k+",
+            "label": "Parents"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "value": "120",
+            "label": "Team members"
+          }
+        },
+        "m1": {
+          "type": "milestone",
+          "settings": {}
+        },
+        "m2": {
+          "type": "milestone",
+          "settings": {
+            "year": "2021",
+            "title": "Service launch",
+            "text": "Grooming & boarding added in 12 cities."
+          }
+        },
+        "m3": {
+          "type": "milestone",
+          "settings": {
+            "year": "2023",
+            "title": "Global Pawprint",
+            "text": "25,000 pet parents in 40 countries."
+          }
+        },
+        "m4": {
+          "type": "milestone",
+          "settings": {
+            "year": "2026",
+            "title": "You with Us",
+            "text": "Building the kindest pet brand on earth."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ]
+    },
+    "team": {
+      "type": "team",
+      "settings": {},
+      "blocks": {
+        "t1": {
+          "type": "member",
+          "settings": {}
+        },
+        "t2": {
+          "type": "member",
+          "settings": {
+            "name": "Dr. Leo Park",
+            "role": "Head Veterinarian"
+          }
+        },
+        "t3": {
+          "type": "member",
+          "settings": {
+            "name": "Aria Singh",
+            "role": "Lead Groomer"
+          }
+        },
+        "t4": {
+          "type": "member",
+          "settings": {
+            "name": "Noah Bell",
+            "role": "Customer Care"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    }
+  },
+  "order": [
+    "banner",
+    "mission",
+    "story",
+    "team"
+  ]
+}

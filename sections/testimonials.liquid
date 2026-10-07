@@ -1,0 +1,66 @@
+{%- comment -%} Figma: Frame 47 (30:282) — testimonial slider {%- endcomment -%}
+<section class="section-y overflow-hidden bg-cream">
+  <div class="page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, eyebrow_style: 'gold', heading: section.settings.heading, subheading: section.settings.subheading %}
+
+    <slide-show class="relative mt-14 block" data-autoplay="{{ section.settings.autoplay }}">
+      <ul class="grid" data-slides>
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }} class="col-start-1 row-start-1 grid items-center gap-10 transition-opacity duration-500 md:grid-cols-[444px_1fr] md:gap-[60px] {% unless forloop.first %}pointer-events-none opacity-0{% endunless %}" data-slide aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}">
+            <div class="aspect-[444/354] overflow-hidden rounded-3xl rounded-tl-[144px] bg-[#f2d2b4]">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'size-full object-cover' }}
+              {%- else -%}
+                {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="flex flex-col gap-6">
+              <div class="flex items-center gap-2.5">
+                <div class="size-[38px] overflow-hidden rounded-full bg-blush">
+                  {%- if block.settings.avatar != blank -%}{{ block.settings.avatar | image_url: width: 80 | image_tag: class: 'size-full object-cover' }}{%- endif -%}
+                </div>
+                <div>
+                  <p class="text-lg font-semibold leading-none text-black">{{ block.settings.name }}</p>
+                  <p class="mt-1.5 text-sm font-medium leading-none text-muted">{{ block.settings.role }}</p>
+                </div>
+              </div>
+              <blockquote class="text-xl font-bold leading-[1.4] text-text md:text-2xl [&_p]:inline">{{ block.settings.quote }}</blockquote>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if section.blocks.size > 1 -%}
+        <div class="mt-8 flex gap-2.5 md:absolute md:bottom-8 md:left-[504px] md:mt-0">
+          <button type="button" data-prev class="grid size-11 place-items-center rounded-full border border-ink text-ink" aria-label="{{ 'general.previous' | t }}">{% render 'icon', name: 'chevron-left', class: 'size-6' %}</button>
+          <button type="button" data-next class="grid size-11 place-items-center rounded-full border border-ink text-ink" aria-label="{{ 'general.next' | t }}">{% render 'icon', name: 'chevron-right', class: 'size-6' %}</button>
+        </div>
+      {%- endif -%}
+    </slide-show>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "10k+ Happy Customers" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Loved by Pets & Their Humans" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Real stories from pet parents who trust us for quality, care, and nutrition." },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "image_picker", "id": "avatar", "label": "Avatar" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Sarah Thompson" },
+        { "type": "text", "id": "role", "label": "Role", "default": "Dog Owner" },
+        { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>“My dog absolutely loves it!” I noticed more energy and a healthier coat within weeks. Finally found food that my dog enjoys and digests well.</p>" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Testimonials", "blocks": [ { "type": "testimonial" }, { "type": "testimonial", "settings": { "name": "James Carter", "role": "Cat Owner" } } ] } ]
+}
+{% endschema %}

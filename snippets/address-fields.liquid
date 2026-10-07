@@ -1,0 +1,15 @@
+{%- comment -%} Params: form, prefix {%- endcomment -%}
+{%- assign cls = 'h-12 w-full rounded-full border border-divider bg-soft px-5' -%}
+<div class="grid gap-3 sm:grid-cols-2">
+  <label><span class="sr-only">{{ 'customer.first_name' | t }}</span><input name="address[first_name]" value="{{ form.first_name }}" placeholder="{{ 'customer.first_name' | t }}" autocomplete="given-name" class="{{ cls }}"></label>
+  <label><span class="sr-only">{{ 'customer.last_name' | t }}</span><input name="address[last_name]" value="{{ form.last_name }}" placeholder="{{ 'customer.last_name' | t }}" autocomplete="family-name" class="{{ cls }}"></label>
+  <label class="sm:col-span-2"><span class="sr-only">{{ 'customer.address1' | t }}</span><input name="address[address1]" value="{{ form.address1 }}" placeholder="{{ 'customer.address1' | t }}" autocomplete="address-line1" class="{{ cls }}"></label>
+  <label class="sm:col-span-2"><span class="sr-only">{{ 'customer.address2' | t }}</span><input name="address[address2]" value="{{ form.address2 }}" placeholder="{{ 'customer.address2' | t }}" autocomplete="address-line2" class="{{ cls }}"></label>
+  <label><span class="sr-only">{{ 'customer.city' | t }}</span><input name="address[city]" value="{{ form.city }}" placeholder="{{ 'customer.city' | t }}" autocomplete="address-level2" class="{{ cls }}"></label>
+  <label><span class="sr-only">{{ 'customer.zip' | t }}</span><input name="address[zip]" value="{{ form.zip }}" placeholder="{{ 'customer.zip' | t }}" autocomplete="postal-code" class="{{ cls }}"></label>
+  <label><span class="sr-only">{{ 'customer.country' | t }}</span><select name="address[country]" data-default="{{ form.country }}" autocomplete="country" class="{{ cls }}">{{ all_country_option_tags }}</select></label>
+  <label><span class="sr-only">{{ 'customer.province' | t }}</span><input name="address[province]" value="{{ form.province }}" placeholder="{{ 'customer.province' | t }}" autocomplete="address-level1" class="{{ cls }}"></label>
+  <label class="sm:col-span-2"><span class="sr-only">{{ 'contact.phone' | t }}</span><input type="tel" name="address[phone]" value="{{ form.phone }}" placeholder="{{ 'contact.phone' | t }}" autocomplete="tel" class="{{ cls }}"></label>
+  <label class="flex items-center gap-2 text-sm sm:col-span-2">{{ form.set_as_default_checkbox }} {{ 'customer.set_default' | t }}</label>
+  <button class="btn btn--primary sm:col-span-2 sm:w-fit">{{ 'customer.save' | t }}</button>
+</div>

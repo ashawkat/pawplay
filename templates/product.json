@@ -1,0 +1,54 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": { "type": "vendor", "settings": {} },
+        "title": { "type": "title", "settings": {} },
+        "rating": { "type": "rating", "settings": {} },
+        "price": { "type": "price", "settings": {} },
+        "variants": { "type": "variant_picker", "settings": {} },
+        "text": { "type": "text", "settings": {} },
+        "buy": { "type": "buy_buttons", "settings": { "show_dynamic_checkout": true } },
+        "perks": { "type": "perks", "settings": {} }
+      },
+      "block_order": ["vendor", "title", "rating", "price", "variants", "text", "buy", "perks"],
+      "settings": {}
+    },
+    "details": {
+      "type": "product-details",
+      "blocks": {
+        "d": { "type": "description", "settings": {} },
+        "t1": { "type": "tab", "settings": { "heading": "Material & Care" } },
+        "t2": { "type": "tab", "settings": { "heading": "Size & Fit" } },
+        "t3": { "type": "tab", "settings": { "heading": "Shipping & Returns" } }
+      },
+      "block_order": ["d", "t1", "t2", "t3"],
+      "settings": {}
+    },
+    "banner": { "type": "image-with-text", "settings": {} },
+    "features": {
+      "type": "feature-gallery",
+      "blocks": {
+        "f1": { "type": "feature", "settings": {} },
+        "f2": { "type": "feature", "settings": { "title": "Paw-Print Design", "text": "A signature style look pet parents adore." } },
+        "f3": { "type": "feature", "settings": { "title": "Secure Zipper", "text": "Safety-lock zipper prevents accidental escapes." } },
+        "f4": { "type": "feature", "settings": { "title": "Vet-Approved", "text": "Tested and recommended by veterinary specialists." } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"],
+      "settings": {}
+    },
+    "reviews": {
+      "type": "product-reviews",
+      "blocks": {
+        "r1": { "type": "review", "settings": {} },
+        "r2": { "type": "review", "settings": { "name": "Daniel R.", "date": "1 month ago", "stars": 5, "title": "Premium feel for the price", "body": "Stitching is perfect, mesh is sturdy and the pink shade is gorgeous in person." } },
+        "r3": { "type": "review", "settings": { "name": "Sofia A.", "date": "2 months ago", "stars": 4, "title": "Great for small dogs", "body": "My Pomeranian fits comfortably in the medium. The strap could be more padded." } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {}
+    },
+    "related": { "type": "related-products", "settings": {} }
+  },
+  "order": ["main", "details", "banner", "features", "reviews", "related"]
+}

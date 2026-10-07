@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "account-pets",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

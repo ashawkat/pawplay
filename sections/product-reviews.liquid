@@ -1,0 +1,99 @@
+{%- comment -%}
+  Figma: customer reviews block. Summary reads the standard reviews.rating / reviews.rating_count
+  metafields (filled by Judge.me, Shopify Product Reviews, etc). Review cards are blocks, or
+  merchants can drop their review app block in instead.
+{%- endcomment -%}
+{%- liquid
+  assign rating = product.metafields.reviews.rating.value.rating | default: section.settings.fallback_rating
+  assign count = product.metafields.reviews.rating_count.value | default: section.settings.fallback_count
+-%}
+<section id="Reviews" class="section-y">
+  <div class="page-width grid gap-8 lg:grid-cols-[364px_1fr]">
+    <div class="h-fit rounded-3xl border border-divider p-6">
+      <span class="inline-flex h-[30px] items-center rounded-full bg-primary/10 px-4 text-xs font-medium uppercase text-primary">{{ section.settings.eyebrow }}</span>
+      <p class="mt-4 text-4xl font-bold text-ink">{{ rating | round: 1 }}</p>
+      <div class="mt-2 flex gap-0.5">{%- for i in (1..5) -%}{%- if i <= rating -%}{% render 'icon', name: 'star', class: 'size-6 text-warning' %}{%- else -%}{% render 'icon', name: 'star', class: 'size-6 text-[#d9d9d9]' %}{%- endif -%}{%- endfor -%}</div>
+      <p class="mt-2 text-sm text-muted">{{ 'products.based_on' | t: count: count }}</p>
+      <ul class="mt-6 space-y-2.5 text-sm">
+        {%- for i in (1..5) reversed -%}
+          {%- assign key = 'pct_' | append: i -%}
+          <li class="flex items-center gap-3">
+            <span class="w-6">{{ i }}★</span>
+            <span class="h-2 flex-1 overflow-hidden rounded-full bg-soft"><span class="block h-full rounded-full bg-primary" style="width: {{ section.settings[key] }}%"></span></span>
+            <span class="w-9 text-right text-muted">{{ section.settings[key] }}%</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if section.settings.button_link != blank -%}
+        <a href="{{ section.settings.button_link }}" class="btn btn--primary mt-6 w-full">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="space-y-4">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+          {%- when 'review' -%}
+            <article {{ block.shopify_attributes }} class="rounded-3xl border border-divider p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="size-10 overflow-hidden rounded-full bg-blush">{%- if block.settings.avatar != blank -%}{{ block.settings.avatar | image_url: width: 80 | image_tag: class: 'size-full object-cover' }}{%- endif -%}</div>
+                  <div>
+                    <p class="text-sm font-semibold text-text">{{ block.settings.name }} {%- if block.settings.verified -%}<span class="ml-1 text-xs font-medium text-secondary">✓ {{ 'products.verified' | t }}</span>{%- endif -%}</p>
+                    <p class="text-xs text-muted">{{ block.settings.date }}</p>
+                  </div>
+                </div>
+                <div class="flex gap-0.5">{%- for i in (1..5) -%}{%- if i <= block.settings.stars -%}{% render 'icon', name: 'star', class: 'size-5 text-warning' %}{%- else -%}{% render 'icon', name: 'star', class: 'size-5 text-[#d9d9d9]' %}{%- endif -%}{%- endfor -%}</div>
+              </div>
+              <h3 class="mt-4 font-body text-base font-semibold text-text">{{ block.settings.title }}</h3>
+              <p class="mt-1 text-sm text-muted">{{ block.settings.body }}</p>
+            </article>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product reviews",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer Reviews" },
+    { "type": "range", "id": "fallback_rating", "label": "Fallback rating", "min": 0, "max": 5, "step": 0.1, "default": 4.9, "info": "Used when the product has no reviews metafield" },
+    { "type": "number", "id": "fallback_count", "label": "Fallback review count", "default": 452 },
+    { "type": "range", "id": "pct_5", "label": "5-star %", "min": 0, "max": 100, "step": 1, "default": 86 },
+    { "type": "range", "id": "pct_4", "label": "4-star %", "min": 0, "max": 100, "step": 1, "default": 10 },
+    { "type": "range", "id": "pct_3", "label": "3-star %", "min": 0, "max": 100, "step": 1, "default": 3 },
+    { "type": "range", "id": "pct_2", "label": "2-star %", "min": 0, "max": 100, "step": 1, "default": 1 },
+    { "type": "range", "id": "pct_1", "label": "1-star %", "min": 0, "max": 100, "step": 1, "default": 0 },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Write a Review" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Link to your review app form" }
+  ],
+  "blocks": [
+    { "type": "@app" },
+    {
+      "type": "review", "name": "Review",
+      "settings": [
+        { "type": "image_picker", "id": "avatar", "label": "Avatar" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Maya K." },
+        { "type": "checkbox", "id": "verified", "label": "Verified buyer", "default": true },
+        { "type": "text", "id": "date", "label": "Date", "default": "2 weeks ago" },
+        { "type": "range", "id": "stars", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Title", "default": "My cat actually loves it!" },
+        { "type": "textarea", "id": "body", "label": "Review", "default": "Beautifully made and so light. My cat walks in herself now whenever it's out." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product reviews",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review", "settings": { "name": "Daniel R.", "date": "1 month ago", "stars": 5, "title": "Premium feel for the price", "body": "Stitching is perfect, mesh is sturdy and the pink shade is gorgeous in person." } },
+        { "type": "review", "settings": { "name": "Sofia A.", "date": "2 months ago", "stars": 4, "title": "Great for small dogs", "body": "My Pomeranian fits comfortably in the medium. The strap was a bit more padded." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

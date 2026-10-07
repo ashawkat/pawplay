@@ -1,0 +1,21 @@
+{%- comment -%} Figma: Pet (181:3596). Params: pet (object with name,type,breed,age,weight,image) {%- endcomment -%}
+<li class="rounded-3xl bg-white p-5 shadow-soft">
+  <div class="aspect-square overflow-hidden rounded-2xl bg-soft">
+    {%- if pet.image != blank -%}
+      <img src="{{ pet.image }}" alt="{{ pet.name | escape }}" loading="lazy" width="400" height="400" class="size-full object-cover">
+    {%- else -%}
+      <span class="grid size-full place-items-center text-primary/30">{% render 'icon', name: 'paw', class: 'h-20 w-24' %}</span>
+    {%- endif -%}
+  </div>
+  <div class="mt-4 flex items-start justify-between">
+    <div>
+      <p class="font-heading text-xl font-semibold text-ink">{{ pet.name }}</p>
+      <p class="text-sm text-muted">{{ pet.type }}{% if pet.breed %} · {{ pet.breed }}{% endif %}</p>
+    </div>
+    {%- if pet.type -%}<span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">{{ pet.type }}</span>{%- endif -%}
+  </div>
+  <dl class="mt-4 grid grid-cols-2 gap-3 text-sm">
+    {%- if pet.age -%}<div class="rounded-xl bg-soft p-3"><dt class="text-muted">{{ 'customer.pet_age' | t }}</dt><dd class="font-semibold">{{ pet.age }}</dd></div>{%- endif -%}
+    {%- if pet.weight -%}<div class="rounded-xl bg-soft p-3"><dt class="text-muted">{{ 'customer.pet_weight' | t }}</dt><dd class="font-semibold">{{ pet.weight }}</dd></div>{%- endif -%}
+  </dl>
+</li>

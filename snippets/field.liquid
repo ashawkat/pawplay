@@ -1,0 +1,7 @@
+{%- comment -%} Form field. Params: name, label (translation key), type, autocomplete, required, value, full (span 2 cols), id {%- endcomment -%}
+{%- assign fid = id | default: name | handleize -%}
+<label class="block {% if full %}sm:col-span-2{% endif %}" for="{{ fid }}">
+  <span class="mb-2 block text-sm font-semibold text-text">{{ label | t }}{% if required %} <span class="text-primary">*</span>{% endif %}</span>
+  <input id="{{ fid }}" type="{{ type | default: 'text' }}" name="{{ name }}" value="{{ value | escape }}" {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %} {% if required %}required{% endif %}
+    class="h-12 w-full rounded-full border border-divider bg-soft px-5 outline-none transition focus:border-primary focus:bg-white">
+</label>

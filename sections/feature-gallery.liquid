@@ -1,0 +1,56 @@
+{%- comment -%} Figma: "Crafted with care, built to last" — staggered image cards with captions {%- endcomment -%}
+<section class="section-y">
+  <div class="page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading %}
+    <ul class="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
+      {%- for block in section.blocks -%}
+        {%- assign up = forloop.index | modulo: 2 -%}
+        <li {{ block.shopify_attributes }} class="flex flex-col gap-4 {% if up == 0 %}lg:flex-col-reverse{% endif %}">
+          <div class="text-center">
+            <h3 class="font-body text-lg font-semibold text-text">{{ block.settings.title }}</h3>
+            <p class="mt-1 text-sm text-muted">{{ block.settings.text }}</p>
+          </div>
+          <div class="aspect-square overflow-hidden rounded-2xl bg-soft">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'size-full object-cover' }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Feature gallery",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why Pet Parents Love It" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Crafted with care, built to last" }
+  ],
+  "blocks": [
+    {
+      "type": "feature", "name": "Feature",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Breathable Mesh" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Engineered airflow keeps pets cool on every trip." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature gallery",
+      "blocks": [
+        { "type": "feature" },
+        { "type": "feature", "settings": { "title": "Paw-Print Design", "text": "A signature style look pet parents adore." } },
+        { "type": "feature", "settings": { "title": "Secure Zipper", "text": "Safety-lock zipper prevents accidental escapes." } },
+        { "type": "feature", "settings": { "title": "Vet-Approved", "text": "Tested and recommended by veterinary specialists." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

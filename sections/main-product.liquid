@@ -1,0 +1,178 @@
+{%- comment -%} Figma: PawPlay/ Product Details (62:1448) — top area {%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured = current_variant.featured_media | default: product.featured_media
+  assign rating = product.metafields.reviews.rating.value.rating | default: 0
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+-%}
+<product-info class="block py-10 md:py-14" data-section="{{ section.id }}" data-url="{{ product.url }}">
+  <div class="page-width">
+    <nav aria-label="Breadcrumb" class="mb-6 text-sm text-muted">
+      <a href="{{ routes.root_url }}" class="hover:text-primary">{{ 'general.home' | t }}</a>
+      {%- if collection -%} / <a href="{{ collection.url }}" class="hover:text-primary">{{ collection.title }}</a>{%- elsif product.collections.first -%} / <a href="{{ product.collections.first.url }}" class="hover:text-primary">{{ product.collections.first.title }}</a>{%- endif -%}
+      / <span class="text-primary" aria-current="page">{{ product.title }}</span>
+    </nav>
+
+    <div class="grid gap-10 lg:grid-cols-2 lg:gap-14">
+      {%- comment -%} Gallery {%- endcomment -%}
+      <media-gallery class="grid gap-4 md:grid-cols-[96px_1fr] lg:sticky lg:top-32 lg:self-start">
+        <ul class="order-2 flex gap-3 overflow-x-auto md:order-1 md:flex-col" role="list">
+          {%- for media in product.media limit: 8 -%}
+            <li class="shrink-0">
+              <button type="button" data-thumb="{{ media.id }}" class="block size-20 overflow-hidden rounded-xl border-2 bg-[#f3f3f3] md:size-24 {% if media.id == featured.id %}border-primary{% else %}border-transparent{% endif %}" aria-label="{{ media.alt | default: product.title | escape }}">
+                {{ media.preview_image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'size-full object-cover' }}
+              </button>
+            </li>
+          {%- endfor -%}
+        </ul>
+        <div class="relative order-1 aspect-square overflow-hidden rounded-3xl bg-[#f3f3f3] md:order-2">
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            {%- assign off = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price -%}
+            <span class="absolute left-4 top-4 z-10 rounded-xl bg-primary px-2.5 py-1.5 text-sm font-medium text-white" data-sale-badge>-{{ off }}%</span>
+          {%- endif -%}
+          {%- if settings.show_wishlist_button -%}
+            <button type="button" class="absolute right-4 top-4 z-10 grid size-10 place-items-center rounded-full bg-white text-primary shadow-card" data-wishlist="{{ product.handle }}" aria-label="{{ 'products.add_to_wishlist' | t }}">{% render 'icon', name: 'heart', class: 'size-5' %}</button>
+          {%- endif -%}
+          {%- for media in product.media -%}
+            <div data-media="{{ media.id }}" class="absolute inset-0 {% unless media.id == featured.id %}hidden{% endunless %}">
+              {%- case media.media_type -%}
+                {%- when 'image' -%}
+                  {%- if forloop.first -%}{%- assign load = 'eager' -%}{%- else -%}{%- assign load = 'lazy' -%}{%- endif -%}
+                  {{ media | image_url: width: 1400 | image_tag: loading: load, widths: '600,900,1200,1400', sizes: '(min-width: 1024px) 560px, 100vw', class: 'size-full object-contain', alt: media.alt | default: product.title }}
+                {%- else -%}
+                  {{ media | media_tag: image_size: '1400x', class: 'size-full' }}
+              {%- endcase -%}
+            </div>
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endfor -%}
+        </div>
+      </media-gallery>
+
+      {%- comment -%} Info {%- endcomment -%}
+      <div class="flex flex-col gap-5">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+            {%- when 'vendor' -%}
+              <p {{ block.shopify_attributes }} class="text-base font-medium text-text">{{ 'products.brand' | t }}: <a href="{{ product.vendor | url_for_vendor }}" class="hover:text-primary">{{ product.vendor }}</a></p>
+            {%- when 'title' -%}
+              <h1 {{ block.shopify_attributes }} class="font-body text-2xl font-semibold leading-tight text-ink md:text-[28px]">{{ product.title }}</h1>
+            {%- when 'rating' -%}
+              <div {{ block.shopify_attributes }} class="flex flex-wrap items-center gap-3 text-sm">
+                {%- if rating_count > 0 -%}
+                  <span class="flex gap-0.5">{%- for i in (1..5) -%}{%- if i <= rating -%}{% render 'icon', name: 'star', class: 'size-5 text-warning' %}{%- else -%}{% render 'icon', name: 'star', class: 'size-5 text-[#d9d9d9]' %}{%- endif -%}{%- endfor -%}</span>
+                  <a href="#Reviews" class="font-medium text-text">{{ rating | round: 1 }} <span class="text-muted">({{ rating_count }} {{ 'products.reviews' | t }})</span></a>
+                {%- endif -%}
+                <span data-stock class="flex items-center gap-1 font-medium {% if current_variant.available %}text-[#23b96f]{% else %}text-primary{% endif %}">
+                  {%- if current_variant.available -%}✓ {{ 'products.in_stock' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}
+                </span>
+              </div>
+            {%- when 'price' -%}
+              <div {{ block.shopify_attributes }} class="flex items-center gap-3" data-price>
+                <span class="text-3xl font-bold text-primary">{{ current_variant.price | money }}</span>
+                {%- if current_variant.compare_at_price > current_variant.price -%}
+                  <s class="text-2xl text-[#b6b6b6]">{{ current_variant.compare_at_price | money }}</s>
+                  {%- assign saved = current_variant.compare_at_price | minus: current_variant.price | money -%}
+                  <span class="rounded-md bg-primary/10 px-2 py-1 text-xs font-semibold text-primary">{{ 'products.save' | t: amount: saved }}</span>
+                {%- endif -%}
+              </div>
+              {%- form 'product', product, id: 'ProductInstallments' -%}<input type="hidden" name="id" value="{{ current_variant.id }}">{{ form | payment_terms }}{%- endform -%}
+            {%- when 'variant_picker' -%}
+              {%- unless product.has_only_default_variant -%}
+                <variant-picker {{ block.shopify_attributes }} class="flex flex-col gap-5" data-variants>
+                  {%- for option in product.options_with_values -%}
+                    <fieldset>
+                      <legend class="mb-3 text-base font-semibold text-text">{{ option.name }}: <span class="font-normal text-muted" data-option-value="{{ forloop.index0 }}">{{ option.selected_value }}</span></legend>
+                      <div class="flex flex-wrap gap-3">
+                        {%- for value in option.values -%}
+                          {%- assign input_id = 'Opt-' | append: section.id | append: '-' | append: forloop.parentloop.index | append: '-' | append: forloop.index -%}
+                          <input type="radio" id="{{ input_id }}" name="{{ option.name | handle }}" value="{{ value | escape }}" form="ProductForm-{{ section.id }}" class="peer/opt sr-only" data-option-index="{{ forloop.parentloop.index0 }}" {% if option.selected_value == value %}checked{% endif %} {% unless value.available %}data-unavailable{% endunless %}>
+                          {%- if value.swatch.color or value.swatch.image -%}
+                            <label for="{{ input_id }}" title="{{ value | escape }}" class="block size-10 cursor-pointer rounded-full border-4 border-white ring-1 ring-divider transition {% if option.selected_value == value %}ring-2 ring-primary{% endif %} {% unless value.available %}opacity-40{% endunless %}" style="background: {% if value.swatch.image %}url({{ value.swatch.image | image_url: width: 80 }}) center/cover{% else %}{{ value.swatch.color }}{% endif %};"><span class="sr-only">{{ value }}</span></label>
+                          {%- else -%}
+                            <label for="{{ input_id }}" class="cursor-pointer rounded-full border px-5 py-2 text-sm font-medium transition {% if option.selected_value == value %}border-primary bg-primary/10 text-primary{% else %}border-divider text-text hover:border-primary{% endif %} {% unless value.available %}line-through opacity-50{% endunless %}">{{ value }}</label>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                    </fieldset>
+                  {%- endfor -%}
+                  <script type="application/json" data-variant-json>{{ product.variants | json }}</script>
+                </variant-picker>
+              {%- endunless -%}
+            {%- when 'text' -%}
+              <div {{ block.shopify_attributes }} class="rte text-base leading-relaxed text-muted">{{ block.settings.text | default: product.description | strip_html | truncatewords: 30 }}</div>
+            {%- when 'buy_buttons' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- assign form_id = 'ProductForm-' | append: section.id -%}
+                {%- form 'product', product, id: form_id, class: 'flex flex-col gap-3', data-product-form: '', data-type: 'add-to-cart-form' -%}
+                  <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+                  <div class="flex gap-3">
+                    <quantity-input class="flex h-12 items-center rounded-full border border-divider px-2">
+                      <button type="button" data-qty="-1" class="grid size-8 place-items-center text-lg" aria-label="−">−</button>
+                      <label class="sr-only" for="Qty-{{ section.id }}">{{ 'templates.cart.quantity' | t }}</label>
+                      <input id="Qty-{{ section.id }}" type="number" name="quantity" value="1" min="1" class="w-10 bg-transparent text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none">
+                      <button type="button" data-qty="1" class="grid size-8 place-items-center text-lg" aria-label="+">+</button>
+                    </quantity-input>
+                    <button type="submit" name="add" class="btn btn--primary h-12 flex-1" data-add-button {% unless current_variant.available %}disabled{% endunless %}>
+                      <span data-add-label>{%- if current_variant.available -%}{{ 'products.add_to_cart' | t }} – {{ current_variant.price | money }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}</span>
+                    </button>
+                  </div>
+                  {%- if block.settings.show_dynamic_checkout -%}
+                    <div class="[&_.shopify-payment-button__button--unbranded]:!rounded-full [&_.shopify-payment-button__button--unbranded]:!bg-ink [&_.shopify-payment-button__button]:!min-h-12 [&_.shopify-payment-button__button]:!rounded-full">{{ form | payment_button }}</div>
+                  {%- endif -%}
+                {%- endform -%}
+              </div>
+            {%- when 'perks' -%}
+              <ul {{ block.shopify_attributes }} class="space-y-4 rounded-2xl border border-divider p-5">
+                {%- for i in (1..3) -%}
+                  {%- assign t = 'perk_' | append: i | append: '_title' -%}
+                  {%- assign s = 'perk_' | append: i | append: '_text' -%}
+                  {%- assign ic = 'perk_' | append: i | append: '_icon' -%}
+                  {%- if block.settings[t] != blank -%}
+                    <li class="flex items-center gap-3">
+                      <span class="grid size-9 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">{% render 'icon', name: block.settings[ic], class: 'size-4' %}</span>
+                      <span><span class="block text-sm font-semibold text-text">{{ block.settings[t] }}</span><span class="block text-xs text-muted">{{ block.settings[s] }}</span></span>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</product-info>
+
+<script type="application/ld+json">{{ product | structured_data }}</script>
+
+{% schema %}
+{
+  "name": "Product information",
+  "blocks": [
+    { "type": "@app" },
+    { "type": "vendor", "name": "Brand", "limit": 1 },
+    { "type": "title", "name": "Title", "limit": 1 },
+    { "type": "rating", "name": "Rating & stock", "limit": 1 },
+    { "type": "price", "name": "Price", "limit": 1 },
+    { "type": "variant_picker", "name": "Variant picker", "limit": 1, "settings": [ { "type": "paragraph", "content": "Color options show swatches when the option has swatch values in Shopify admin." } ] },
+    { "type": "text", "name": "Short description", "settings": [ { "type": "richtext", "id": "text", "label": "Text", "info": "Leave empty to show the start of the product description" } ] },
+    { "type": "buy_buttons", "name": "Buy buttons", "limit": 1, "settings": [ { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show Buy Now button", "default": true } ] },
+    {
+      "type": "perks", "name": "Perks", "limit": 1,
+      "settings": [
+        { "type": "select", "id": "perk_1_icon", "label": "Perk 1 icon", "default": "truck", "options": [ { "value": "truck", "label": "Truck" }, { "value": "shield", "label": "Shield" }, { "value": "chat", "label": "Chat" }, { "value": "handshake", "label": "Heart" } ] },
+        { "type": "text", "id": "perk_1_title", "label": "Perk 1 title", "default": "Free Shipping on orders over $49" },
+        { "type": "text", "id": "perk_1_text", "label": "Perk 1 text", "default": "Delivered in 2–4 business days" },
+        { "type": "select", "id": "perk_2_icon", "label": "Perk 2 icon", "default": "handshake", "options": [ { "value": "truck", "label": "Truck" }, { "value": "shield", "label": "Shield" }, { "value": "chat", "label": "Chat" }, { "value": "handshake", "label": "Heart" } ] },
+        { "type": "text", "id": "perk_2_title", "label": "Perk 2 title", "default": "30-day easy returns" },
+        { "type": "text", "id": "perk_2_text", "label": "Perk 2 text", "default": "Hassle-free, no questions asked" },
+        { "type": "select", "id": "perk_3_icon", "label": "Perk 3 icon", "default": "shield", "options": [ { "value": "truck", "label": "Truck" }, { "value": "shield", "label": "Shield" }, { "value": "chat", "label": "Chat" }, { "value": "handshake", "label": "Heart" } ] },
+        { "type": "text", "id": "perk_3_title", "label": "Perk 3 title", "default": "Secure checkout guarantee" },
+        { "type": "text", "id": "perk_3_text", "label": "Perk 3 text", "default": "Trusted, encrypted payments" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "booking-form",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

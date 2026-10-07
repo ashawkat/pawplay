@@ -1,0 +1,40 @@
+{%- comment -%}
+  Mount point for the Vue side cart (src/side-cart → assets/side-cart.js).
+  Nothing here costs anything on page load: the module is imported by theme.js on first cart intent.
+{%- endcomment -%}
+{%- if settings.cart_type == 'drawer' and template.name != 'cart' -%}
+  {%- capture config -%}
+    {
+      "freeShippingThreshold": {{ settings.free_shipping_threshold | default: 0 | json }},
+      "showUpsell": {{ settings.cart_upsell | json }},
+      "showNote": {{ settings.cart_note | json }},
+      "cartUrl": {{ routes.cart_url | json }},
+      "shopUrl": {{ routes.all_products_collection_url | json }},
+      "strings": {
+        "title": {{ 'templates.cart.title' | t | json }},
+        "close": {{ 'general.close' | t | json }},
+        "empty": {{ 'templates.cart.empty' | t | json }},
+        "continue": {{ 'templates.cart.continue' | t | json }},
+        "remove": {{ 'templates.cart.remove' | t | json }},
+        "removed": {{ 'side_cart.removed' | t | json }},
+        "added": {{ 'side_cart.added' | t | json }},
+        "add": {{ 'side_cart.add' | t | json }},
+        "increase": {{ 'side_cart.increase' | t | json }},
+        "decrease": {{ 'side_cart.decrease' | t | json }},
+        "subtotal": {{ 'templates.cart.subtotal' | t | json }},
+        "taxes": {{ 'side_cart.taxes' | t | json }},
+        "viewCart": {{ 'side_cart.view_cart' | t | json }},
+        "checkout": {{ 'side_cart.checkout' | t | json }},
+        "upsell": {{ settings.cart_upsell_heading | json }},
+        "addNote": {{ 'side_cart.add_note' | t | json }},
+        "freeShippingAway": {{ 'side_cart.free_away' | t | json }},
+        "freeShippingTail": {{ 'side_cart.free_tail' | t | json }},
+        "freeShippingUnlocked": {{ 'side_cart.free_unlocked' | t | json }}
+      }
+    }
+  {%- endcapture -%}
+  <div id="SideCartRoot"
+    data-src="{{ 'side-cart.js' | asset_url }}"
+    data-open-on-add="{{ settings.cart_open_on_add }}"
+    data-config="{{ config | strip_newlines | escape }}"></div>
+{%- endif -%}

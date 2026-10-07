@@ -1,0 +1,50 @@
+{%- comment -%}
+  Figma: Profile - My pets (181:3264) + Pet card (181:3596).
+  Data: customer metafield custom.pets (type JSON), e.g.
+  [{"name":"Bella","type":"Dog","breed":"Golden Retriever","age":"3 yrs","weight":"28 kg","image":"https://…"}]
+  Set it from admin, Flow, or an app. Until then, demo cards show in the editor only.
+{%- endcomment -%}
+{%- assign pets = customer.metafields.custom.pets.value -%}
+<section class="bg-blush py-12 md:py-16">
+  <div class="page-width grid gap-6 lg:grid-cols-[260px_1fr]">
+    {%- if customer -%}{% render 'account-nav', active: 'pets' %}{%- endif -%}
+    <div class="{% unless customer %}lg:col-span-2{% endunless %}">
+      {%- if customer or request.design_mode -%}
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <h1 class="font-heading text-3xl font-bold text-ink">{{ section.settings.heading }}</h1>
+          {%- if section.settings.add_link != blank -%}<a href="{{ section.settings.add_link }}" class="btn btn--primary h-11 px-5 text-sm">+ {{ section.settings.add_label }}</a>{%- endif -%}
+        </div>
+        <ul class="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {%- if pets.size > 0 -%}
+            {%- for pet in pets -%}
+              {% render 'pet-card', pet: pet %}
+            {%- endfor -%}
+          {%- elsif request.design_mode -%}
+            <li class="rounded-3xl bg-white p-5 shadow-soft"><div class="aspect-square rounded-2xl bg-soft">{{ 'image' | placeholder_svg_tag: 'placeholder-svg rounded-2xl' }}</div><p class="mt-4 font-heading text-xl font-semibold">Bella</p><p class="text-sm text-muted">Dog · Golden Retriever · 3 yrs</p></li>
+            <li class="rounded-3xl bg-white p-5 shadow-soft"><div class="aspect-square rounded-2xl bg-soft">{{ 'image' | placeholder_svg_tag: 'placeholder-svg rounded-2xl' }}</div><p class="mt-4 font-heading text-xl font-semibold">Milo</p><p class="text-sm text-muted">Cat · British Shorthair · 2 yrs</p></li>
+          {%- else -%}
+            <li class="rounded-3xl bg-white p-10 text-center shadow-soft sm:col-span-2 xl:col-span-3">
+              <span class="mx-auto block w-fit text-primary/30">{% render 'icon', name: 'paw', class: 'h-14 w-16' %}</span>
+              <p class="mt-4 text-muted">{{ section.settings.empty_text }}</p>
+            </li>
+          {%- endif -%}
+        </ul>
+      {%- else -%}
+        {% render 'login-prompt' %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "My pets",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "My pets" },
+    { "type": "text", "id": "add_label", "label": "Add button label", "default": "Add a pet" },
+    { "type": "url", "id": "add_link", "label": "Add button link", "info": "e.g. a form page or app" },
+    { "type": "text", "id": "empty_text", "label": "Empty text", "default": "No pets added yet. Tell us about your furry family so we can recommend the right products." },
+    { "type": "paragraph", "content": "Reads the customer metafield custom.pets (JSON list of pets)." }
+  ]
+}
+{% endschema %}

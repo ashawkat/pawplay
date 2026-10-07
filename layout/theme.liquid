@@ -1,0 +1,114 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_primary }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; {{ 'general.tagged_with' | t: tags: current_tags.first }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+    {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+
+    {% render 'meta-tags' %}
+
+    {%- liquid
+      assign heading_font = settings.type_heading_font
+      assign body_font = settings.type_body_font
+      assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+      assign body_font_medium = body_font | font_modify: 'weight', '500'
+      assign body_font_semibold = body_font | font_modify: 'weight', '600'
+      assign heading_font_medium = heading_font | font_modify: 'weight', '500'
+      assign heading_font_semibold = heading_font | font_modify: 'weight', '600'
+      assign heading_font_bold = heading_font | font_modify: 'weight', 'bold'
+    -%}
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {{ body_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
+    {{ heading_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
+
+    <style>
+      {{ body_font | font_face: font_display: 'swap' }}
+      {{ body_font_medium | font_face: font_display: 'swap' }}
+      {{ body_font_semibold | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ heading_font | font_face: font_display: 'swap' }}
+      {{ heading_font_medium | font_face: font_display: 'swap' }}
+      {{ heading_font_semibold | font_face: font_display: 'swap' }}
+      {{ heading_font_bold | font_face: font_display: 'swap' }}
+
+      :root {
+        --pp-primary: {{ settings.color_primary }};
+        --pp-secondary: {{ settings.color_secondary }};
+        --pp-yellow: {{ settings.color_yellow }};
+        --pp-warning: {{ settings.color_warning }};
+        --pp-info: {{ settings.color_info }};
+        --pp-black: {{ settings.color_heading }};
+        --pp-text: {{ settings.color_text }};
+        --pp-text-muted: {{ settings.color_text_muted }};
+        --pp-hero-bg: {{ settings.color_hero_bg }};
+        --pp-cream: {{ settings.color_cream }};
+        --pp-footer-bg: {{ settings.color_footer_bg }};
+        --pp-font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+        --pp-font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+        --pp-section-y: {{ settings.section_spacing }}px;
+      }
+    </style>
+
+    {{ 'app.css' | asset_url | stylesheet_tag }}
+    <script>
+      window.PawPlay = {
+        moneyFormat: {{ shop.money_format | json }},
+        strings: {
+          addToCart: {{ 'products.add_to_cart' | t | json }},
+          soldOut: {{ 'products.sold_out' | t | json }},
+          unavailable: {{ 'products.unavailable' | t | json }},
+          inStock: {{ 'products.in_stock' | t | json }}
+        }
+      };
+    </script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'components.js' | asset_url }}" defer></script>
+
+    {{ content_for_header }}
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+  </head>
+
+  <body class="template-{{ template.name | handle }}">
+    <a class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:p-3" href="#MainContent">
+      {{ 'accessibility.skip_to_text' | t }}
+    </a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {% render 'side-cart' %}
+
+    {%- comment -%} Instant navigation: Chrome prerenders internal links on hover/press {%- endcomment -%}
+    <script type="speculationrules">
+      {
+        "prerender": [{
+          "where": { "and": [
+            { "href_matches": "/*" },
+            { "not": { "href_matches": ["/cart*", "/checkout*", "/account*", "/*/cart*", "*?*variant=*"] } },
+            { "not": { "selector_matches": "[data-cart-toggle], [rel~=nofollow]" } }
+          ] },
+          "eagerness": "moderate"
+        }]
+      }
+    </script>
+  </body>
+</html>

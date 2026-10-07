@@ -1,0 +1,12 @@
+{%- comment -%} Centered heading with pill eyebrow. Params: eyebrow, heading, subheading, eyebrow_style ('primary'|'gold') {%- endcomment -%}
+<div class="relative mx-auto flex max-w-[880px] flex-col items-center gap-4 text-center">
+  {%- if eyebrow != blank -%}
+    {%- if eyebrow_style == 'gold' -%}
+      <span class="inline-flex h-[30px] items-center rounded-full bg-[#fff5d5] px-6 text-sm font-medium text-[#edb712]">{{ eyebrow }}</span>
+    {%- else -%}
+      <span class="eyebrow">{{ eyebrow }}</span>
+    {%- endif -%}
+  {%- endif -%}
+  <h2 class="section-title">{{ heading }}</h2>
+  {%- if subheading != blank -%}<p class="section-sub">{{ subheading }}</p>{%- endif -%}
+</div>

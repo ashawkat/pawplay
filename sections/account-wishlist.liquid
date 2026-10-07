@@ -1,0 +1,30 @@
+{%- comment -%}
+  Figma: Profile - Wishlist (171:1907). Items saved by the heart buttons (browser storage)
+  are fetched and rendered with the normal product card via the product "card" template.
+{%- endcomment -%}
+<section class="bg-blush py-12 md:py-16">
+  <div class="page-width grid gap-6 lg:grid-cols-[260px_1fr]">
+    {%- if customer -%}{% render 'account-nav', active: 'wishlist' %}{%- endif -%}
+    <div class="{% unless customer %}lg:col-span-2{% endunless %}">
+      <h1 class="font-heading text-3xl font-bold text-ink">{{ section.settings.heading }}</h1>
+      <wishlist-grid class="mt-6 block">
+        <ul data-wishlist-grid class="grid grid-cols-2 gap-5 xl:grid-cols-3"></ul>
+        <div data-wishlist-empty class="hidden rounded-3xl bg-white p-10 text-center shadow-soft">
+          <span class="mx-auto block w-fit text-primary/30">{% render 'icon', name: 'heart', class: 'size-14' %}</span>
+          <p class="mt-4 text-muted">{{ section.settings.empty_text }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary mt-6">{{ 'templates.404.cta' | t }}</a>
+        </div>
+      </wishlist-grid>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wishlist",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "My wishlist" },
+    { "type": "text", "id": "empty_text", "label": "Empty text", "default": "Your wishlist is empty. Tap the heart on any product to save it here." }
+  ]
+}
+{% endschema %}
