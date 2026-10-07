@@ -4,8 +4,35 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "links_1": {
+          "type": "links",
+          "settings": {
+            "heading": "Quick Links",
+            "menu": "footer"
+          }
+        },
+        "links_2": {
+          "type": "links",
+          "settings": {
+            "heading": "Services",
+            "menu": "footer"
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "links_1",
+        "links_2",
+        "newsletter"
+      ],
       "settings": {}
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }

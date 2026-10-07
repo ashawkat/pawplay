@@ -1,13 +1,13 @@
 {%- comment -%} Figma: footer (33:226) — CTA card overlaps the dark footer {%- endcomment -%}
-<footer class="color-{{ section.settings.color_scheme }} bg-scheme relative text-muted" {% if section.settings.show_cta %}data-footer-cta{% endif %}>
+<footer class="color-{{ section.settings.color_scheme }} bg-scheme relative flow-root text-muted" {% if section.settings.show_cta %}data-footer-cta{% endif %}>
   {%- if section.settings.show_cta -%}
     <div class="page-width relative z-10 -mt-[150px]">
       <div class="relative overflow-hidden rounded-3xl bg-primary px-6 py-14 text-center">
         <span class="pointer-events-none absolute -left-6 -top-6 size-48 rounded-full bg-white/10 blur-sm" aria-hidden="true"></span>
-        <span class="pointer-events-none absolute -bottom-16 right-10 size-56 rounded-full border-[28px] border-divider" aria-hidden="true"></span>
+        <span class="pointer-events-none absolute -bottom-16 right-10 size-56 rounded-full border-[28px] border-white/10" aria-hidden="true"></span>
         <h2 class="relative mx-auto max-w-[420px] font-heading text-3xl font-semibold text-white md:text-4xl">{{ section.settings.cta_heading }}</h2>
         {%- if section.settings.cta_text != blank -%}
-          <p class="relative mt-3 text-lg font-semibold text-muted md:text-xl">{{ section.settings.cta_text }}</p>
+          <p class="relative mt-3 text-lg font-semibold text-white/75 md:text-xl">{{ section.settings.cta_text }}</p>
         {%- endif -%}
         {%- if section.settings.cta_label != blank -%}
           <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="btn btn--yellow relative mt-9 h-12">
@@ -64,7 +64,7 @@
                 <input type="hidden" name="contact[tags]" value="newsletter">
                 <label for="FooterEmail" class="sr-only">{{ 'newsletter.email' | t }}</label>
                 <input id="FooterEmail" type="email" name="contact[email]" required autocomplete="email" placeholder="{{ 'newsletter.email' | t }}"
-                  class="h-11 w-full rounded-full border border-white/15 bg-white/[0.08] px-4 text-center text-sm text-white placeholder:text-muted outline-none focus:border-primary">
+                  class="h-11 w-full rounded-full border border-divider bg-soft px-4 text-center text-sm text-text placeholder:text-muted outline-none focus:border-primary">
                 <button type="submit" class="btn btn--primary w-full">{{ 'newsletter.subscribe' | t }}</button>
                 {%- if form.posted_successfully? -%}<p class="text-sm text-secondary">{{ 'newsletter.success' | t }}</p>{%- endif -%}
                 {%- if form.errors -%}<p class="text-sm text-primary">{{ form.errors | default_errors }}</p>{%- endif -%}
